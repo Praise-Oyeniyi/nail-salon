@@ -1,3 +1,6 @@
+body{
+    background-color:#fff1f560;
+}
 .banner-inner{
     background: url('/src/components/images/IMAGE1.png') no-repeat;
     background-position: center;
@@ -6,4 +9,9 @@
 .filter-bg{
     background-color: #fff1f5;
     font-weight: 500;
+}
+button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

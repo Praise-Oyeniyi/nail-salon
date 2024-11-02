@@ -5,7 +5,7 @@ const ProductBox = ({image, alt, name, price, info}) => {
     const [like, setLike] = useState(false)
 
   return (
-    <div className='w-full'>
+    <div className='w-full shadow-md shadow-gray-100'>
         <div className="image relative bg-[#fff1f5]">
             <img src={image} alt={alt} className='w-full h-[22em] max-h-[22em] flex justify-center items-center'/>
             <div className='bg-[#ff00ff] p-2 absolute top-3 right-3  w-fit rounded-full' onClick={()=>{setLike(!like)}}>

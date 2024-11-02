@@ -2,8 +2,8 @@ import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 import HandIn from '../components/images/IMAGE1.png'
 import Hand from '../components/images/IMAGE2.png'
-import { FaRegEye } from "react-icons/fa6";
-import { FaRegEyeSlash } from "react-icons/fa6";
+import { FaRegEye,FaRegEyeSlash  } from "react-icons/fa6";
+import {FaGoogle  } from "react-icons/fa";
 
 
 const Welcome = () => {
@@ -95,8 +95,8 @@ const Welcome = () => {
                                 {up?'Sign up':'Sign in'}
                             </button>
 
-                            <button className='uppercase rounded-3xl tracking-wider py-2 font-bold text-base bg-[#ffb7ce7a] flex justify-center items-center w-full'>
-                                {up?'Sign up with google':'Sign in with google'}
+                            <button className='uppercase gap-x-5 rounded-3xl tracking-wider py-2 font-bold text-base bg-[#ffb7ce7a] flex justify-center items-center w-full'>
+                                <span ><FaGoogle size={20}/></span>{up?'Sign up with google':'Sign in with google'}
                             </button>
 
 
