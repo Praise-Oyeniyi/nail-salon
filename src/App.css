@@ -1,0 +1,9 @@
+.banner-inner{
+    background: url('/src/components/images/IMAGE1.png') no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+.filter-bg{
+    background-color: #fff1f5;
+    font-weight: 500;
+}
