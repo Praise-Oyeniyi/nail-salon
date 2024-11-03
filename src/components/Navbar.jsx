@@ -4,6 +4,7 @@ import { FaAngleDown} from "react-icons/fa6";
 import { FaShoppingCart,FaRegUserCircle, } from "react-icons/fa";
 import { CiLocationOn } from "react-icons/ci";
 import Sidebar from './Sidebar';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     const [side, setSide] = useState(false);
@@ -35,7 +36,7 @@ const Navbar = () => {
         </div>
 
         <div>
-            <div className={`w-full h-12 md:hidden z-30 ${side? "fixed top-0 left-0 bg-[#fff1f560]":"block"}`}>
+            <div className={`w-full h-12 md:hidden z-30 transition-all ease-in duration-200 ${side? "fixed top-0 left-0 bg-[#fff1f5fd]":"block"}`}>
                 <div className={`w-full h-full flex justify-between items-center`}>
                     <div className='burger-menu w-1/6 h-full flex items-center justify-center'>
                         <div className='cursor-pointer p-2' onClick={()=>setSide(!side)}>
@@ -56,13 +57,15 @@ const Navbar = () => {
                                 <input type="text" placeholder='search product'  className='w-full bg-transparent text-sm outline-none accent-gray-700'/>
                                 <span className='absolute top-[50%] right-2 -translate-y-[50%]  text-gray-700'><CiSearch /></span>
                             </li>
-                            <li className='flex gap-x-1 items-center'><span><FaShoppingCart/></span>Cart</li>
+                            <Link to='cart'>
+                                <li className='flex gap-x-1 items-center'><span><FaShoppingCart/></span>Cart</li>
+                            </Link>
                             <li className='flex gap-x-1 items-center'><span><CiLocationOn /></span>Chicago</li>
                         </ul>
                     </div>
                 </div> 
-                <div className={`absolute z-30  ${side? 'top-12 block ': '-top-[999px] hidden' }`}>
-                    <Sidebar/>
+                <div className={`absolute z-30`}>
+                    <Sidebar open={side}/>
                 </div>
                 
             </div>

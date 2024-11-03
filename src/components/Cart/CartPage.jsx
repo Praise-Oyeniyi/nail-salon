@@ -6,7 +6,7 @@ const CartPage = () => {
   return (
     <div className=''>
         <Navbar/>
-        <div className='md:w-5/6 w-[90%] mx-auto mt-7 h-full mb-20'>
+        <div className='md:w-5/6 w-[90%] mx-auto mt-5 md:mt-7 h-full mb-20'>
             <div className='w-full'>
                 {[1,2,3,4,5].map(()=>(
                     <div className='w-full flex items-center gap-x-3 border-b border-b-gray-300'>

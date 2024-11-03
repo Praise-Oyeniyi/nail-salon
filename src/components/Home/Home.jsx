@@ -9,7 +9,7 @@ const Home = () => {
         <div>
           <Navbar/>
           <div>
-            <div className='w-[90%] mx-auto'>
+            <div className='w-[90%] mx-auto mt-7 md:mt-0'>
               <Banner/>
             </div>
             <div className='w-[90%] mx-auto mt-5'>

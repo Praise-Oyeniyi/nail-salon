@@ -4,10 +4,10 @@ import { FaAngleDown} from "react-icons/fa6";
 import { FaShoppingCart,FaRegUserCircle, } from "react-icons/fa";
 
 // #ffb7ce #cccccc #fff1f5 #ff00ff
-const Sidebar = () => {
+const Sidebar = ({open}) => {
   
   return (
-    <div className='h-screen overflow-hidden left-0 z-40 fixed w-full  backdrop-blur-sm'>
+    <div className={`h-screen overflow-hidden ${open? 'top-12 block ': '-top-[999px] hidden' } left-0 z-40 fixed w-full  backdrop-blur-sm `}>
         <div className='w-5/6 h-full xl:h-auto md:w-[25%] space-y-7 xl:space-y-10 rounded-r-xl shadow-md xl:shadow-none shadow-gray-300 xl:rounded-r-none xl:px-10 px-7 xl:py-7 py-3  bg-[#ffb7ce] xl:bg-[#fff1f5]'>
             <div className="sidebar-header">
                 <div className="logo">
