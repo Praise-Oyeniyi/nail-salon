@@ -5,6 +5,7 @@ import PD3 from '../images/IMAGE5.png'
 import PD4 from '../images/IMAGE6.png'
 import ProductBox from '../ProductBox'
 import { FaAngleDown } from "react-icons/fa6";
+import { Link } from 'react-router-dom'
 
 
 const ProductDisplay = () => {
@@ -24,9 +25,11 @@ const ProductDisplay = () => {
                 <div className='flex items-start w-full gap-x-2 md:gap-x-5 gap-y-3 md:gap-y-5 justify-between flex-wrap'>
                     {[PD1, PD2, PD3, PD4].map((e, index)=>(
                         <div className='md:w-[25%] w-[48%]' key={index}>
-                            <ProductBox name={'Crochet nails'} 
-                            price={'30'} info={'Original nails, Long Lasting'} 
-                            alt={'fixed nails'} image={e}/>
+                            <Link className='flex gap-x-1 items-center' to='/details'>
+                                <ProductBox name={'Crochet nails'} 
+                                price={'30'} info={'Original nails, Long Lasting'} 
+                                alt={'fixed nails'} image={e}/>
+                            </Link>
                         </div>
                     ))
                     

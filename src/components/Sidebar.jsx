@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { CiSearch } from "react-icons/ci";
 import { FaAngleDown} from "react-icons/fa6";
 import { FaShoppingCart,FaRegUserCircle, } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 // #ffb7ce #cccccc #fff1f5 #ff00ff
 const Sidebar = ({open}) => {
@@ -15,14 +16,15 @@ const Sidebar = ({open}) => {
                 </div>
             </div>
             <ul className='space-y-7 font-medium cursor-pointer'>
-                <li className='hidden xl:block'>Home</li>
+                <li className=''><Link className='flex gap-x-1 items-center' to='/home'>Home</Link></li>
                 <li className='flex gap-x-1 items-center'>Categories <span><FaAngleDown /></span></li>
                 <li>Deals</li>
                 <li>What's New</li>
                 <li>Delivery</li>
-                <li>Order</li>
+                <li><Link className='flex gap-x-1 items-center' to='/order'>Order</Link></li>
                 <li className='flex gap-x-1 items-center'><span><FaRegUserCircle/> </span>Account</li>
-                <li className='flex gap-x-1 items-center'><span><FaShoppingCart/></span>Cart</li>
+                <li className=''><Link className='flex gap-x-1 items-center' to='/cart'><span><FaShoppingCart/></span>Cart</Link></li>
+
                 <li className='relative bg-[#fff1f5] xl:bg-[#ffb7ce] rounded-2xl py-1 px-2'>
                     <input type="text" placeholder='search product'  className='w-full bg-transparent text-sm outline-none accent-gray-700'/>
                     <span className='absolute top-[50%] right-2 -translate-y-[50%]  text-gray-700'><CiSearch /></span>
