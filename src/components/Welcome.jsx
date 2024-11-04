@@ -1,9 +1,10 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
-import HandIn from '../components/images/IMAGE1.png'
-import Hand from '../components/images/IMAGE2.png'
+import HandIn from '../components/images/IMAGE1.webp'
+import Hand from '../components/images/IMAGE2.webp'
 import { FaRegEye,FaRegEyeSlash  } from "react-icons/fa6";
 import {FaGoogle  } from "react-icons/fa";
+import Logo from '../components/images/logo.webp'
 
 
 const Welcome = () => {
@@ -23,10 +24,12 @@ const Welcome = () => {
 
             <div className='md:w-3/6 w-full h-full text-center mt-10 px-7 md:px-14'>
                 <div className="text-inner flex w-full h-full flex-col justify-center">
-                    <div className="logo w-14 h-14 mx-auto bg-black rounded-full my-5"></div>
+                    <div className="logo w-14 h-14 mx-auto overflow-hidden bg-black rounded-full my-5">
+                        <img src={Logo} alt="" className='w-full '/>
+                    </div>
                     
                     <div className="inner-text leading-tight">
-                        <h2 className='md:text-4xl text-3xl xl:text-6xl font-bold tracking-wide'>Welcome{up? '!':' back!'}</h2>
+                        <h2 className='md:text-4xl text-3xl lg:text-6xl font-bold tracking-wide'>Welcome{up? '!':' back!'}</h2>
                         <p className='font-semibold text-base md:text-xl'>Please fill in your details</p>
                     </div>
 

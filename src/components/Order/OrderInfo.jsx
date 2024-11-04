@@ -1,4 +1,5 @@
 import React from 'react'
+import Item from '../images/IMAGE4.webp'
 
 
 // #ffb7ce #cccccc #fff1f5 #ff00ff
@@ -15,7 +16,9 @@ const OrderInfo = () => {
                     <div className="order-item-in w-full ">
                         <div className='flex w-full justify-between'>
                             <div className="left flex gap-x-2">
-                                <div className="image bg-black md:h-14 h-10 w-10 md:w-14"></div>
+                                <div className="image bg-black overflow-hidden md:h-14 h-10 w-10 md:w-14">
+                                    <img src={Item} alt="" className='w-full'/>
+                                </div>
                                 <div className='text-sm'>
                                     <h6 className='item text-[#cccccc] text-xs md:sm'>Nails</h6>
                                     <h4 className='Item-name font-bold'>Cortex Nail</h4>
@@ -37,7 +40,7 @@ const OrderInfo = () => {
                 </div>
             </div>
             <div className="w-full h-10 flex items-center bg-[#ffb7ce]">
-                <div className='md:w-5/6 w-full px-2 md:px-0 mx-auto flex font-medium text-xs md:text-sm justify-between items-center py-1'>
+                <div className='md:px-5 w-full px-2 md:px-0 mx-auto flex font-medium text-xs md:text-sm justify-between items-center py-1'>
                     <p className='text-gray-500 tracking-tight md:tracking-normal w-3/6 md:w-auto'>Effectively manage your order in our order page</p>
                     <button className='rounded-xl px-1 md:px-2 py-1 text-gray-100 tracking-tight md:tracking-normal bg-[#ff00ff]'>Create Shipping Label</button>
                 </div>

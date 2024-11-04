@@ -4,6 +4,7 @@ import { FaAngleDown} from "react-icons/fa6";
 import { FaShoppingCart,FaRegUserCircle, } from "react-icons/fa";
 import { CiLocationOn } from "react-icons/ci";
 import Sidebar from './Sidebar';
+import Logo from '../components/images/logo.webp'
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
@@ -14,7 +15,9 @@ const Navbar = () => {
     <div className='w-full relative '>
         <div className='w-full h-14 hidden md:flex items-center px-10 mt-3 mb-5'>
             <div className="top-header w-2/6">
-                <div className="logo h-12 w-12 bg-black rounded-full"></div>
+                <div className="logo h-12 w-12 bg-black rounded-full overflow-hidden">
+                    <Link to="/home"><img src={Logo} alt="" className='w-full'/></Link>
+                </div>
                 
             </div>
 
@@ -29,7 +32,7 @@ const Navbar = () => {
                         <span className='absolute top-[50%] right-2 -translate-y-[50%]  text-gray-700'><CiSearch /></span>
                     </li>
                     <li className='flex gap-x-1 items-center'><span><FaRegUserCircle /></span>Account</li>
-                    <li className='flex gap-x-1 items-center'><span><FaShoppingCart/></span>Cart</li>
+                    <li ><Link className='flex gap-x-1 items-center' to="/cart"><span><FaShoppingCart/></span>Cart</Link></li>
                 </ul>
             </div>
             
@@ -57,9 +60,9 @@ const Navbar = () => {
                                 <input type="text" placeholder='search product'  className='w-full bg-transparent text-sm outline-none accent-gray-700'/>
                                 <span className='absolute top-[50%] right-2 -translate-y-[50%]  text-gray-700'><CiSearch /></span>
                             </li>
-                            <Link to='cart'>
-                                <li className='flex gap-x-1 items-center'><span><FaShoppingCart/></span>Cart</li>
-                            </Link>
+                        
+                            <li ><Link className='flex gap-x-1 items-center' to='/cart'><span><FaShoppingCart/></span>Cart</Link></li>
+                            
                             <li className='flex gap-x-1 items-center'><span><CiLocationOn /></span>Chicago</li>
                         </ul>
                     </div>

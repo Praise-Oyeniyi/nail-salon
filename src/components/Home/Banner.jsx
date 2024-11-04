@@ -1,5 +1,5 @@
 import React from 'react'
-import BannerImage from '../images/IMAGE3.png'
+import BannerImage from '../images/IMAGE3.webp'
 
 const Banner = () => {
   return (
@@ -10,7 +10,7 @@ const Banner = () => {
                     Grab upto 10% off on selected nails
                 </h2>
                 <button 
-                    className='w-fit mx-auto md:mr-auto bg-black text-base font-semibold text-white mt-2 md:mt-5 flex justify-center items-center rounded-2xl py-1 px-5 uppercase tracking-wide'>shop now</button>
+                    className='w-fit mx-auto md:mx-0 bg-black text-base font-semibold text-white mt-2 md:mt-5 flex justify-center items-center rounded-3xl py-2 px-5 uppercase tracking-wide'>shop now</button>
             </div>
             <div className='h-full w-3/6  banner-inner hidden md:block'>
             </div>

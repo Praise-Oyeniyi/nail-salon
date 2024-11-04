@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Navbar from '../Navbar'
-import PD1 from '../images/IMAGE3.png'
+import PD1 from '../images/IMAGE3.webp'
 import {FaRegStar } from "react-icons/fa";
 
 const ProductDeet = () => {
@@ -14,7 +14,7 @@ const ProductDeet = () => {
                 <div className='w-full h-[20em] md:h-[30em] bg-[#fff1f5] rounded-lg shadow-xl shadow-gray-300'>
                     <img 
                         src={PD1}
-                        className="w-5/6 ml-auto !h-full object-contain object-right-bottom" 
+                        className="w-5/6 ml-auto lg:mx-auto !h-full object-contain object-right-bottom lg:object-center" 
                         alt="full product view in product details page" 
                     />
 

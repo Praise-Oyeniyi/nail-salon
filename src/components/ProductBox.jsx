@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { FaRegHeart, FaHeart, FaRegStar } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const ProductBox = ({image, alt, name, price, info}) => {
     const [like, setLike] = useState(false)
@@ -7,7 +8,9 @@ const ProductBox = ({image, alt, name, price, info}) => {
   return (
     <div className='w-full shadow-md shadow-gray-100'>
         <div className="image relative bg-[#fff1f5]">
-            <img src={image} alt={alt} className='w-[10em] md:w-full md:h-[22em] max-h-[22em] flex justify-center items-center'/>
+            <Link to="/details">
+                <img src={image} alt={alt} className='w-[10em] md:w-full md:h-[22em] max-h-[22em] flex justify-center items-center'/>
+            </Link>
             <div className='bg-[#ff00ff] p-2 text-sm md:text-base absolute top-3 right-3  w-fit rounded-full' onClick={()=>{setLike(!like)}}>
                 {like? <FaHeart  className="text-red-700"/>
                 :
@@ -15,7 +18,7 @@ const ProductBox = ({image, alt, name, price, info}) => {
                 }
             </div>
         </div>
-        <div className="pd-info flex items-start justify-between font-medium mt-3 md:mt-0">
+        <div className="pd-info flex items-start justify-between font-medium py-3 px-2 md:mt-0">
             <div className='flex flex-col gap-y-1'>
                 <h4 className='text-base md:text-lg tracking-tight md:tracking-normal font-bold uppercase'>{name}</h4>
                 <p className='text-xs md:text-base'>{info}</p>

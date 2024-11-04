@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import PD1 from '../images/IMAGE3.png'
+import PD1 from '../images/IMAGE3.webp'
 
 const CartItem = () => {
   const [item, setItems] = useState(1)
@@ -14,7 +14,7 @@ const CartItem = () => {
 
         <div className='md:space-y-1'>
           <h4 className='md:text-xl text-lg font-bold'>Cortex-Nail</h4>
-          <p className='md:text-base text-sm text-gray-700 leading-tight md:leading-normal tracking-tight xl:tracking-normal'>A perfect nail to grace your look in every location or event that you want to attend. A must buy nail </p>
+          <p className='md:text-base text-sm text-gray-700 leading-tight md:leading-normal tracking-tight lg:tracking-normal'>A perfect nail to grace your look in every location or event that you want to attend. A must buy nail </p>
           <p className='cursor-pointer my-1 md:my-0 color w-fit text-sm  px-2 rounded-xl shadow-sm shadow-gray-400'>Black</p>
           <div className='flex gap-x-3 items-center'>
             <h5 className='md:text-xl text-lg font-bold'>$30</h5>
