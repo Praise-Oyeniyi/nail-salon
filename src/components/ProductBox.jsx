@@ -18,11 +18,11 @@ const ProductBox = ({image, alt, name, price, info}) => {
                 }
             </div>
         </div>
-        <div className="pd-info flex items-start justify-between font-medium py-3 px-2 md:mt-0">
+        <div className="pd-info flex items-start justify-between font-medium py-3 pb-5 px-2 md:mt-0">
             <div className='flex flex-col gap-y-1'>
                 <h4 className='text-base md:text-lg tracking-tight md:tracking-normal font-bold uppercase'>{name}</h4>
                 <p className='text-xs md:text-base'>{info}</p>
-                <div className='ratings flex items-center gap-x-2'>
+                <div className='ratings flex items-center gap-x-2 pt-1'>
                     <div className='flex cursor-pointer gap-x-1 text-[#ff00ff] text-xs md:text-base'>{[1,2,3,4,5].map(()=>(<FaRegStar />))}</div>
                     <h6 className='text-xs'>(In stock)</h6>
                 </div>

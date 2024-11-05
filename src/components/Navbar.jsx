@@ -22,7 +22,7 @@ const Navbar = () => {
             </div>
 
             <div className="w-full">
-                <ul className='w-full relative font-medium flex cursor-pointer justify-between items-center'>
+                <ul className='w-full relative font-semibold flex cursor-pointer justify-between items-center'>
                     <li className='flex gap-x-1 items-center'>Categories <span><FaAngleDown /></span></li>
                     <li>Deals</li>
                     <li>What's New</li>

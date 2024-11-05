@@ -16,24 +16,24 @@ const Welcome = () => {
     <div className='w-full mx-auto h-full'>
         <div className='w-full h-full flex justify-center '>
             <div className="image-side hidden md:block w-3/6 relative border-r bg-[#ffb7ce7a]">
-                <div className='w-full h-full '>
+                <div className='w-full'>
                     {up? <img src={Hand}  alt="" className="h-full" /> : <img src={HandIn} alt="" />}
                 </div>
             </div>
 
 
-            <div className='md:w-3/6 w-full h-full text-center mt-10 px-7 md:px-14'>
+            <div className='md:w-3/6 w-full h-full text-center mt-5 px-7 md:px-14'>
                 <div className="text-inner flex w-full h-full flex-col justify-center">
-                    <div className="logo w-14 h-14 mx-auto overflow-hidden bg-black rounded-full my-5">
+                    <div className="logo w-14 h-14 mx-auto overflow-hidden bg-black rounded-full mt-5 mb-3">
                         <img src={Logo} alt="" className='w-full '/>
                     </div>
                     
                     <div className="inner-text leading-tight">
-                        <h2 className='md:text-4xl text-3xl lg:text-6xl font-bold tracking-wide'>Welcome{up? '!':' back!'}</h2>
+                        <h2 className='md:text-4xl text-3xl lg:text-5xl font-bold tracking-wide'>Welcome{up? '!':' back!'}</h2>
                         <p className='font-semibold text-base md:text-xl'>Please fill in your details</p>
                     </div>
 
-                    <form action="#" className='pt-4'>
+                    <form action="#" className='pt-4 font-normal text-sm'>
                         {up? 
                             <div className='space-y-2 pt-7'>
                                 <div className='py-2 border-b focus-within:border-b-2 border-b-black '>

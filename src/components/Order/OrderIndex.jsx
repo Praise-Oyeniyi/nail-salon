@@ -20,11 +20,11 @@ const OrderIndex = () => {
 
             </div>
         </div>
-        <div className=' lg:block'>    
+        <div className='hidden lg:block'>    
             <Sidebar open={true}/>
-            <div>
-                <Sidebar open={side}/>
-            </div>
+        </div>
+        <div className=''>
+            <Sidebar open={side}/>
         </div>
         <div className='w-full md:py-7 py-3 px-5 mx-auto lg:ml-[25%]'>
             <div className='w-full space-y-3'>
@@ -46,7 +46,7 @@ const OrderIndex = () => {
                         <OrderInfo/>
                         <OrderSumry/>
                     </div>
-                    <div className='lg:w-[20%] w-full lg:!max-w-[20%] lg:!h-5/6 lg:max-h-[83%] lg:fixed right-4 overflow-y-auto'>
+                    <div className='lg:w-[20%] w-full lg:!max-w-[20%] lg:!h-5/6 lg:max-h-[83%] lg:fixed right-4 overflow-y-auto z-40'>
                         <OrderSide/>
                     </div>
                 </div>
