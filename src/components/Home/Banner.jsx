@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 // import BannerImage from '../images/IMAGE3.webp'
-import BannerImage1 from '../../images/IMAGE1.webp'
-import BannerImage2 from '../../images/IMAGE2.webp'
-import BannerImage3 from '../../images/IMAGE3.webp'
-import BannerImage4 from '../../images/IMAGE4.webp'
+import BannerImage1 from '../../images/1.webp'
+import BannerImage2 from '../../images/2.webp'
+import BannerImage3 from '../../images/3.webp'
+import BannerImage4 from '../../images/4.webp'
 import { FaChevronLeft, FaChevronRight  } from "react-icons/fa";
 
 
@@ -80,11 +80,11 @@ const Banner = () => {
     >
       <div className="flex justify-between items-end gap-x-10 h-full ">
         {/* Text Section */}
-        <div className="self-center w-3/6 text-center md:text-left lg:pl-7 py-14 md:py-0">
+        <div className="self-center w-3/6 text-center md:text-left lg:pl-7 py-14 md:py-0 ">
           {slides.map((slide, index) => (
             <div
               key={index}
-              className={`absolute inset-0 m:w-3/6 p-8  flex flex-col justify-center transition-opacity duration-500 ${
+              className={`absolute inset-0 md:w-3/6 p-8 z-20 flex flex-col justify-center transition-opacity duration-500 ${
                 currentSlide === index 
                   ? 'opacity-100 z-10' 
                   : 'opacity-0 z-0'
@@ -100,7 +100,7 @@ const Banner = () => {
         </div>
 
         {/* Image Section */}
-        <div className="h-full w-1/2 banner-inner hidden md:block relative">
+        <div className="h-full w-full md:w-1/2 banner-inner md:relative lg:after:absolute after:w-full after:h-full after:top-0 after:left-0 lg:after:bg-white/30 after:z-10">
           {slides.map((slide, index) => (
             <div
               key={index}
@@ -113,7 +113,7 @@ const Banner = () => {
               <img
                 src={slide.image}
                 alt={''}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover absolute top-0 left-0 z-0"
               />
             </div>
           ))}
@@ -123,14 +123,14 @@ const Banner = () => {
       {/* Navigation Buttons */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 invisible group-hover:visible -translate-y-1/2 bg-white/60 hover:bg-white p-2 rounded-full shadow-lg transition-all z-20"
+        className="absolute left-4 top-1/2 visible md:invisible group-hover:visible -translate-y-1/2 bg-white/60 hover:bg-white p-2 rounded-full shadow-lg transition-all z-20"
         aria-label="Previous slide"
       >
         <FaChevronLeft className="md:w-6 w-4 h-4 md:h-6" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 invisible group-hover:visible -translate-y-1/2 bg-white/60 hover:bg-white p-2 rounded-full shadow-lg transition-all z-20"
+        className="absolute right-4 top-1/2 visible md:invisible group-hover:visible -translate-y-1/2 bg-white/60 hover:bg-white p-2 rounded-full shadow-lg transition-all z-20"
         aria-label="Next slide"
       >
         <FaChevronRight  className="md:w-6 w-4 h-4 md:h-6" />
@@ -142,8 +142,8 @@ const Banner = () => {
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all ${
-              currentSlide === index ? 'bg-[#ff00ff] w-3 md:w-6' : 'bg-gray-400'
+            className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all ${
+              currentSlide === index ? 'bg-[#ff00ff] w-2 md:w-3' : 'bg-gray-400'
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
@@ -155,26 +155,4 @@ const Banner = () => {
 
 export default Banner;
 
-
-// const Banner = () => {
-//   return (
-//     <div className='bg-[#fff1f5] md:px-10 px-5 w-full py-14 md:py-0  md:h-[50vh] overflow-hidden'>
-//         <div className=' flex justify-around items-end gap-x-10 h-full'>
-//             <div className='self-center w-auto text-center md:text-left lg:pl-7'>
-//                 <h2 className='text-3xl md:text-5xl tracking-wide font-bold leading-tighter'>
-//                     Grab upto 10% off on selected nails
-//                 </h2>
-//                 <button 
-//                     className='w-fit mx-auto md:mx-0 bg-black text-base font-semibold text-white mt-2 md:mt-5 flex justify-center items-center rounded-3xl py-2 px-5 uppercase tracking-wide'>shop now</button>
-//             </div>
-//             <div className='h-full w-3/6  banner-inner hidden md:block'>
-//             </div>
-//         </div>
-//     </div>
-
-    
-//   )
-// }
-
-// export default Banner
 
