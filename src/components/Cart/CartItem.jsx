@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import PD1 from '../images/IMAGE3.webp'
+import PD1 from '../../images/IMAGE3.webp'
 
 const CartItem = () => {
   const [item, setItems] = useState(1)

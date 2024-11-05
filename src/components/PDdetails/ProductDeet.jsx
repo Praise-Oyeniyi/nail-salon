@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Navbar from '../Navbar'
-import PD1 from '../images/IMAGE3.webp'
+import PD1 from '../../images/IMAGE3.webp'
 import {FaRegStar } from "react-icons/fa";
 
 const ProductDeet = () => {

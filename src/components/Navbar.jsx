@@ -4,7 +4,7 @@ import { FaAngleDown} from "react-icons/fa6";
 import { FaShoppingCart,FaRegUserCircle, } from "react-icons/fa";
 import { CiLocationOn } from "react-icons/ci";
 import Sidebar from './Sidebar';
-import Logo from '../components/images/logo.webp'
+import Logo from '../images/logo.webp'
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {

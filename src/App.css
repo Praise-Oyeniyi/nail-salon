@@ -2,7 +2,7 @@ body{
     background-color:#fff1f560;
 }
 .banner-inner{
-    background: url('/src/components/images/IMAGE1.webp') no-repeat;
+    background: url('../src/images/IMAGE1.webp') no-repeat;
     background-position: center;
     background-size: contain;
 }

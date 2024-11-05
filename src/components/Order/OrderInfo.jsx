@@ -1,5 +1,5 @@
 import React from 'react'
-import Item from '../images/IMAGE4.webp'
+import Item from '../../images/IMAGE4.webp'
 
 
 // #ffb7ce #cccccc #fff1f5 #ff00ff

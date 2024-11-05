@@ -1,8 +1,8 @@
 import React from 'react'
-import PD1 from '../images/IMAGE3.webp'
-import PD2 from '../images/IMAGE4.webp'
-import PD3 from '../images/IMAGE5.webp'
-import PD4 from '../images/IMAGE6.webp'
+import PD1 from '../../images/IMAGE3.webp'
+import PD2 from '../../images/IMAGE4.webp'
+import PD3 from '../../images/IMAGE5.webp'
+import PD4 from '../../images/IMAGE6.webp'
 import ProductBox from '../ProductBox'
 import { FaAngleDown } from "react-icons/fa6";
 

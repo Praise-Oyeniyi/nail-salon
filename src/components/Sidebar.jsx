@@ -3,7 +3,7 @@ import { CiSearch } from "react-icons/ci";
 import { FaAngleDown} from "react-icons/fa6";
 import { FaShoppingCart,FaRegUserCircle, } from "react-icons/fa";
 import { Link } from 'react-router-dom';
-import Logo from '../components/images/logo.webp';
+import Logo from '../images/logo.webp';
 
 // #ffb7ce #cccccc #fff1f5 #ff00ff
 const Sidebar = ({open}) => {

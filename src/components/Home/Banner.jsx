@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import BannerImage from '../images/IMAGE3.webp'
-import BannerImage1 from '../images/1.webp'
-import BannerImage2 from '../images/2.webp'
-import BannerImage3 from '../images/3.webp'
-import BannerImage4 from '../images/4.webp'
+// import BannerImage from '../images/IMAGE3.webp'
+import BannerImage1 from '../../images/IMAGE1.webp'
+import BannerImage2 from '../../images/IMAGE2.webp'
+import BannerImage3 from '../../images/IMAGE3.webp'
+import BannerImage4 from '../../images/IMAGE4.webp'
 import { FaChevronLeft, FaChevronRight  } from "react-icons/fa";
 
 
@@ -156,4 +156,25 @@ const Banner = () => {
 export default Banner;
 
 
+// const Banner = () => {
+//   return (
+//     <div className='bg-[#fff1f5] md:px-10 px-5 w-full py-14 md:py-0  md:h-[50vh] overflow-hidden'>
+//         <div className=' flex justify-around items-end gap-x-10 h-full'>
+//             <div className='self-center w-auto text-center md:text-left lg:pl-7'>
+//                 <h2 className='text-3xl md:text-5xl tracking-wide font-bold leading-tighter'>
+//                     Grab upto 10% off on selected nails
+//                 </h2>
+//                 <button 
+//                     className='w-fit mx-auto md:mx-0 bg-black text-base font-semibold text-white mt-2 md:mt-5 flex justify-center items-center rounded-3xl py-2 px-5 uppercase tracking-wide'>shop now</button>
+//             </div>
+//             <div className='h-full w-3/6  banner-inner hidden md:block'>
+//             </div>
+//         </div>
+//     </div>
+
+    
+//   )
+// }
+
+// export default Banner
 

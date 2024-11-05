@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
-import HandIn from '../components/images/IMAGE1.webp'
-import Hand from '../components/images/IMAGE2.webp'
+import HandIn from '../images/IMAGE1.webp'
+import Hand from '../images/IMAGE2.webp'
 import { FaRegEye,FaRegEyeSlash  } from "react-icons/fa6";
 import {FaGoogle  } from "react-icons/fa";
-import Logo from '../components/images/logo.webp'
+import Logo from '../images/logo.webp'
 
 
 const Welcome = () => {
