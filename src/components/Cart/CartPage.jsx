@@ -1,20 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { CartContextProvider } from '../../context/CartContext';
 import Navbar from '../Navbar'
 import CartItem from './CartItem'
 
 const CartPage = () => {
+    const {cart, total} = useContext(CartContextProvider);
+    const sum = total.reduce((a, b) => a + b, 0)
+
   return (
     <div className=''>
         <Navbar/>
         <div className='md:w-5/6 w-[90%] mx-auto mt-5 md:mt-7 h-full mb-20'>
             <div className='w-full'>
-                {[1,2,3,4,5].map(()=>(
-                    <div className='w-full flex items-center gap-x-3 border-b border-b-gray-300'>
-                        <input type="checkbox" 
-                            className='accent-[#ff00ff] w-4 h-4 md:h-5 md:w-5 !outline-none border !border-[#ff00ff]'
-                            name="cart-select" id="cart-select" 
-                        />
-                        <CartItem/>
+                {cart.map((e, index)=>(
+                    <div key={index}>
+                        <CartItem price={e.price} id={e.id} info={e.info} count={e.count} name={e.name} color={e.color} image={e.image}/>
                     </div>
                 ))}
             </div>
@@ -32,10 +32,10 @@ const CartPage = () => {
                 </div>
 
                 <div>
-                    <h4 className='md:text-3xl font-bold text-xl'>USD {'150'}</h4>
+                    <h4 className='md:text-3xl font-bold text-xl'>USD {sum}</h4>
                 </div>
 
-                <button className='md:text-lg text-sm uppercase text-white tracking-wide font-bold px-3 py-1 rounded-2xl bg-[#ff00ff]'>Make Payment<span>{'{5}'}</span></button>
+                <button className='md:text-lg text-sm uppercase text-white tracking-wide font-bold px-3 py-1 rounded-2xl bg-[#ff00ff]'>Make Payment <span>{`{${cart.length}}`}</span></button>
 
             </div>
 
