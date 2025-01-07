@@ -6,31 +6,36 @@ import { ProductItems } from '../../Products/ProductInfo';
 
 
 const CartItem = ({image, count, name, price, info, color, id}) => {
-  const {addtoCart, removedItem, total} = useContext(CartContextProvider);
+  const {addtoCart, removedItem, total, setSum, setTotal} = useContext(CartContextProvider);
 
   const addToItem = () => {
     const cartAdd = ProductItems.filter((e)=>e.id == id);
     addtoCart(...cartAdd)   
-
+    
   }
 
   const removeItem = (itemId) => {
       removedItem(itemId)
   }
   
+
+ 
   const updateTotal = (e) => {
     if (e.target.checked) {
       // Checkbox is checked, add the item's total to the list
-      total.push(price * count);
+      setTotal([...total, price * count]);
+      // setSum(total.reduce((a, b) => a + b, 0))
     } else {
       // Checkbox is unchecked, remove the item's total from the list
       const itemTotal = price * count;
       const index = total.indexOf(itemTotal);
       if (index > -1) {
         total.splice(index, 1);
+        setTotal([...total])
       }
+      // setSum(total.reduce((a, b) => a + b, 0))
+
     }
-    console.log(total);
   }
 
   return (

@@ -10,9 +10,12 @@ export const CartContextProvider = createContext();
 
 
 const CartContext = ({children}) => {
+    const [total, setTotal] = useState([]);
     const [cart, setCart] = useState([]);
-    const total = [];
-    console.log(cart)
+    const [sum, setSum] = useState(0)
+
+
+    console.log(total)
 
     const addtoCart = (item) =>{
         const existingItemIndex = cart.findIndex(cartItem => cartItem.id === item.id);
@@ -51,10 +54,9 @@ const CartContext = ({children}) => {
     }, [cart])
 
 
-    // console.log(cart)
 
     return (
-        <CartContextProvider.Provider value={{cart, setCart, addtoCart, removedItem, total }}>
+        <CartContextProvider.Provider value={{cart, setCart, addtoCart, removedItem, total, sum, setSum, setTotal }}>
             {children}
         </CartContextProvider.Provider>
     );

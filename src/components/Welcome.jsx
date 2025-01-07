@@ -2,15 +2,32 @@ import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 import HandIn from '../images/IMAGE1.webp'
 import Hand from '../images/IMAGE2.webp'
-import { FaRegEye,FaRegEyeSlash  } from "react-icons/fa6";
 import {FaGoogle  } from "react-icons/fa";
 import Logo from '../images/logo.webp'
-
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { authSchema, loginSchema } from '../constants/schema/AuthScehema';
+import {FormComp, PassFormComp} from './FormComp';
+import {submitData} from '../../src/apis/Auth';
 
 const Welcome = () => {
     const [up, setUp]= useState(true);
-    const [see, setSee] = useState(false)
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+        resolver: yupResolver(up?authSchema:loginSchema),
+        mode: "onChange" // This enables real-time validation
+    });
 
+    const onSubmitHandler = (data) => {
+        submitData(data, 'https://wittynailtip.com/backend/signup.php')
+        console.log({ data });
+        // reset();
+    };
+
+    const onSignInHandler = (data) => {
+        submitData(data, 'https://wittynailtip.com/backend/login.php')
+        console.log({ data });
+        reset();
+    };
 
   return (
     <div className='w-full mx-auto h-full'>
@@ -33,57 +50,24 @@ const Welcome = () => {
                         <p className='font-semibold text-base md:text-xl'>Please fill in your details</p>
                     </div>
 
-                    <form action="#" className='pt-4 font-normal text-sm'>
-                        {up? 
+                    <form  className='pt-4 font-normal text-sm' onSubmit={up?handleSubmit(onSubmitHandler):handleSubmit(onSignInHandler)}> 
+                        {
+                        up? 
                             <div className='space-y-2 pt-7'>
-                                <div className='py-2 border-b focus-within:border-b-2 border-b-black '>
-                                    <input required type="email" placeholder='Email' className='accent-slate-950 outline-none border-none w-full bg-transparent font-medium text-black'/>
-                                </div>
+                                <FormComp name={'email'} type={'email'} plName={'Email'} register={register} errorInfo={errors.email?.message}/>
+                                        
+                                <FormComp name={'username'} type={'text'} plName={'Username'} register={register} errorInfo={errors.username?.message}/>
 
-                                <div className='py-2 border-b focus-within:border-b-2 border-b-black '>
-                                    <input required type="text" placeholder='Username' className='accent-slate-950 outline-none border-none w-full bg-transparent font-medium text-black'/>
-                                </div>
+                                <PassFormComp name={'password'} plName={'Password'} errorInfo={errors.password?.message} register={register}/>
+                                <PassFormComp name={'PasswordConfirmation'} plName={'Re-enter Password'} errorInfo={errors.passwordConfirmation?.message} register={register}/>
 
-                                <div className='py-2 border-b focus-within:border-b-2 border-b-black relative'>
-                                    <input required type={see?"text":'password'} placeholder='Password' className='accent-slate-950 outline-none border-none w-full bg-transparent font-medium text-black'/>
-                                    <div className='absolute right-0 top-50 -translate-y-[100%] cursor-pointer' onClick={()=>{setSee(!see)}}>
-                                        {see?
-                                            <FaRegEyeSlash/>
-                                            :
-                                            <FaRegEye/>
-                                        }
-                                    </div>
-                                    
-                                </div>
-
-                                <div className='py-2 border-b focus-within:border-b-2 relative border-b-black '>
-                                    <input required type={see?"text":'password'} placeholder='Re-enter Password' className='accent-slate-950 outline-none border-none w-full bg-transparent font-medium text-black'/>
-                                    <div className='absolute right-0 top-50 -translate-y-[100%] cursor-pointer' onClick={()=>{setSee(!see)}}>
-                                        {see?
-                                            <FaRegEyeSlash/>
-                                            :
-                                            <FaRegEye/>
-                                        }
-                                    </div>
-                                </div>
                             </div>
                             :
                             <div className='space-y-2 pt-7'>
-                                <div className='py-2 border-b relative focus-within:border-b-2 border-b-black '>
-                                    <input required type="email" placeholder='Email' className='accent-slate-950 outline-none border-none w-full bg-transparent font-medium text-black'/>
-                                    
-                                </div>
+                                <FormComp name={'email'} type={'email'} plName={'Email'} register={register} errorInfo={errors.email?.message}/>
 
-                                <div className='py-2 border-b focus-within:border-b-2 border-b-black relative '>
-                                    <input required type={see?"text":'password'} placeholder='Password' className='accent-slate-950 outline-none border-none w-full bg-transparent font-medium text-black'/>
-                                    <div className='absolute right-0 top-50 -translate-y-[100%] cursor-pointer' onClick={()=>{setSee(!see)}}>
-                                        {see?
-                                            <FaRegEyeSlash/>
-                                            :
-                                            <FaRegEye/>
-                                        }
-                                    </div>
-                                </div>
+                                <PassFormComp name={'password'} plName={'Password'} errorInfo={errors.password?.message} register={register}/>
+
                             </div>
                         }
                         <div className='mt-2 flex items-center space-x-2 cursor-pointer'>
@@ -94,11 +78,14 @@ const Welcome = () => {
 
                             {/* #ffb7ce #cccccc #fff1f5 #ff00ff */}
                         <div className="buttons w-5/6 md:w-4/6 mx-auto mt-5 space-y-3 text-sm md:text-base ">
-                            <button className='uppercase rounded-3xl tracking-wider py-1 md:py-2 font-bold  bg-[#ffb7ce] w-5/6 mx-auto'>
+                            <button type='submit' className='uppercase rounded-3xl tracking-wider py-1 md:py-2 font-bold  bg-[#ffb7ce] w-5/6 mx-auto'>
                                 {up?'Sign up':'Sign in'}
                             </button>
 
-                            <button className='uppercase gap-x-3 rounded-3xl tracking-wider py-1 md:py-2 font-bold bg-[#ffb7ce21]  md:bg-[#ffb7ce7a] w-full'>
+                            <button 
+                                className='uppercase gap-x-3 rounded-3xl tracking-wider py-1 md:py-2 font-bold bg-[#ffb7ce21] md:bg-[#ffb7ce7a] w-full'
+                                disabled
+                            >
                                 <span className='text-base md:text-xl'><FaGoogle /></span>{up?'Sign up with google':'Sign in with google'}
                             </button>
 

@@ -1,11 +1,16 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { CartContextProvider } from '../../context/CartContext';
 import Navbar from '../Navbar'
 import CartItem from './CartItem'
 
 const CartPage = () => {
-    const {cart, total} = useContext(CartContextProvider);
-    const sum = total.reduce((a, b) => a + b, 0)
+    const {cart, sum, total, setSum} = useContext(CartContextProvider);
+
+    useEffect(()=>{
+        setSum(total.reduce((a, b) => a + b, 0))
+    }, [total])
+
+    
 
   return (
     <div className=''>
