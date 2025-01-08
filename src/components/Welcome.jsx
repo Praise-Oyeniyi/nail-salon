@@ -9,24 +9,35 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { authSchema, loginSchema } from '../constants/schema/AuthScehema';
 import {FormComp, PassFormComp} from './FormComp';
 import {submitData} from '../../src/apis/Auth';
+import { useNavigate } from 'react-router-dom'
 
 const Welcome = () => {
+    const navigate = useNavigate();
+    const [message,setMessage] = useState(null)
     const [up, setUp]= useState(true);
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         resolver: yupResolver(up?authSchema:loginSchema),
         mode: "onChange" // This enables real-time validation
     });
 
-    const onSubmitHandler = (data) => {
-        submitData(data, 'https://wittynailtip.com/backend/signup.php')
-        console.log({ data });
-        // reset();
+    const onSubmitHandler = async (data) => {
+        const result = await submitData(data, 'https://wittynailtip.com/backend/signup.php');
+        if (result.success) {
+            reset();
+            navigate('/Home');
+        } else {
+            setMessage(result.error);
+        }
     };
-
-    const onSignInHandler = (data) => {
-        submitData(data, 'https://wittynailtip.com/backend/login.php')
-        console.log({ data });
-        reset();
+    
+    const onSignInHandler = async (data) => {
+        const result = await submitData(data, 'https://wittynailtip.com/backend/login.php');
+        if (result.success) {
+            reset();
+            navigate('/Home');
+        } else {
+            setMessage(result.error);
+        }
     };
 
   return (
@@ -59,7 +70,7 @@ const Welcome = () => {
                                 <FormComp name={'username'} type={'text'} plName={'Username'} register={register} errorInfo={errors.username?.message}/>
 
                                 <PassFormComp name={'password'} plName={'Password'} errorInfo={errors.password?.message} register={register}/>
-                                <PassFormComp name={'PasswordConfirmation'} plName={'Re-enter Password'} errorInfo={errors.passwordConfirmation?.message} register={register}/>
+                                <PassFormComp name={'confirmPassword'} plName={'Re-enter Password'} errorInfo={errors.confirmPassword?.message} register={register}/>
 
                             </div>
                             :
@@ -78,6 +89,7 @@ const Welcome = () => {
 
                             {/* #ffb7ce #cccccc #fff1f5 #ff00ff */}
                         <div className="buttons w-5/6 md:w-4/6 mx-auto mt-5 space-y-3 text-sm md:text-base ">
+                            {message && <h6 className='text-red-500 tex-center tex-sm'>{message}</h6>}
                             <button type='submit' className='uppercase rounded-3xl tracking-wider py-1 md:py-2 font-bold  bg-[#ffb7ce] w-5/6 mx-auto'>
                                 {up?'Sign up':'Sign in'}
                             </button>

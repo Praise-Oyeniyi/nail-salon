@@ -4,7 +4,9 @@ import { FaAngleDown } from "react-icons/fa6";
 import { ProductItems } from '../../Products/ProductInfo';
 
 
-const ProductDisplay = () => {
+const ProductDisplay = ({data}) => {
+console.log(data[0]?.images[0])
+
   return (
     <div className='mb-14'>
         <div>
@@ -19,11 +21,11 @@ const ProductDisplay = () => {
             <div className="products md:mt-10 mt-7 md:space-y-5 space-y-3">
                 <h3 className='capitalize font-bold text-2xl md:text-3xl'>Nails for you!</h3>
                 <div className='flex items-start w-full gap-x-2 md:gap-x-5 gap-y-3 md:gap-y-5 justify-between flex-wrap lg:flex-nowrap'>
-                    {ProductItems.map((e)=>(
+                    {data.map((e)=>(
                         <div className='md:w-[25%] w-[48%]' key={e.id}>
                             <ProductBox name={e.name} 
-                            price={e.price} info={e.info} 
-                            alt={e.alt} image={e.image} item={e}/>
+                            price={e?.prices[0].unit_amount} info={e.description} 
+                            alt={'images'} image={e?.images[0]} item={e}/>
                         </div>
                     ))
                     
