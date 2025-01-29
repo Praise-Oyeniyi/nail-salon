@@ -1,15 +1,17 @@
 import React, { useContext, useState } from 'react'
 import { CartContextProvider } from '../../context/CartContext';
-import { ProductItems } from '../../Products/ProductInfo';
+import { ProductContextProvider } from '../../context/Product';
 
 
 
 
 const CartItem = ({image, count, name, price, info, color, id}) => {
+  const {data} = useContext(ProductContextProvider)
   const {addtoCart, removedItem, total, setSum, setTotal} = useContext(CartContextProvider);
 
   const addToItem = () => {
-    const cartAdd = ProductItems.filter((e)=>e.id == id);
+    const cartAdd = data.filter((e)=>e?.id === id);
+    console.log(...cartAdd)
     addtoCart(...cartAdd)   
     
   }
@@ -47,7 +49,7 @@ const CartItem = ({image, count, name, price, info, color, id}) => {
                     
       <div className='md:py-3 py-2'>
         <div className='flex items-center gap-x-3 md:gap-x-5'>
-          <div className="shadow-lg w-[10em] bg-[#fff1f5] shadow-gray-300 rounded-xl">
+          <div className="shadow-lg w-[10em] bg-[#fff1f5] shadow-gray-300 rounded-xl overflow-hidden">
             <img src={image} alt="" className='w-full'/>
           </div>
 

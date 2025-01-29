@@ -15,7 +15,6 @@ export async function submitData(userData, endpoint) {
       }
   
       const result = await response.json();
-      console.log(result)
       return {
         success: true,
         data: result

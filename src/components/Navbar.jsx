@@ -31,7 +31,7 @@ const Navbar = () => {
                         <input type="text" placeholder='search product'  className='w-full bg-transparent text-sm outline-none accent-gray-700'/>
                         <span className='absolute top-[50%] right-2 -translate-y-[50%]  text-gray-700'><CiSearch /></span>
                     </li>
-                    <li className='flex gap-x-1 items-center'><span><FaRegUserCircle /></span>Account</li>
+                    <li className='flex gap-x-1 items-center'><Link className='flex gap-x-1 items-center' to='/edit-profile'><span><FaRegUserCircle/> </span>Account</Link></li>
                     <li ><Link className='flex gap-x-1 items-center' to="/cart"><span><FaShoppingCart/></span>Cart</Link></li>
                 </ul>
             </div>

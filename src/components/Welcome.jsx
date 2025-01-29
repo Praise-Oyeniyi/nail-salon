@@ -6,10 +6,11 @@ import {FaGoogle  } from "react-icons/fa";
 import Logo from '../images/logo.webp'
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { authSchema, loginSchema } from '../constants/schema/AuthScehema';
+import { authSchema, loginSchema } from '../constants/schema/AuthSchema';
 import {FormComp, PassFormComp} from './FormComp';
 import {submitData} from '../../src/apis/Auth';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
+
 
 const Welcome = () => {
     const navigate = useNavigate();

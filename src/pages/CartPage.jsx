@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { CartContextProvider } from '../../context/CartContext';
-import Navbar from '../Navbar'
-import CartItem from './CartItem'
+import { CartContextProvider } from '../context/CartContext';
+import Navbar from '../components/Navbar'
+import CartItem from '../components/Cart/CartItem'
 
 const CartPage = () => {
     const {cart, sum, total, setSum} = useContext(CartContextProvider);
 
-    useEffect(()=>{
-        setSum(total.reduce((a, b) => a + b, 0))
-    }, [total])
+    // useEffect(()=>{
+    //     setSum(total.reduce((a, b) => a + b, 0))
+    // }, [total])
 
+
+    console.log(cart)
     
 
   return (
@@ -19,7 +21,7 @@ const CartPage = () => {
             <div className='w-full'>
                 {cart.map((e, index)=>(
                     <div key={index}>
-                        <CartItem price={e.price} id={e.id} info={e.info} count={e.count} name={e.name} color={e.color} image={e.image}/>
+                        <CartItem price={e.prices[0].unit_amount} id={e.id} info={e.description} count={e.count} name={e[0]?.name} color={e.color} image={e.images[0]}/>
                     </div>
                 ))}
             </div>
@@ -37,7 +39,7 @@ const CartPage = () => {
                 </div>
 
                 <div>
-                    <h4 className='md:text-3xl font-bold text-xl'>USD {sum}</h4>
+                    <h4 className='md:text-3xl font-bold text-xl'>USD {total}</h4>
                 </div>
 
                 <button className='md:text-lg text-sm uppercase text-white tracking-wide font-bold px-3 py-1 rounded-2xl bg-[#ff00ff]'>Make Payment <span>{`{${cart.length}}`}</span></button>

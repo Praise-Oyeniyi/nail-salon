@@ -1,25 +1,30 @@
 import {
     createContext,
+    useContext,
     useEffect,
     useState,
 } from "react";
-import { ProductItems } from "../Products/ProductInfo";
+import { ProductContextProvider } from "./Product";
+
+
+
 export const CartContextProvider = createContext();
 
 
 
 
 const CartContext = ({children}) => {
+    const {data} = useContext(ProductContextProvider)
     const [total, setTotal] = useState([]);
     const [cart, setCart] = useState([]);
     const [sum, setSum] = useState(0)
 
 
     console.log(total)
-
     const addtoCart = (item) =>{
         const existingItemIndex = cart.findIndex(cartItem => cartItem.id === item.id);
 
+        console.log(existingItemIndex)
         if(cart.length !== 0 && existingItemIndex > -1){
 
             const updatedCart = cart.map((cartItem, index) => {
@@ -29,8 +34,10 @@ const CartContext = ({children}) => {
                 return cartItem;
             });
             setCart(updatedCart)
-        }else if(ProductItems.filter(picked=> picked.id == item.id)){         
+            setTotal(cart.reduce((sum, item) => sum + (item.count * item.prices[0].unit_amount), 0).toFixed(2));
+        }else if(data.filter(picked=> picked.id == item.id)){         
             setCart([...cart, {...item, count:1} ])
+            setTotal(cart.reduce((sum, item) => sum + (item.count * item.prices[0].unit_amount), 0).toFixed(2));
         }
     }
 
@@ -45,6 +52,7 @@ const CartContext = ({children}) => {
         }).filter(Boolean);
         
         setCart(newCart)
+        setTotal(cart.reduce((sum, item) => sum + (item.count * item.prices[0].unit_amount), 0).toFixed(2));
     }
 
     useEffect(() => {
@@ -52,6 +60,7 @@ const CartContext = ({children}) => {
             localStorage.setItem('cart', JSON.stringify(cart));
         }
     }, [cart])
+
 
 
 

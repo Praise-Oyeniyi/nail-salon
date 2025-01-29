@@ -30,7 +30,7 @@ const Sidebar = ({open}) => {
                 <li>What's New</li>
                 <li>Delivery</li>
                 <li><Link className='flex gap-x-1 items-center' to='/order'>Order</Link></li>
-                <li className='flex gap-x-1 items-center'><span><FaRegUserCircle/> </span>Account</li>
+                <li className='flex gap-x-1 items-center'><Link className='flex gap-x-1 items-center' to='/edit-profile'><span><FaRegUserCircle/> </span>Account</Link></li>
                 <li className=''><Link className='flex gap-x-1 items-center' to='/cart'><span><FaShoppingCart/></span>Cart</Link></li>
 
                 <li className='relative bg-[#fff1f5] lg:bg-[#ffb7ce] rounded-2xl py-1 px-2'>

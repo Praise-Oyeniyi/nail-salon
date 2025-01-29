@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import Navbar from '../Navbar'
-import Banner from './Banner'
-import ProductDisplay from './ProductDisplay'
+import React, { useContext} from 'react'
+import { ProductContextProvider } from '../context/Product'
+import Navbar from '../components/Navbar'
+import Banner from '../components/Home/Banner'
+import ProductDisplay from '../components/Home/ProductDisplay'
 
 const Home = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetch('https://wittynailtip.com/backend/product.php')
-      .then(response => response.json())
-      .then(data => setData(data.data));
-  }, []);
+  const {data} = useContext(ProductContextProvider)
 
 
   return (

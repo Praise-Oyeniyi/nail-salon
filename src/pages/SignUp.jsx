@@ -1,5 +1,5 @@
 import React from 'react'
-import Welcome from './Welcome'
+import Welcome from '../components/Welcome'
 
 
 // #ffb7ce #cccccc #fff1f5 #ff00ff

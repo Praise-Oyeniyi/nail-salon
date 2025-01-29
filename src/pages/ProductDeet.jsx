@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Navbar from '../Navbar'
-import PD1 from '../../images/IMAGE3.webp'
+import Navbar from '../components/Navbar'
+import PD1 from '../images/IMAGE3.webp'
 import {FaRegStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-import { CartContextProvider } from '../../context/CartContext';
-import { ProductItems } from '../../Products/ProductInfo';
+import { CartContextProvider } from '../context/CartContext';
+import { ProductContextProvider } from '../context/Product';
 
 const ProductDeet = () => {
     const { productId} = useParams();
+    const {data} = useContext(ProductContextProvider);
     const {cart, addtoCart, removedItem} = useContext(CartContextProvider);
-    const pdDetails = ProductItems[productId-1];
+    const pdDetails = data.filter((e)=> e.id === productId);
+    console.log(pdDetails);
     const initCount = cart.filter((e)=> e.id == productId)
     const [item, setItems] = useState(initCount[0]?.count || 0)
 
@@ -37,10 +39,10 @@ const ProductDeet = () => {
         <div className='md:w-4/6 w-[90%] mx-auto mt-5 md:mt-0'>
             <h6 className='text-gray-400 md:text-base text-sm font-normal  md:pl-3 pb-1 md:pb-2'>Nails/ Exclusive/ High quality/ Shop by nail type/ <span className='font-bold text-gray-900'>Cortex</span></h6>
             <div className='w-full mx-auto md:space-y-5 space-y-3'>
-                <div className='w-full h-[20em] md:h-[30em] bg-[#fff1f5] rounded-lg shadow-xl shadow-gray-300'>
+                <div className='w-full h-[20em] md:h-[30em] bg-[#fff1f5] rounded-lg shadow-xl shadow-gray-300 overflow-hidden'>
                     <img 
-                        src={pdDetails.image}
-                        className="w-5/6 ml-auto lg:mx-auto !h-full object-contain object-right-bottom lg:object-center" 
+                        src={pdDetails[0].images[0]}
+                        className="w-5/6 ml-auto md:w-full lg:mx-auto !h-full object-cover object-center lg:object-center" 
                         alt="full product view in product details page" 
                     />
 
@@ -51,16 +53,16 @@ const ProductDeet = () => {
                 <div>
                     <div className="priceandinfo md:flex justify-start items-start">
                         <div className="left w-full md:w-4/6 space-y-2 pb-5 border-b-2 md:border-r-2 border-r-gray-300 border-b-gray-300" >
-                            <h3 className='uppercase text-xl md:text-3xl font-bold'>{pdDetails.name}</h3>
+                            <h3 className='uppercase text-xl md:text-3xl font-bold'>{pdDetails[0].name}</h3>
                             <p className='font-medium text-sm md:text-base leading-tight'>
-                                {pdDetails.info}
+                                {pdDetails[0].description}
                             </p>
                             <div className='flex cursor-pointer gap-x-1 text-[#ff00ff]'>{[1,2,3,4,5].map(()=>(<FaRegStar />))}</div>
                         </div>
 
                         <div className="right w-auto md:pl-5">
                             <div className='border-b-2 border-b-gray-300 pt-3 md:pt-0 pb-3'>
-                                <h4 className='uppercase text-xl md:text-3xl font-bold'><span className='line-through'>${'50'}</span> /${pdDetails.price}</h4>
+                                <h4 className='uppercase text-xl md:text-3xl font-bold'><span className='line-through'>${pdDetails[0].prices[0].unit_amount *5}</span> /${pdDetails[0].prices[0].unit_amount}</h4>
                                 <p className='font-medium text-sm md:text-base leading-tight'>20% Discount Price on our products</p>
                             </div>
                             

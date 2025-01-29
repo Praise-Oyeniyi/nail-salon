@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import Sidebar from '../Sidebar'
-import OrderInfo from './OrderInfo'
-import OrderSide from './OrderSide'
-import OrderSumry from './OrderSumry'
+import Sidebar from '../components/Sidebar'
+import OrderInfo from '../components/Order/OrderInfo'
+import OrderSide from '../components/Order/OrderSide'
+import OrderSumry from '../components/Order/OrderSumry'
 
 
 const OrderIndex = () => {
