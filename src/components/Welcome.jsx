@@ -95,12 +95,12 @@ const Welcome = () => {
                                 {up?'Sign up':'Sign in'}
                             </button>
 
-                            <button 
+                            {/* <button 
                                 className='uppercase gap-x-3 rounded-3xl tracking-wider py-1 md:py-2 font-bold bg-[#ffb7ce21] md:bg-[#ffb7ce7a] w-full'
                                 disabled
                             >
                                 <span className='text-base md:text-xl'><FaGoogle /></span>{up?'Sign up with google':'Sign in with google'}
-                            </button>
+                            </button> */}
 
 
                             <p className='font-normal text-sm md:text-base pt-9'>{up? 'Already have an account?':"Don't have an account?" }<Link to href={up?'/signin':'/'}><span onClick={()=>setUp(!up)} className='uppercase font-bold pl-2'>{up? 'Sign In': 'Sign up'}</span></Link> </p>

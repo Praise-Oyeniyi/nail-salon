@@ -21,7 +21,6 @@ const CartContext = ({children}) => {
     const [saved, setSaved] = useState([]);
 
 
-    console.log(total)
     const addtoCart = (item) =>{
         const existingItemIndex = cart.findIndex(cartItem => cartItem.id === item.id);
 
@@ -40,6 +39,7 @@ const CartContext = ({children}) => {
             setCart([...cart, {...item, count:1} ])
             setTotal(cart.reduce((sum, item) => sum + (item.count * item.prices[0].unit_amount), 0).toFixed(2));
         }
+        addtoCart()
     }
 
     const removedItem = (productId) => {
@@ -64,6 +64,18 @@ const CartContext = ({children}) => {
 
 
     useEffect(() => {
+        fetch('https://wittynailtip.com/backend/cart.php', {
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => setCart(data.data))
+        .catch(error => console.error('Error fetching cart:', error));
+    }, []);
+
+    useEffect(() => {
         fetch('https://wittynailtip.com/backend/fav.php', {
             credentials: 'include',
             headers: {
@@ -72,11 +84,45 @@ const CartContext = ({children}) => {
         })
         .then(response => response.json())
         .then(data => setSaved(data.data))
-        .catch(error => console.error('Error fetching profile:', error));
+        .catch(error => console.error('Error fetching saved:', error));
     }, []);
-    
-    console.log(saved)
 
+
+
+    useEffect(() => {
+        fetch('https://wittynailtip.com/backend/add-to-fav.php', {
+            method: 'POST',
+            credentials: 'include', 
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'
+            },
+            body: saved  
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Added to favorites:', data);
+        })
+        .catch(error => console.error('Error adding to favorites:', error));
+    }, []);
+
+    // const addToCartfn = (itemId) => {
+    //     fetch('https://wittynailtip.com/backend/add-to-fav.php', {
+    //         method: 'POST',
+    //         credentials: 'include',  // Important for your session cookie
+    //         headers: {
+    //             'Content-Type': 'application/x-www-form-urlencoded',
+    //             'Accept': 'application/json'
+    //         },
+    //         body: `item_id=${itemId}`  // Send the item ID as form data
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log('Added to favorites:', data);
+    //         // Handle success (maybe update UI or show a message)
+    //     })
+    //     .catch(error => console.error('Error adding to favorites:', error));
+    // };
 
 
 

@@ -9,10 +9,9 @@ const Saved = () => {
     const savedFilter = cart.filter((item)=> item.id === saved);
 
   return (
-    <div>
-        <div className='w-[90%] mx-auto mt-7 md:mt-0'>
-            <Navbar/>
-            <div className='md:w-5/6 w-[90%] mx-auto mt-5 md:mt-7 h-full mb-20'>
+    <div className=''>
+        <Navbar/>
+        <div className='md:w-5/6 w-[90%] mx-auto mt-5 md:mt-7 h-full mb-20'>
             <div className='w-full'>
                 {savedFilter.map((e, index)=>(
                     <div key={index}>
@@ -22,7 +21,6 @@ const Saved = () => {
             </div>
 
 
-            </div>
         </div>
     </div>
   )

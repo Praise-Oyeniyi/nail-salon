@@ -5,11 +5,14 @@ import {CartContextProvider} from '../context/CartContext';
 
 const ProductBox = ({ image, id, name, price, alt, info, item}) => {
     const [like, setLike] = useState(false)
-    const {addtoCart, setSaved} = useContext(CartContextProvider)
+    const {addtoCart, setSaved, saved} = useContext(CartContextProvider)
     
-    // if(like === true){
-
-    // }
+    if(like === true){
+        setSaved([...saved, id])
+    }else{
+        const updatedSaved = saved.filter((savedItem)=>savedItem !== id)
+        setSaved(updatedSaved);
+    }
 
   return (
     <div className='w-full shadow-md shadow-gray-200'>
