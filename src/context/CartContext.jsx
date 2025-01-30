@@ -18,6 +18,7 @@ const CartContext = ({children}) => {
     const [total, setTotal] = useState([]);
     const [cart, setCart] = useState([]);
     const [sum, setSum] = useState(0)
+    const [saved, setSaved] = useState([]);
 
 
     console.log(total)
@@ -62,10 +63,25 @@ const CartContext = ({children}) => {
     }, [cart])
 
 
+    useEffect(() => {
+        fetch('https://wittynailtip.com/backend/fav.php', {
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => setSaved(data.data))
+        .catch(error => console.error('Error fetching profile:', error));
+    }, []);
+    
+    console.log(saved)
+
+
 
 
     return (
-        <CartContextProvider.Provider value={{cart, setCart, addtoCart, removedItem, total, sum, setSum, setTotal }}>
+        <CartContextProvider.Provider value={{cart, setCart, addtoCart, removedItem, total, sum, setSum, setTotal, saved, setSaved }}>
             {children}
         </CartContextProvider.Provider>
     );

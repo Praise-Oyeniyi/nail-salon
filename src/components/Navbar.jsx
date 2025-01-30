@@ -25,7 +25,7 @@ const Navbar = () => {
                 <ul className='w-full relative font-semibold flex cursor-pointer justify-between items-center'>
                     <li className='flex gap-x-1 items-center'>Categories <span><FaAngleDown /></span></li>
                     <li>Deals</li>
-                    <li>What's New</li>
+                    <li><Link className='flex gap-x-1 items-center' to='/saved'>Saved Items</Link></li>
                     <li>Delivery</li>
                     <li className='relative bg-[#fff1f5] rounded-2xl py-1 px-2'>
                         <input type="text" placeholder='search product'  className='w-full bg-transparent text-sm outline-none accent-gray-700'/>

@@ -8,6 +8,7 @@ import CartPage from './pages/CartPage';
 import CartContext from './context/CartContext';
 import Product from './context/Product';
 import EditProfile from './pages/EditProfile';
+import Saved from './pages/Saved';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="details/:productId" element={<ProductDeet/>} />
             <Route path="cart" element={<CartPage/>} />
             <Route path="edit-profile" element={<EditProfile/>} />
+            <Route path="saved" element={<Saved/>} />
           </Routes>
 
         </BrowserRouter>

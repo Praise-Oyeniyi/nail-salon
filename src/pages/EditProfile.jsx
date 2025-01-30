@@ -6,14 +6,20 @@ import { Link } from 'react-router-dom';
 
 const EditProfile = () => {
   const [side, setSide] = useState(false);
-  const [user, setUser] = useState('o');
+  const [user, setUser] = useState(null);
   const [edit, setEdit] = useState(false)
 
-    // useEffect(() => {
-    //     fetch('https://wittynailtip.com/backend/profile.php')
-    //     .then(response => response.json())
-    //     .then(data => setUser(data));
-    // }, []);
+  useEffect(() => {
+    fetch('https://wittynailtip.com/backend/profile.php', {
+        credentials: 'include',
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => setUser(data.data))
+    .catch(error => console.error('Error fetching profile:', error));
+  }, []);
 
     console.log(user)
 
@@ -69,30 +75,30 @@ const EditProfile = () => {
               :
               <form action="" className="profile-details space-y-5 md:w-4/6 w-full mx-auto md:mx-0">
                 <div className="profile-name">
-                  <label htmlFor="name" className='block text-[#5f5f5f] font-semibold text-base'>Profile Name</label>
-                  <input disabled type="text" name="name" id="name" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder='Winning Egede' />
+                  <label htmlFor="name" className='block text-[#5f5f5f] font-semibold text-base'>FullName</label>
+                  <input disabled type="text" name="name" id="name" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={user.full_name} />
                 </div>
 
                 <div className="profile-uname">
                   <label htmlFor="uname" className='block text-[#5f5f5f] font-semibold text-base'>Username</label>
-                  <input disabled type="text" name="uname" id="uname" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder='wintech234' />
+                  <input disabled type="text" name="uname" id="uname" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={user.username} />
                   <i className='text-[#cccccc] text-xs pl-3 font-medium'>Available change in 05/30</i>
                 </div>
 
                 <div className="profile-address">
-                  <label htmlFor="address" className='block text-[#5f5f5f] font-semibold text-base'>Address</label>
-                  <input disabled type="text" name="address" id="address" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder='Winning Egede' />
+                  <label htmlFor="address" className='block text-[#5f5f5f] font-semibold text-base'>Billing Address</label>
+                  <input disabled type="text" name="address" id="address" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={user.billing_address}  />
                 </div>
 
                 <div className="profile-email">
                   <label htmlFor="email" className='block text-[#5f5f5f] font-semibold text-base'>Email</label>
-                  <input disabled type="text" name="email" id="email" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder='Winningegede@gmail.com' />
+                  <input disabled type="text" name="email" id="email" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={user.email}  />
                 </div>
                 
 
                 <div className="profile-phone">
                   <label htmlFor="phone" className='block text-[#5f5f5f] font-semibold text-base'>Phone No</label>
-                  <input disabled type="text" name="phone" id="phone" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder='+1 (234) 987 564' />
+                  <input disabled type="text" name="phone" id="phone" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={user.phone_number}  />
                 </div>
 
                 <div className="submit-btns pt-3 flex justify-start items-center space-x-3 text-white font-medium">

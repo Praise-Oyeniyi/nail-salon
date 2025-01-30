@@ -21,7 +21,7 @@ const CartPage = () => {
             <div className='w-full'>
                 {cart.map((e, index)=>(
                     <div key={index}>
-                        <CartItem price={e.prices[0].unit_amount} id={e.id} info={e.description} count={e.count} name={e[0]?.name} color={e.color} image={e.images[0]}/>
+                        <CartItem price={e.prices[0].unit_amount} id={e.id} info={e.description} count={e.count} name={e.name} color={e.color} image={e.images[0]}/>
                     </div>
                 ))}
             </div>

@@ -5,15 +5,17 @@ import {CartContextProvider} from '../context/CartContext';
 
 const ProductBox = ({ image, id, name, price, alt, info, item}) => {
     const [like, setLike] = useState(false)
-    const {addtoCart} = useContext(CartContextProvider)
+    const {addtoCart, setSaved} = useContext(CartContextProvider)
     
-    
+    // if(like === true){
+
+    // }
 
   return (
     <div className='w-full shadow-md shadow-gray-200'>
         <div className="image relative bg-[#fff1f5]">
             <Link to={`/details/${id}`}>
-                <img src={image} alt={alt} className='w-[10em] md:w-full md:object-cover md:h-[22em] max-h-[22em] flex justify-center items-center'/>
+                <img src={image} alt={alt} className='w-[10em] md:w-full object-cover md:h-[22em] max-h-[22em] flex justify-center items-center'/>
             </Link>
             <div className='bg-[#ff00ff] p-2 text-sm md:text-base absolute top-3 right-3  w-fit rounded-full' onClick={()=>{setLike(!like)}}>
                 {like? <FaHeart  className="text-red-700"/>

@@ -27,7 +27,7 @@ const Sidebar = ({open}) => {
                 <li className=''><Link className='flex gap-x-1 items-center' to='/home'>Home</Link></li>
                 <li className='flex gap-x-1 items-center'>Categories <span><FaAngleDown /></span></li>
                 <li>Deals</li>
-                <li>What's New</li>
+                <li><Link className='flex gap-x-1 items-center' to='/saved'>Saved Items</Link></li>
                 <li>Delivery</li>
                 <li><Link className='flex gap-x-1 items-center' to='/order'>Order</Link></li>
                 <li className='flex gap-x-1 items-center'><Link className='flex gap-x-1 items-center' to='/edit-profile'><span><FaRegUserCircle/> </span>Account</Link></li>
