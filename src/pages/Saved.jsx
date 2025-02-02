@@ -4,9 +4,12 @@ import Navbar from '../components/Navbar';
 import { CartContextProvider } from '../context/CartContext';
 
 const Saved = () => {
-    const {cart, saved} = useContext(CartContextProvider);
+    const {cart, saved, getSaved} = useContext(CartContextProvider);
 
+    
+    getSaved();
     const savedFilter = cart.filter((item)=> item.id === saved);
+    
 
   return (
     <div className=''>

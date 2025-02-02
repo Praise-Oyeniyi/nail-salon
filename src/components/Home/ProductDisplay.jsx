@@ -20,7 +20,7 @@ const ProductDisplay = ({data}) => {
                 <h3 className='capitalize font-bold text-2xl md:text-3xl'>Nails for you!</h3>
                 <div className='flex items-start w-full gap-x-2 md:gap-x-5 gap-y-3 md:gap-y-5 justify-between flex-wrap lg:flex-nowrap'>
                     {data.map((e)=>(
-                        <div className='md:w-[25%] w-[48%]' key={e.id}>
+                        <div className='md:w-[25%] w-[48%]' key={e?.id}>
                             <ProductBox name={e.name}
                             id={e?.id}
                             price={e.prices[0].unit_amount} info={e.description} 

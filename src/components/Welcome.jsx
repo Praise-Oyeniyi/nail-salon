@@ -23,21 +23,21 @@ const Welcome = () => {
 
     const onSubmitHandler = async (data) => {
         const result = await submitData(data, 'https://wittynailtip.com/backend/signup.php');
-        if (result.success) {
+        if (result.data.success) {
             reset();
             navigate('/Home');
         } else {
-            setMessage(result.error);
+            setMessage(result.data.message);
         }
     };
     
     const onSignInHandler = async (data) => {
         const result = await submitData(data, 'https://wittynailtip.com/backend/login.php');
-        if (result.success) {
+        if (result.data.success){
             reset();
             navigate('/Home');
         } else {
-            setMessage(result.error);
+            setMessage(result.data.message);
         }
     };
 

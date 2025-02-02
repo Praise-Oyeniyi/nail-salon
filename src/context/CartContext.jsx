@@ -35,7 +35,7 @@ const CartContext = ({children}) => {
             });
             setCart(updatedCart)
             setTotal(cart.reduce((sum, item) => sum + (item.count * item.prices[0].unit_amount), 0).toFixed(2));
-        }else if(data.filter(picked=> picked.id == item.id)){         
+        }else if(data.filter(picked=> picked.id === item.id)){         
             setCart([...cart, {...item, count:1} ])
             setTotal(cart.reduce((sum, item) => sum + (item.count * item.prices[0].unit_amount), 0).toFixed(2));
         }
@@ -44,9 +44,9 @@ const CartContext = ({children}) => {
 
     const removedItem = (productId) => {
         const newCart = cart.map((e)=>{
-            if(e.id == productId && e.count >= 1){
+            if(e.id === productId && e.count >= 1){
                 return { ...e, count: e.count - 1 };
-            }else if(e.id == productId && e.count <= 1){
+            }else if(e.id === productId && e.count <= 1){
                 return null
             }
             return e;
@@ -63,19 +63,19 @@ const CartContext = ({children}) => {
     }, [cart])
 
 
-    useEffect(() => {
-        fetch('https://wittynailtip.com/backend/cart.php', {
-            credentials: 'include',
-            headers: {
-                'Accept': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => setCart(data.data))
-        .catch(error => console.error('Error fetching cart:', error));
-    }, []);
+    // useEffect(() => {
+    //     fetch('https://wittynailtip.com/backend/cart.php', {
+    //         credentials: 'include',
+    //         headers: {
+    //             'Accept': 'application/json'
+    //         }
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => console.log(data))
+    //     .catch(error => console.error('Error fetching cart:', error));
+    // }, []);
 
-    useEffect(() => {
+    const getSaved = ()=>{
         fetch('https://wittynailtip.com/backend/fav.php', {
             credentials: 'include',
             headers: {
@@ -83,28 +83,35 @@ const CartContext = ({children}) => {
             }
         })
         .then(response => response.json())
-        .then(data => setSaved(data.data))
+        .then(data => console.log(data))
         .catch(error => console.error('Error fetching saved:', error));
-    }, []);
+    }
 
 
+    // Option 1: Use the callback form of setSaved
+    const addToSave = (id) => {
+        setSaved(prevSaved => {
+            const newSaved = [...prevSaved, id];
+            
+            fetch('https://wittynailtip.com/backend/add-to-fav.php', {
+                method: 'POST',
+                credentials: 'include', 
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Accept': 'application/json'
+                },
+                body: `${id}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Added to favorites:', data);
+            })
+            .catch(error => console.error('Error adding to favorites:', error));
 
-    useEffect(() => {
-        fetch('https://wittynailtip.com/backend/add-to-fav.php', {
-            method: 'POST',
-            credentials: 'include', 
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Accept': 'application/json'
-            },
-            body: saved  
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Added to favorites:', data);
-        })
-        .catch(error => console.error('Error adding to favorites:', error));
-    }, []);
+            return newSaved;
+        });
+    }
+
 
     // const addToCartfn = (itemId) => {
     //     fetch('https://wittynailtip.com/backend/add-to-fav.php', {
@@ -127,7 +134,7 @@ const CartContext = ({children}) => {
 
 
     return (
-        <CartContextProvider.Provider value={{cart, setCart, addtoCart, removedItem, total, sum, setSum, setTotal, saved, setSaved }}>
+        <CartContextProvider.Provider value={{cart, setCart, addtoCart, removedItem, total, sum, setSum, setTotal, saved, setSaved, getSaved, addToSave }}>
             {children}
         </CartContextProvider.Provider>
     );

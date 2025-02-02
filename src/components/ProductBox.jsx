@@ -1,18 +1,24 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FaRegHeart, FaHeart, FaRegStar } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import {CartContextProvider} from '../context/CartContext';
 
 const ProductBox = ({ image, id, name, price, alt, info, item}) => {
     const [like, setLike] = useState(false)
-    const {addtoCart, setSaved, saved} = useContext(CartContextProvider)
+    const {addtoCart, setSaved, saved, addToSave} = useContext(CartContextProvider)
     
-    if(like === true){
-        setSaved([...saved, id])
-    }else{
-        const updatedSaved = saved.filter((savedItem)=>savedItem !== id)
-        setSaved(updatedSaved);
-    }
+
+    // useEffect(()=>{
+    //     if(like === true){
+    //         setSaved([...saved, id])
+    //     }else{
+    //         const updatedSaved = saved.filter((savedItem)=>savedItem !== id)
+    //         setSaved(updatedSaved);
+    //     }
+    // }, [])
+    
+
+    
 
   return (
     <div className='w-full shadow-md shadow-gray-200'>
@@ -20,7 +26,7 @@ const ProductBox = ({ image, id, name, price, alt, info, item}) => {
             <Link to={`/details/${id}`}>
                 <img src={image} alt={alt} className='w-[10em] md:w-full object-cover md:h-[22em] max-h-[22em] flex justify-center items-center'/>
             </Link>
-            <div className='bg-[#ff00ff] p-2 text-sm md:text-base absolute top-3 right-3  w-fit rounded-full' onClick={()=>{setLike(!like)}}>
+            <div className='bg-[#ff00ff] p-2 text-sm md:text-base absolute top-3 right-3  w-fit rounded-full' onClick={() => {const newLikeState = !like;setLike(newLikeState);if (newLikeState) {  addToSave(id)}}}>
                 {like? <FaHeart  className="text-red-700"/>
                 :
                 <FaRegHeart color="#fff"/>
