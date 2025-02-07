@@ -10,7 +10,8 @@ const Product = ({children}) => {
     useEffect(() => {
         fetch('https://wittynailtip.com/backend/product.php')
         .then(response => response.json())
-        .then(data => setData(data.data));
+        .then(data => setData(data.data))
+        .catch(error => console.error('Error fetching Product:', error));
     }, []);
 
 

@@ -19,12 +19,43 @@ const CartContext = ({children}) => {
     const [cart, setCart] = useState([]);
     const [sum, setSum] = useState(0)
     const [saved, setSaved] = useState([]);
+    
+    
+    useEffect(() => {
+        fetch('https://wittynailtip.com/backend/cart.php', {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => setCart(data.data))
+        .catch(error => console.error('Error fetching cart:', error));
+    }, []);
+    console.log(cart)
 
+
+    const addCartApi = (id) =>{
+        const cart = {"product_id":id}
+        fetch('https://wittynailtip.com/backend/add-to-cart.php', {
+            method: 'POST',
+            credentials: 'include', 
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(cart)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Added to Cart:', data);
+        })
+        .catch(error => console.error('Error adding to favorites:', error));
+    }
 
     const addtoCart = (item) =>{
         const existingItemIndex = cart.findIndex(cartItem => cartItem.id === item.id);
-
-        console.log(existingItemIndex)
         if(cart.length !== 0 && existingItemIndex > -1){
 
             const updatedCart = cart.map((cartItem, index) => {
@@ -34,12 +65,13 @@ const CartContext = ({children}) => {
                 return cartItem;
             });
             setCart(updatedCart)
-            setTotal(cart.reduce((sum, item) => sum + (item.count * item.prices[0].unit_amount), 0).toFixed(2));
-        }else if(data.filter(picked=> picked.id === item.id)){         
+            addCartApi(item?.id)
+            // setTotal(cart.reduce((sum, item) => sum + (item.count * item.prices[0].unit_amount), 0).toFixed(2));
+        }else if(data.filter(picked=> picked.id === item?.id)){         
             setCart([...cart, {...item, count:1} ])
-            setTotal(cart.reduce((sum, item) => sum + (item.count * item.prices[0].unit_amount), 0).toFixed(2));
+            addCartApi(item?.id)
+            // setTotal(cart.reduce((sum, item) => sum + (item.count * item.prices[0].unit_amount), 0).toFixed(2));
         }
-        addtoCart()
     }
 
     const removedItem = (productId) => {
@@ -55,44 +87,11 @@ const CartContext = ({children}) => {
         setCart(newCart)
         setTotal(cart.reduce((sum, item) => sum + (item.count * item.prices[0].unit_amount), 0).toFixed(2));
     }
-
-    useEffect(() => {
-        if(cart.length>0) {
-            localStorage.setItem('cart', JSON.stringify(cart));
-        }
-    }, [cart])
-
-
-    // useEffect(() => {
-    //     fetch('https://wittynailtip.com/backend/cart.php', {
-    //         credentials: 'include',
-    //         headers: {
-    //             'Accept': 'application/json'
-    //         }
-    //     })
-    //     .then(response => response.json())
-    //     .then(data => console.log(data))
-    //     .catch(error => console.error('Error fetching cart:', error));
-    // }, []);
-
-    const getSaved = ()=>{
-        fetch('https://wittynailtip.com/backend/fav.php', {
-            credentials: 'include',
-            headers: {
-                'Accept': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error('Error fetching saved:', error));
-    }
-
-
-    // Option 1: Use the callback form of setSaved
+    
     const addToSave = (id) => {
-        setSaved(prevSaved => {
-            const newSaved = [...prevSaved, id];
-            
+        // setSaved(prevSaved => {
+            // const newSaved = [...prevSaved, id];
+            const prod = {"product_id":id}
             fetch('https://wittynailtip.com/backend/add-to-fav.php', {
                 method: 'POST',
                 credentials: 'include', 
@@ -100,7 +99,7 @@ const CartContext = ({children}) => {
                     'Content-Type': 'application/x-www-form-urlencoded',
                     'Accept': 'application/json'
                 },
-                body: `${id}`
+                body: JSON.stringify(prod)
             })
             .then(response => response.json())
             .then(data => {
@@ -108,33 +107,14 @@ const CartContext = ({children}) => {
             })
             .catch(error => console.error('Error adding to favorites:', error));
 
-            return newSaved;
-        });
+            // return newSaved;
+        // });
     }
-
-
-    // const addToCartfn = (itemId) => {
-    //     fetch('https://wittynailtip.com/backend/add-to-fav.php', {
-    //         method: 'POST',
-    //         credentials: 'include',  // Important for your session cookie
-    //         headers: {
-    //             'Content-Type': 'application/x-www-form-urlencoded',
-    //             'Accept': 'application/json'
-    //         },
-    //         body: `item_id=${itemId}`  // Send the item ID as form data
-    //     })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         console.log('Added to favorites:', data);
-    //         // Handle success (maybe update UI or show a message)
-    //     })
-    //     .catch(error => console.error('Error adding to favorites:', error));
-    // };
 
 
 
     return (
-        <CartContextProvider.Provider value={{cart, setCart, addtoCart, removedItem, total, sum, setSum, setTotal, saved, setSaved, getSaved, addToSave }}>
+        <CartContextProvider.Provider value={{cart, setCart, addtoCart, removedItem, total, sum, setSum, setTotal, saved, setSaved, addToSave }}>
             {children}
         </CartContextProvider.Provider>
     );

@@ -4,15 +4,14 @@ import Navbar from '../components/Navbar'
 import CartItem from '../components/Cart/CartItem'
 
 const CartPage = () => {
-    const {cart, sum, total, setSum} = useContext(CartContextProvider);
+    const {cart, sum, total, setSum, setCart} = useContext(CartContextProvider);
 
     // useEffect(()=>{
     //     setSum(total.reduce((a, b) => a + b, 0))
     // }, [total])
 
-
-    console.log(cart)
     
+    console.log(cart)
 
   return (
     <div className=''>
@@ -21,7 +20,7 @@ const CartPage = () => {
             <div className='w-full'>
                 {cart.map((e, index)=>(
                     <div key={index}>
-                        <CartItem price={e.prices[0].unit_amount} id={e.id} info={e.description} count={e.count} name={e.name} color={e.color} image={e.images[0]}/>
+                        <CartItem price={e.price?.unit_amount} id={e.id} info={e.description} count={e.count} name={e.name} color={e.color} image={e.images[0]}/>
                     </div>
                 ))}
             </div>

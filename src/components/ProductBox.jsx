@@ -21,7 +21,7 @@ const ProductBox = ({ image, id, name, price, alt, info, item}) => {
     
 
   return (
-    <div className='w-full shadow-md shadow-gray-200'>
+    <div className='w-full shadow-md shadow-gray-200' >
         <div className="image relative bg-[#fff1f5]">
             <Link to={`/details/${id}`}>
                 <img src={image} alt={alt} className='w-[10em] md:w-full object-cover md:h-[22em] max-h-[22em] flex justify-center items-center'/>
@@ -38,7 +38,7 @@ const ProductBox = ({ image, id, name, price, alt, info, item}) => {
                 <h4 className='text-base md:text-lg tracking-tight md:tracking-normal font-bold uppercase'>{name}</h4>
                 <p className='text-xs md:text-base'>{info}</p>
                 <div className='ratings flex items-center gap-x-2 pt-1'>
-                    <div className='flex cursor-pointer gap-x-1 text-[#ff00ff] text-xs md:text-base'>{[1,2,3,4,5].map(()=>(<FaRegStar />))}</div>
+                    <div className='flex cursor-pointer gap-x-1 text-[#ff00ff] text-xs md:text-base'>{[1,2,3,4,5].map((e,index)=>(<FaRegStar key={index}/>))}</div>
                     <h6 className='text-xs'>(In stock)</h6>
                 </div>
                 

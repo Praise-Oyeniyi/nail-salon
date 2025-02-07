@@ -2,12 +2,14 @@ import {useState, useEffect} from 'react'
 import Sidebar from '../components/Sidebar';
 import { FaUser } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import Loader from '../components/Loader';
 
 
 const EditProfile = () => {
   const [side, setSide] = useState(false);
   const [user, setUser] = useState(null);
   const [edit, setEdit] = useState(false)
+  const [load, setLoad] = useState(false)
 
   useEffect(() => {
     fetch('https://wittynailtip.com/backend/profile.php', {
@@ -17,11 +19,39 @@ const EditProfile = () => {
         }
     })
     .then(response => response.json())
-    .then(data => setUser(data.data))
-    .catch(error => console.error('Error fetching profile:', error));
+    .then(data => {
+      setUser(data.data)
+      setLoad(true); 
+    })
+    .catch(error => {
+      console.error('Error fetching profile:', error)
+      setUser(null)
+    });
   }, []);
 
-    console.log(user)
+  const UpdateProfile = (e) =>{
+    e.preventDefault()
+    const full_name = e.target.name.value;
+    const username = user.username;
+    const phone_number = e.target.phone.value;
+    const email = user.email;
+    const billing_address = e.target.address.value;
+
+
+    const updatedProfile = {"full_name":full_name, "username":username, "phone_number":phone_number, "email":email, "billing_address":billing_address}
+    fetch('https://wittynailtip.com/backend/edit-profle.php', {
+      method: 'POST',
+      credentials: 'include', 
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+      },
+      body: JSON.stringify(updatedProfile)
+    })
+      .then(response => response.json())
+      .then(data => {console.log(data)})
+      .catch(error => console.error('Error saving updates:', error));
+  }
 
 
   return (
@@ -51,32 +81,38 @@ const EditProfile = () => {
             </div>
             {user ===null || user?.status === 'error'?
               <div className='flex items-center h-auto'>
-                <h3>You are not logged in. Please log in to view your profile</h3>
+                <h3>{load && "You are not logged in. Please log in to view your profile"}</h3>
               </div>
               :
               <div className="btn flex md:flex-row flex-col justify-center gap-y-2 md:justify-start items-center md:space-x-3 text-white font-medium">
-                <button className='bg-[#ffb7ce] p-2 px-3 rounded-full text-base'>
+                {/* <button className='bg-[#ffb7ce] p-2 px-3 rounded-full text-base'>
                   Change Picture
                 </button>
                 <button className='bg-[#ff00ff] p-2 px-3 rounded-full text-base'>
                   Delete Picture
+                </button> */}
+                 <button className='bg-[#ff00ff] p-2 px-3 rounded-full text-base' onClick={()=>setEdit(true)}>
+                  Edit Profile
                 </button>
               </div>
             }
           </div>
 
           {/* #ffb7ce #cccccc #fff1f5 #ff00ff */}
-          <div className="profile-form">
-            {user ===null || user?.status === 'error'?
+          {!load?
+            <Loader what={"Your profile is"}/>
+            :
+            <div className="profile-form">
+            {user ===null || user?.status === 'error' || user === undefined ?
               <div className='flex w-full justify-center'>
                 <Link className='items-center bg-[#ff00ff] p-2 px-5 cursor-pointer rounded-full text-base text-white tracking-wider font-semibold' to='/'><button>Log In</button></Link>
                 
               </div>
               :
-              <form action="" className="profile-details space-y-5 md:w-4/6 w-full mx-auto md:mx-0">
+              <form action="" className="profile-details space-y-5 md:w-4/6 w-full mx-auto md:mx-0" onSubmit={(e)=>UpdateProfile(e)}>
                 <div className="profile-name">
                   <label htmlFor="name" className='block text-[#5f5f5f] font-semibold text-base'>FullName</label>
-                  <input disabled type="text" name="name" id="name" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={user.full_name} />
+                  <input disabled={!edit && true} type="text" name="name" id="name" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={user.full_name} />
                 </div>
 
                 <div className="profile-uname">
@@ -87,7 +123,7 @@ const EditProfile = () => {
 
                 <div className="profile-address">
                   <label htmlFor="address" className='block text-[#5f5f5f] font-semibold text-base'>Billing Address</label>
-                  <input disabled type="text" name="address" id="address" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={user.billing_address}  />
+                  <input disabled={!edit && true} type="text" name="address" id="address" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={user.billing_address}  />
                 </div>
 
                 <div className="profile-email">
@@ -98,20 +134,28 @@ const EditProfile = () => {
 
                 <div className="profile-phone">
                   <label htmlFor="phone" className='block text-[#5f5f5f] font-semibold text-base'>Phone No</label>
-                  <input disabled type="text" name="phone" id="phone" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={user.phone_number}  />
+                  <input disabled={!edit && true} type="text" name="phone" id="phone" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={user.phone_number}  />
                 </div>
 
                 <div className="submit-btns pt-3 flex justify-start items-center space-x-3 text-white font-medium">
-                  <button className='bg-[#ffb7ce] p-2 px-3 rounded-full text-sm'>
-                      Reset Password
+                  {edit?
+                    <button className='bg-[#ffb7ce] p-2 px-3 rounded-full text-sm'>
+                      Update Profile
                     </button>
-                    <button className='bg-[#ff00ff] p-2 px-3 rounded-full text-sm'>
-                      Delete Account
-                    </button>
+                  :
+                    <>
+                      <button className='bg-[#ffb7ce] p-2 px-3 rounded-full text-sm'>
+                        Reset Password
+                      </button>
+                      <button className='bg-[#ff00ff] p-2 px-3 rounded-full text-sm'>
+                        Delete Account
+                      </button>
+                    </>
+                  }
                 </div>
               </form>
             }
-          </div>
+          </div>}
         </div>
 
       </div>
