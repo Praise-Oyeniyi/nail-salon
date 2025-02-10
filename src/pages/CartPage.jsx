@@ -5,6 +5,7 @@ import CartItem from '../components/Cart/CartItem'
 
 const CartPage = () => {
     const {cart} = useContext(CartContextProvider);
+    const [pay, setPay] = useState(false);
 
     const payOrder = () => {
         const payPend = {"pay":"pay"}
@@ -18,8 +19,8 @@ const CartPage = () => {
             body: JSON.stringify(payPend)
         })
         .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error('Error fetching cart:', error));
+        .then(data => {setPay(true)})
+        .catch(error => console.error('Error in pend order:', error));
     }
     
     
@@ -27,6 +28,34 @@ const CartPage = () => {
         const unitPrice = item.price?.unit_amount|| 0;
         return sum + (unitPrice * item.quantity);
     }, 0).toFixed(2);
+
+
+    useEffect(() => {
+        if(pay){
+            fetch('https://wittynailtip.com/backend/pay-api.php', {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => console(data.data))
+            .catch(error => console.error('Error in payment:', error));
+        }
+    }, [pay]);
+
+    const emptyCart = () =>{
+        fetch('https://wittynailtip.com/backend/empty-cart.php', {
+          credentials: 'include',
+          headers: {
+            'Accept': 'application/json'
+          }
+        })
+        .then(response => response.json())
+        .then(data => {console.log(data); window.location.reload()})
+        .catch(error => console.error('Error clearing cart:', error));
+    }
     
 
   return (
@@ -46,11 +75,12 @@ const CartPage = () => {
         <div className="cart-footer flex items-center w-full fixed bottom-0 h-16 bg-[#fff1f5] shadow-[0_-4px_7px_-1px_rgba(0,0,0,0.1)]">
             <div className='md:w-5/6 w-[90%] mx-auto flex items-center justify-between z-10'>
                 <div className='flex items-center gap-x-1'>
-                    <input type="checkbox" 
+                    {/* <input type="checkbox" 
                         className='accent-[#ff00ff] w-4 h-4 md:h-5 md:w-5 !outline-none border !border-[#ff00ff]'
                         name="cart-select" id="cart-select" 
                     />
-                    <h4 className='font-bold md:text-xl text-lg'>ALL </h4>
+                    <h4 className='font-bold md:text-xl text-lg'>ALL </h4> */}
+                    {cart.length >0? <button className='bg-red-500 flex justify-center items-center rounded-full pointer px-5 py-2' onClick={()=>emptyCart()}>Empty cart</button> : <h3>You have no item in cart. Start shopping now</h3>}
                 </div>
 
                 <div>

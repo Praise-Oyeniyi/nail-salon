@@ -25,7 +25,10 @@ const Welcome = () => {
         const result = await submitData(data, 'https://wittynailtip.com/backend/signup.php');
         if (result.data.success) {
             reset();
-            navigate('/Home');
+            navigate('/Home', { 
+                replace: true,
+                state: { reload: true }
+            });
         } else {
             setMessage(result.data.message);
         }
@@ -35,7 +38,10 @@ const Welcome = () => {
         const result = await submitData(data, 'https://wittynailtip.com/backend/login.php');
         if (result.data.success){
             reset();
-            navigate('/Home');
+            navigate('/Home', { 
+                replace: true,
+                state: { reload: true }
+            });
         } else {
             setMessage(result.data.message);
         }

@@ -4,7 +4,6 @@ import {
     useEffect,
     useState,
 } from "react";
-import { ProductContextProvider } from "./Product";
 
 
 
@@ -14,7 +13,6 @@ export const CartContextProvider = createContext();
 
 
 const CartContext = ({children}) => {
-    const {data} = useContext(ProductContextProvider)
     const [total, setTotal] = useState([]);
     const [cart, setCart] = useState([]);
     const [sum, setSum] = useState(0)
@@ -40,7 +38,6 @@ const CartContext = ({children}) => {
         setSaved(savedItems);
     }, []);
 
-    console.log(cart)
     const addCartApi = (id, amount) =>{
         const cartProd = {"product_id":id, "quantity":amount, "color":'color', size:'size'};
         fetch('https://wittynailtip.com/backend/add-to-cart.php', {
@@ -53,7 +50,7 @@ const CartContext = ({children}) => {
             body: JSON.stringify(cartProd)
         })
         .then(response => response.json())
-        .then(data => console.log('Added to cart:', data))
+        .then(data => {console.log('Added to cart:', data); alert('Added to cart')})
         .catch(error => console.error('Error adding to favorites:', error));
     }
 
