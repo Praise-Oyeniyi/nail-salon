@@ -23,7 +23,7 @@ const ProductDisplay = ({data}) => {
                         <div className='md:w-[25%] w-[48%]' key={e?.id}>
                             <ProductBox name={e.name}
                             id={e?.id}
-                            price={e.prices[0].unit_amount} info={e.description} 
+                            price={e?.prices[0].unit_amount} info={e?.description} 
                             alt={'images'} image={e?.images[0]} item={e}/>
                         </div>
                     ))

@@ -4,23 +4,39 @@ import Navbar from '../components/Navbar'
 import CartItem from '../components/Cart/CartItem'
 
 const CartPage = () => {
-    const {cart, sum, total, setSum, setCart} = useContext(CartContextProvider);
+    const {cart} = useContext(CartContextProvider);
 
-    // useEffect(()=>{
-    //     setSum(total.reduce((a, b) => a + b, 0))
-    // }, [total])
-
+    const payOrder = () => {
+        const payPend = {"pay":"pay"}
+        fetch('https://wittynailtip.com/backend/pend-order.php', {
+            credentials: 'include',
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(payPend)
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error fetching cart:', error));
+    }
     
-    console.log(cart)
+    
+    const total = cart?.reduce((sum, item) => {
+        const unitPrice = item.price?.unit_amount|| 0;
+        return sum + (unitPrice * item.quantity);
+    }, 0).toFixed(2);
+    
 
   return (
     <div className=''>
         <Navbar/>
         <div className='md:w-5/6 w-[90%] mx-auto mt-5 md:mt-7 h-full mb-20'>
             <div className='w-full'>
-                {cart.map((e, index)=>(
+                {cart?.map((e, index)=>(
                     <div key={index}>
-                        <CartItem price={e.price?.unit_amount} id={e.id} info={e.description} count={e.count} name={e.name} color={e.color} image={e.images[0]}/>
+                        <CartItem price={e.price?.unit_amount} id={e.product_id} info={e.description} count={e.quantity} name={e.name} color={e.color} image={e.images[0]}/>
                     </div>
                 ))}
             </div>
@@ -41,7 +57,7 @@ const CartPage = () => {
                     <h4 className='md:text-3xl font-bold text-xl'>USD {total}</h4>
                 </div>
 
-                <button className='md:text-lg text-sm uppercase text-white tracking-wide font-bold px-3 py-1 rounded-2xl bg-[#ff00ff]'>Make Payment <span>{`{${cart.length}}`}</span></button>
+                <button onClick={()=>payOrder()} className='md:text-lg text-sm uppercase text-white tracking-wide font-bold px-3 py-1 rounded-2xl bg-[#ff00ff]'>Make Payment <span>{`{${cart?.length}}`}</span></button>
 
             </div>
 

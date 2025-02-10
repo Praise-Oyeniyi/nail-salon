@@ -3,13 +3,14 @@ import Sidebar from '../components/Sidebar';
 import { FaUser } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import Loader from '../components/Loader';
-
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const EditProfile = () => {
   const [side, setSide] = useState(false);
   const [user, setUser] = useState(null);
   const [edit, setEdit] = useState(false)
   const [load, setLoad] = useState(false)
+  const [update, setUpdate] = useState(false)
 
   useEffect(() => {
     fetch('https://wittynailtip.com/backend/profile.php', {
@@ -30,26 +31,28 @@ const EditProfile = () => {
   }, []);
 
   const UpdateProfile = (e) =>{
+    setUpdate(true)
     e.preventDefault()
     const full_name = e.target.name.value;
-    const username = user.username;
+    const username = user?.username;
     const phone_number = e.target.phone.value;
-    const email = user.email;
+    const email = user?.email;
     const billing_address = e.target.address.value;
 
 
-    const updatedProfile = {"full_name":full_name, "username":username, "phone_number":phone_number, "email":email, "billing_address":billing_address}
-    fetch('https://wittynailtip.com/backend/edit-profle.php', {
+    const updatedProfile = {"name":full_name, "username":username, "number":phone_number, "email":email, "billing":billing_address}
+    console.log(updatedProfile)
+    fetch('https://wittynailtip.com/backend/edit-profile.php', {
       method: 'POST',
       credentials: 'include', 
       headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Accept': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
       body: JSON.stringify(updatedProfile)
     })
       .then(response => response.json())
-      .then(data => {console.log(data)})
+      .then(data => {console.log(data); alert(data.message); setUpdate(false)})
       .catch(error => console.error('Error saving updates:', error));
   }
 
@@ -139,8 +142,9 @@ const EditProfile = () => {
 
                 <div className="submit-btns pt-3 flex justify-start items-center space-x-3 text-white font-medium">
                   {edit?
-                    <button className='bg-[#ffb7ce] p-2 px-3 rounded-full text-sm'>
+                    <button className='bg-[#ffb7ce] p-2 px-3 rounded-full text-sm flex gap-x-2 items-center justify-center'>
                       Update Profile
+                      <AiOutlineLoading3Quarters className={`animate-spin ${update? 'block':'hidden'}`}/>
                     </button>
                   :
                     <>

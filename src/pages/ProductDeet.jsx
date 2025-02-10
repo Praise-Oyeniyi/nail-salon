@@ -10,17 +10,15 @@ const ProductDeet = () => {
     const { productId} = useParams();
     const {data} = useContext(ProductContextProvider);
     const {cart, addtoCart, removedItem} = useContext(CartContextProvider);
-    const pdDetails = data.filter((e)=> e.id === productId);
-    console.log(pdDetails);
-    const initCount = cart.filter((e)=> e.id == productId)
-    const [item, setItems] = useState(initCount[0]?.count || 0)
-
+    const pdDetails = data.find((e)=> e?.id == productId);
+    const initCount = cart.filter((e)=> e.product_id === productId)
+    const [item, setItems] = useState(initCount[0]?.quantity || 0)
 
 
     const addToItem = () => {
         addtoCart(pdDetails)   
         setItems(prevItem => {
-            const newCount = prevItem +1 || initCount[0]?.count;
+            const newCount = prevItem +1 || initCount[0]?.quantity;
             return newCount;
         });   
     }
@@ -41,7 +39,7 @@ const ProductDeet = () => {
             <div className='w-full mx-auto md:space-y-5 space-y-3'>
                 <div className='w-full h-[20em] md:h-[30em] bg-[#fff1f5] rounded-lg shadow-xl shadow-gray-300 overflow-hidden'>
                     <img 
-                        src={pdDetails[0].images[0]}
+                        src={pdDetails?.images[0]}
                         className="w-5/6 ml-auto md:w-full lg:mx-auto !h-full object-cover object-center lg:object-center" 
                         alt="full product view in product details page" 
                     />
@@ -53,16 +51,16 @@ const ProductDeet = () => {
                 <div>
                     <div className="priceandinfo md:flex justify-start items-start">
                         <div className="left w-full md:w-4/6 space-y-2 pb-5 border-b-2 md:border-r-2 border-r-gray-300 border-b-gray-300" >
-                            <h3 className='uppercase text-xl md:text-3xl font-bold'>{pdDetails[0].name}</h3>
+                            <h3 className='uppercase text-xl md:text-3xl font-bold'>{pdDetails?.name}</h3>
                             <p className='font-medium text-sm md:text-base leading-tight'>
-                                {pdDetails[0].description}
+                                {pdDetails?.description}
                             </p>
                             <div className='flex cursor-pointer gap-x-1 text-[#ff00ff]'>{[1,2,3,4,5].map(()=>(<FaRegStar />))}</div>
                         </div>
 
                         <div className="right w-auto md:pl-5">
                             <div className='border-b-2 border-b-gray-300 pt-3 md:pt-0 pb-3'>
-                                <h4 className='uppercase text-xl md:text-3xl font-bold'><span className='line-through'>${pdDetails[0].prices[0].unit_amount *5}</span> /${pdDetails[0].prices[0].unit_amount}</h4>
+                                <h4 className='uppercase text-xl md:text-3xl font-bold'><span className='line-through'>${pdDetails?.prices[0]?.unit_amount *5}</span> /${pdDetails?.prices[0].unit_amount}</h4>
                                 <p className='font-medium text-sm md:text-base leading-tight'>20% Discount Price on our products</p>
                             </div>
                             

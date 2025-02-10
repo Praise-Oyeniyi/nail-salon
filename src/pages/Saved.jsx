@@ -32,17 +32,22 @@ const Saved = () => {
         <div className='md:w-5/6 w-[90%] mx-auto mt-5 md:mt-7 h-full mb-20'>
             <div className='w-full'>
                {load?
-                saved.map((e, index)=>(
+                saved?.map((e, index)=>(
                     <div key={index}>
                         <SavedItem price={e?.prices[0].unit_amount} id={e?.id} info={e?.description} name={e?.name} color={e?.color} image={e?.images[0]} item={e}/>
                     </div>
                 ))
                     :
-                    <Loader what={"Your saved items are loading"}/>
+                    <Loader what={"Your saved items are"}/>
                 }
             </div>
 
 
+        </div>
+        <div className="cart-footer flex items-center w-full fixed bottom-0 h-16 bg-[#fff1f5] shadow-[0_-4px_7px_-1px_rgba(0,0,0,0.1)]">
+            <div className='md:w-5/6 w-[90%] mx-auto flex items-center justify-between z-10'>
+                <button>Delete All Saved Items</button>
+            </div>
         </div>
     </div>
   )

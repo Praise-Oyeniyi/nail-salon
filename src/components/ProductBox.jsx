@@ -8,16 +8,12 @@ const ProductBox = ({ image, id, name, price, alt, info, item}) => {
     const {addtoCart, setSaved, saved, addToSave} = useContext(CartContextProvider)
     
 
-    // useEffect(()=>{
-    //     if(like === true){
-    //         setSaved([...saved, id])
-    //     }else{
-    //         const updatedSaved = saved.filter((savedItem)=>savedItem !== id)
-    //         setSaved(updatedSaved);
-    //     }
-    // }, [])
+    const handleLikeAndSave = (id) => {
+        const newLikeState = !like;
+        setLike(newLikeState);
     
-
+        addToSave(id, newLikeState)
+    };
     
 
   return (
@@ -26,7 +22,7 @@ const ProductBox = ({ image, id, name, price, alt, info, item}) => {
             <Link to={`/details/${id}`}>
                 <img src={image} alt={alt} className='w-[10em] md:w-full object-cover md:h-[22em] max-h-[22em] flex justify-center items-center'/>
             </Link>
-            <div className='bg-[#ff00ff] p-2 text-sm md:text-base absolute top-3 right-3  w-fit rounded-full' onClick={() => {const newLikeState = !like;setLike(newLikeState);if (newLikeState) {  addToSave(id)}}}>
+            <div className='bg-[#ff00ff] p-2 text-sm md:text-base absolute top-3 right-3  w-fit rounded-full' onClick={() => handleLikeAndSave(id)}>
                 {like? <FaHeart  className="text-red-700"/>
                 :
                 <FaRegHeart color="#fff"/>

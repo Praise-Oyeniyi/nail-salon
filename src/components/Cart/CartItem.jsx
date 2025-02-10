@@ -17,7 +17,7 @@ const CartItem = ({image, count, name, price, info, color, id}) => {
   }
 
   const removeItem = (itemId) => {
-      removedItem(itemId)
+    removedItem(itemId)
   }
   
 
