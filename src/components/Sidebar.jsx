@@ -25,14 +25,12 @@ const Sidebar = ({open}) => {
             </div>
             <ul className='space-y-7 font-medium cursor-pointer'>
                 <li className=''><Link className='flex gap-x-1 items-center' to='/home'>Home</Link></li>
-                <li className='flex gap-x-1 items-center'>Categories <span><FaAngleDown /></span></li>
-                <li>Deals</li>
+                {/* <li className='flex gap-x-1 items-center'>Categories <span><FaAngleDown /></span></li> */}
                 <li><Link className='flex gap-x-1 items-center' to='/saved'>Saved Items</Link></li>
-                <li>Delivery</li>
-                <li><Link className='flex gap-x-1 items-center' to='/order'>Order</Link></li>
-                <li className='flex gap-x-1 items-center'><Link className='flex gap-x-1 items-center' to='/edit-profile'><span><FaRegUserCircle/> </span>Account</Link></li>
+                {/* <li>Delivery</li> */}
+                <li><Link className='flex gap-x-1 items-center' to='/order'>My Orders</Link></li>             
                 <li className=''><Link className='flex gap-x-1 items-center' to='/cart'><span><FaShoppingCart/></span>Cart</Link></li>
-
+                <li className='flex gap-x-1 items-center'><Link className='flex gap-x-1 items-center' to='/edit-profile'><span><FaRegUserCircle/> </span>Account</Link></li>
                 <li className='relative bg-[#fff1f5] lg:bg-[#ffb7ce] rounded-2xl py-1 px-2'>
                     <input type="text" placeholder='search product'  className='w-full bg-transparent text-sm outline-none accent-gray-700'/>
                     <span className='absolute top-[50%] right-2 -translate-y-[50%]  text-gray-700'><CiSearch /></span>

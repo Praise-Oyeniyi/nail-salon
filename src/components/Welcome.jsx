@@ -18,17 +18,14 @@ const Welcome = () => {
     const [up, setUp]= useState(true);
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         resolver: yupResolver(up?authSchema:loginSchema),
-        mode: "onChange" // This enables real-time validation
+        mode: "onChange"
     });
 
     const onSubmitHandler = async (data) => {
         const result = await submitData(data, 'https://wittynailtip.com/backend/signup.php');
         if (result.data.success) {
             reset();
-            navigate('/Home', { 
-                replace: true,
-                state: { reload: true }
-            });
+            navigate('/Home');
         } else {
             setMessage(result.data.message);
         }
@@ -36,15 +33,13 @@ const Welcome = () => {
     
     const onSignInHandler = async (data) => {
         const result = await submitData(data, 'https://wittynailtip.com/backend/login.php');
-        if (result.data.success){
-            reset();
-            navigate('/Home', { 
-                replace: true,
-                state: { reload: true }
-            });
-        } else {
-            setMessage(result.data.message);
-        }
+        console.log(result)
+        // if (result.data.success){
+        //     reset();
+        //     navigate('/Home');
+        // } else {
+        //     setMessage(result.data.message);
+        // }
     };
 
   return (
@@ -109,7 +104,7 @@ const Welcome = () => {
                             </button> */}
 
 
-                            <p className='font-normal text-sm md:text-base pt-9'>{up? 'Already have an account?':"Don't have an account?" }<Link to href={up?'/signin':'/'}><span onClick={()=>setUp(!up)} className='uppercase font-bold pl-2'>{up? 'Sign In': 'Sign up'}</span></Link> </p>
+                            <p className='font-normal text-sm md:text-base pt-9 cursor-pointer'>{up? 'Already have an account?':"Don't have an account?" }<Link to href={up?'/signin':'/'}><span onClick={()=>setUp(!up)} className='uppercase font-bold pl-2'>{up? 'Sign In': 'Sign up'}</span></Link> </p>
                         </div>
                         
                         

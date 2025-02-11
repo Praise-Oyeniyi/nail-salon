@@ -73,21 +73,21 @@ const CartPage = () => {
 
         </div>
         <div className="cart-footer flex items-center w-full fixed bottom-0 h-16 bg-[#fff1f5] shadow-[0_-4px_7px_-1px_rgba(0,0,0,0.1)]">
-            <div className='md:w-5/6 w-[90%] mx-auto flex items-center justify-between z-10'>
-                <div className='flex items-center gap-x-1'>
+            <div className='md:w-5/6 w-[95%] mx-auto flex items-center justify-between z-10 py-2'>
+                <div className={`${cart.length >0 && 'flex' } hidde md:text-lg text-sm font-semibold items-center gap-x-1 `}>
                     {/* <input type="checkbox" 
                         className='accent-[#ff00ff] w-4 h-4 md:h-5 md:w-5 !outline-none border !border-[#ff00ff]'
                         name="cart-select" id="cart-select" 
                     />
                     <h4 className='font-bold md:text-xl text-lg'>ALL </h4> */}
-                    {cart.length >0? <button className='bg-red-500 flex justify-center items-center rounded-full pointer px-5 py-2' onClick={()=>emptyCart()}>Empty cart</button> : <h3>You have no item in cart. Start shopping now</h3>}
+                    <button className='bg-red-500 flex justify-center items-center rounded-2xl cursor-pointer px-3 py-1' onClick={()=>emptyCart()}>Empty cart</button>
                 </div>
 
                 <div>
                     <h4 className='md:text-3xl font-bold text-xl'>USD {total}</h4>
                 </div>
 
-                <button onClick={()=>payOrder()} className='md:text-lg text-sm uppercase text-white tracking-wide font-bold px-3 py-1 rounded-2xl bg-[#ff00ff]'>Make Payment <span>{`{${cart?.length}}`}</span></button>
+                <button onClick={()=>payOrder()} className='md:text-lg text-sm uppercase cursor-pointer text-white tracking-wide font-bold px-3 py-1 rounded-2xl bg-[#ff00ff]'>Make Payment <span>{`{${cart?.length}}`}</span></button>
 
             </div>
 

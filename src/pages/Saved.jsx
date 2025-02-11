@@ -56,7 +56,7 @@ const Saved = () => {
         </div>
         <div className="cart-footer flex items-center w-full fixed bottom-0 h-16 bg-[#fff1f5] shadow-[0_-4px_7px_-1px_rgba(0,0,0,0.1)]">
             <div className='md:w-5/6 w-[90%] mx-auto flex items-center justify-between z-10'>
-                {saved.length >0? <button className='bg-red-500 flex justify-center items-center rounded-full pointer px-5 py-2' onClick={()=>deleteSaved()}>Delete All Saved Items</button> : <h3>You have not saved any item</h3>}
+                {saved.length >0? <button className='bg-red-500 flex justify-center items-center rounded-2xl cursor-pointer px-3 py-1' onClick={()=>deleteSaved()}>Delete All Saved Items</button> : <h3>You have not saved any item</h3>}
                 
             </div>
         </div>

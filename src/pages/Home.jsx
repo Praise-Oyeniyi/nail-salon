@@ -16,7 +16,7 @@ const Home = () => {
             <div className='w-[90%] mx-auto mt-7 md:mt-0'>
               <Banner/>
             </div>
-            <div className='w-[90%] mx-auto mt-5'>
+            <div className='max-w-[90%] w-[90%] overflow-x-hidden mx-auto mt-5'>
               <ProductDisplay data={data}/>
             </div>
           </div>
