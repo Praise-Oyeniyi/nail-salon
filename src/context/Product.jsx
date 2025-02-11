@@ -5,7 +5,7 @@ export const ProductContextProvider = createContext(null);
 
 
 const Product = ({children}) => {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(null);
 
     useEffect(() => {
         fetch('https://wittynailtip.com/backend/product.php')

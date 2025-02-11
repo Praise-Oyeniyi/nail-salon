@@ -18,9 +18,9 @@ const ProductBox = ({ image, id, name, price, alt, info, item}) => {
 
   return (
     <div className='w-full shadow-md shadow-gray-200' >
-        <div className="image relative bg-[#fff1f5] w-fit">
+        <div className="image relative bg-[#fff1f5] min-w-full">
             <Link to={`/details/${id}`}>
-                <img src={image} alt={alt} className='min-w-full min-h-[12em] max-h-[12em] object-cover md:min-h-[22em] md:max-h-[22em] flex justify-center items-center'/>
+                <img src={image} alt={alt} className='min-w-full min-h-[12em] max-h-[12em] object-center object-cover md:min-h-[22em] md:max-h-[22em] flex justify-center items-center'/>
             </Link>
             <div className='bg-[#ff00ff] p-2 text-sm md:text-base absolute top-3 right-3 w-fit rounded-full' onClick={() => handleLikeAndSave(id)}>
                 {like? <FaHeart  className="text-red-700"/>

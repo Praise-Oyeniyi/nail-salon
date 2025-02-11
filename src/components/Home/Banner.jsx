@@ -80,7 +80,7 @@ const Banner = () => {
     >
       <div className="flex justify-between items-end gap-x-10 h-full ">
         {/* Text Section */}
-        <div className="self-center w-3/6 text-center md:text-left lg:pl-7 py-14 md:py-0 ">
+        <div className="self-center w-3/6 z-[90] text-center md:text-left lg:pl-7 py-14 md:py-0 rlative before:absolute before:h-full before:w-full before:bg-white/40 !before:z-[0] before:top-0 before:left-0">
           {slides.map((slide, index) => (
             <div
               key={index}
@@ -90,9 +90,9 @@ const Banner = () => {
                   : 'opacity-0 z-0'
               }`}
             >
-              <h2 className="text-3xl md:text-5xl tracking-wide font-bold leading-tighter md:pl-5">{slide.description}</h2>
+              <h2 className="text-3xl md:text-5xl tracking-wide font-bold leading-tighter md:pl-5 z-[90]">{slide.description}</h2>
                 <button 
-                    className='w-fit mx-auto md:mx-0 bg-black text-base font-semibold text-white mt-2 md:mt-5 flex justify-center items-center rounded-3xl py-2 px-5 uppercase tracking-wide'>
+                    className='w-fit z-[99] mx-auto md:mx-0 bg-black text-base font-semibold text-white mt-2 md:mt-5 flex justify-center items-center rounded-3xl py-2 px-5 uppercase tracking-wide'>
                     shop now
                 </button>
             </div>
@@ -123,21 +123,21 @@ const Banner = () => {
       {/* Navigation Buttons */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 visible md:invisible group-hover:visible -translate-y-1/2 bg-white/60 hover:bg-white p-2 rounded-full shadow-lg transition-all z-20"
+        className="absolute left-4 top-1/2 visible md:invisible group-hover:visible -translate-y-1/2 bg-white/60 hover:bg-white p-2 rounded-full shadow-lg transition-all z-[90]"
         aria-label="Previous slide"
       >
         <FaChevronLeft className="md:w-6 w-4 h-4 md:h-6" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 visible md:invisible group-hover:visible -translate-y-1/2 bg-white/60 hover:bg-white p-2 rounded-full shadow-lg transition-all z-20"
+        className="absolute right-4 z-[90] top-1/2 visible md:invisible group-hover:visible -translate-y-1/2 bg-white/60 hover:bg-white p-2 rounded-full shadow-lg transition-all "
         aria-label="Next slide"
       >
         <FaChevronRight  className="md:w-6 w-4 h-4 md:h-6" />
       </button>
 
       {/* Indicators */}
-      <div className="absolute bottom-4 left-1/4 -translate-x-1/2 md:flex gap-2 z-20 mx-auto hidden">
+      <div className="absolute bottom-4 left-1/4 -translate-x-1/2 md:flex gap-2 z-[99] mx-auto hidden">
         {slides.map((_, index) => (
           <button
             key={index}

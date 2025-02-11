@@ -104,7 +104,7 @@ const Navbar = () => {
                         </ul>
                     </div>
                 </div> 
-                <div className={`absolute z-30`}>
+                <div className={`absolute !z-[99999]`}>
                     <Sidebar open={side}/>
                 </div>
                 
