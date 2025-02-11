@@ -79,10 +79,10 @@ const EditProfile = () => {
 
           <h3 className='font-semibold md:text-2xl text-lg'>Profile Picture</h3>
           <div className="pic-btn flex space-x-7">
-            <div className="img-box rounded-full h-32 w-32 overflow-hidden bg-[#ffb7ce] flex justify-center items-center">
+            <div className="img-box rounded-full h-32 w-32 overflow-hidden bg-[#ffb7ce] flex justify-center items-center flex-shrink-0">
               <FaUser className='text-5xl '/>
             </div>
-            {user ===null || user?.status === 'error'?
+            {user ===null || user === undefined?
               <div className='flex items-center h-auto'>
                 <h3>{load && "You are not logged in. Please log in to view your profile"}</h3>
               </div>
