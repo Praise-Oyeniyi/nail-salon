@@ -15,7 +15,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 const Welcome = () => {
     const navigate = useNavigate();
     const [message,setMessage] = useState(null)
-    const [up, setUp]= useState(false);
+    const [up, setUp]= useState(true);
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         resolver: yupResolver(up?authSchema:loginSchema),
         mode: "onChange"

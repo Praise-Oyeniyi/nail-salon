@@ -53,12 +53,12 @@ const CartContext = ({children}) => {
             body: JSON.stringify(cartProd)
         })
         .then(response => response.json())
-        .then(data => {console.log('Added to cart:', data); alert('Added to cart')})
+        .then(data => {console.log('Added to cart:', data); alert('Added to cart'); fetchCartItems();})
         .catch(error => console.error('Error adding to favorites:', error));
     }
 
     const addtoCart = (item) => {
-        const existingItemIndex = cart.findIndex(cartItem => cartItem.product_id === item.id);
+        const existingItemIndex = cart.findIndex(cartItem => cartItem.product_id === item.product_id);
     
         if (existingItemIndex > -1) {
             const updatedCart = cart.map((cartItem, index) => {
@@ -68,11 +68,11 @@ const CartContext = ({children}) => {
                 return cartItem;
             });
             setCart(updatedCart);
-            addCartApi(item?.id, updatedCart[existingItemIndex].quantity);
+            addCartApi(item?.product_id, updatedCart[existingItemIndex].quantity);
         } else {
-            const newCartItem = { ...item, quantity: 1, product_id: item.id };
+            const newCartItem = { ...item, quantity: 1, product_id: item.product_id };
             setCart([...cart, newCartItem]);
-            addCartApi(item?.id, 1);
+            addCartApi(item?.product_id, 1);
         }
     };
 

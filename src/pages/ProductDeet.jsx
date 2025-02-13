@@ -1,30 +1,42 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
-import PD1 from '../images/IMAGE3.webp'
 import {FaRegStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { CartContextProvider } from '../context/CartContext';
-import { ProductContextProvider } from '../context/Product';
 import ProductDeetLoader from '../components/PDdetails/ProductDeetLoader';
 
 const ProductDeet = () => {
     const { productId} = useParams();
-    const {data} = useContext(ProductContextProvider);
-    const {cart, addtoCart, removedItem} = useContext(CartContextProvider);
-    const pdDetails = data?.find((e)=> e?.id == productId);
-    const initCount = cart?.filter((e)=> e.product_id === productId)
-    const [item, setItems] = useState(initCount[0]?.quantity || 0)
+    const [data, setData] = useState(null);
+    const {addtoCart, removedItem} = useContext(CartContextProvider);
+    const [item, setItems] = useState(data?.quantity || 0)
+
+    useEffect(() => {
+        fetch('https://wittynailtip.com/backend/product-info.php', {
+            credentials: 'include',
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({"product_id":productId})
+        })
+        .then(response => response.json())
+        .then(data => setData(data.data))
+        .catch(error => console.error('Error fetching Product details:', error));
+    }, []);
 
 
     const addToItem = () => {
-        addtoCart(pdDetails)   
+        addtoCart(data)   
         setItems(prevItem => {
-            const newCount = prevItem +1 || initCount[0]?.quantity;
+            const newCount = prevItem +1 || data?.quantity;
             return newCount;
         });   
     }
 
     const removeItem = (itemId) => {
+        console.log(itemId)
         removedItem(itemId)
         setItems(prevItem => {
             const newCount = prevItem <= 0? 0: prevItem - 1 ;
@@ -35,13 +47,13 @@ const ProductDeet = () => {
   return (
     <div className='md:mb-14 mb-10'>
         <Navbar/>
-        { data && cart?
+        { data?
             <div className='md:w-4/6 w-[90%] mx-auto mt-5 md:mt-0'>
             {/* <h6 className='text-gray-400 md:text-base text-sm font-normal  md:pl-3 pb-1 md:pb-2'>Nails/ Exclusive/ High quality/ Shop by nail type/ <span className='font-bold text-gray-900'>Cortex</span></h6> */}
             <div className='w-full mx-auto md:space-y-5 space-y-3'>
                 <div className='w-full h-[20em] md:h-[30em] bg-[#fff1f5] rounded-lg shadow-xl shadow-gray-300 overflow-hidden'>
                     <img 
-                        src={pdDetails?.images[0]}
+                        src={data?.images[0]}
                         className="w-full ml-auto md:min-w-full lg:mx-auto !h-full object-cover object-center lg:object-center" 
                         alt="full product view in product details page" 
                     />
@@ -53,16 +65,16 @@ const ProductDeet = () => {
                 <div>
                     <div className="priceandinfo md:flex justify-start items-start">
                         <div className="left w-full md:w-4/6 space-y-2 pb-5 border-b-2 md:border-r-2 border-r-gray-300 border-b-gray-300" >
-                            <h3 className='uppercase text-xl md:text-3xl font-bold'>{pdDetails?.name}</h3>
+                            <h3 className='uppercase text-xl md:text-3xl font-bold'>{data?.name}</h3>
                             <p className='font-medium text-sm md:text-base leading-tight'>
-                                {pdDetails?.description}
+                                {data?.description}
                             </p>
                             <div className='flex cursor-pointer gap-x-1 text-[#ff00ff]'>{[1,2,3,4,5].map((_, index)=>(< FaRegStar key={index}/>))}</div>
                         </div>
 
                         <div className="right w-auto md:pl-5">
                             <div className='border-b-2 border-b-gray-300 pt-3 md:pt-0 pb-3'>
-                                <h4 className='uppercase text-xl md:text-3xl font-bold'><span className='line-through'>${pdDetails?.prices[0]?.unit_amount + (0.2*pdDetails?.prices[0]?.unit_amount)}</span> /${pdDetails?.prices[0].unit_amount}</h4>
+                                <h4 className='uppercase text-xl md:text-3xl font-bold'><span className='line-through'>${data?.price?.unit_amount + (0.2*data?.price?.unit_amount)}</span> /${data?.price?.unit_amount}</h4>
                                 <p className='font-medium text-sm md:text-base leading-tight'>20% Discount Price on our products</p>
                             </div>
                             
@@ -98,7 +110,7 @@ const ProductDeet = () => {
 
                     <div className='pt-5 border-b-2 border-b-gray-300 pb-7 flex text-right font-bold w-full justify-center md:justify-end items-center gap-x-2 text-base md:text-lg'>
                         <button className='h-10 w-40 rounded-3xl text-white tracking-wide bg-[#ff00ff]'>Buy Now</button>
-                        <button className='h-10 w-40 rounded-3xl text-black tracking-wide bg-[#ffb7ce]' onClick={()=>addToItem()}>Add to cart</button>
+                        <button disabled={item<1 && true} className={`h-10 w-40 rounded-3xl text-black tracking-wide  ${item<1 ?'!bg-[#ffb7ce86]':'bg-[#ffb7ce]'}`} onClick={()=>addToItem()}>Add to cart</button>
                     </div>
 
                     <div className="pd-perks md:w-3/6">
@@ -136,7 +148,7 @@ const ProductDeet = () => {
             
         </div>
         :
-        <ProductDeetLoader/>
+        <ProductDeetLoader/>     
     }
 
     </div>
