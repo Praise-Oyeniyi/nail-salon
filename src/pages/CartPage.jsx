@@ -41,7 +41,7 @@ const CartPage = () => {
             })
             .then(response => response.json())
             .then(data => window.location.href = data.url)
-            .catch(error => console.error('Error in payment:', error));
+            .catch(error => alert('Error in payment:', error));
         }
     }, [pay]);
 

@@ -4,6 +4,7 @@ import { FaUser } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import Loader from '../components/Loader';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { Navigate } from 'react-router-dom';
 
 const EditProfile = () => {
   const [side, setSide] = useState(false);
@@ -41,7 +42,6 @@ const EditProfile = () => {
 
 
     const updatedProfile = {"name":full_name, "username":username, "number":phone_number, "email":email, "billing":billing_address}
-    console.log(updatedProfile)
     fetch('https://wittynailtip.com/backend/edit-profile.php', {
       method: 'POST',
       credentials: 'include', 
@@ -54,6 +54,20 @@ const EditProfile = () => {
       .then(response => response.json())
       .then(data => {console.log(data); alert(data.message); setUpdate(false)})
       .catch(error => console.error('Error saving updates:', error));
+  }
+
+  const Logout = () =>{
+    fetch('https://wittynailtip.com/backend/logout.php', {
+      method: 'GET',
+      credentials: 'include', 
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+    })
+      .then(response => response.json())
+      .then(data => {alert(data.message); Navigate('/home')})
+      .catch(error => console.error('Error Logging Out', error));
   }
 
 
@@ -151,8 +165,8 @@ const EditProfile = () => {
                       <button className='bg-[#ffb7ce] p-2 px-3 rounded-full text-sm'>
                         Reset Password
                       </button>
-                      <button className='bg-[#ff00ff] p-2 px-3 rounded-full text-sm'>
-                        Delete Account
+                      <button className='bg-[#ff00ff] p-2 px-3 rounded-full text-sm' onClick={()=>Logout()}>
+                        Logout
                       </button>
                     </>
                   }
