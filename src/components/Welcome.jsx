@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 import HandIn from '../images/IMAGE1.webp'
 import Hand from '../images/IMAGE2.webp'
-import {FaGoogle  } from "react-icons/fa";
 import Logo from '../images/logo.webp'
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,18 +9,22 @@ import { authSchema, loginSchema } from '../constants/schema/AuthSchema';
 import {FormComp, PassFormComp} from './FormComp';
 import {submitData} from '../../src/apis/Auth';
 import { useNavigate} from 'react-router-dom'
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 
 const Welcome = () => {
     const navigate = useNavigate();
     const [message,setMessage] = useState(null)
-    const [up, setUp]= useState(true);
+    const [up, setUp]= useState(false);
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         resolver: yupResolver(up?authSchema:loginSchema),
         mode: "onChange"
     });
+    const [update, setUpdate] = useState(false)
+    
 
     const onSubmitHandler = async (data) => {
+        setUpdate(true)
         const result = await submitData(data, 'https://wittynailtip.com/backend/signup.php');
         if (result.data.success) {
             reset();
@@ -29,17 +32,22 @@ const Welcome = () => {
         } else {
             setMessage(result.data.message);
         }
+        setUpdate(false)
     };
     
     const onSignInHandler = async (data) => {
+        setUpdate(true)
         const result = await submitData(data, 'https://wittynailtip.com/backend/login.php');
-        console.log(result)
-        // if (result.data.success){
-        //     reset();
-        //     navigate('/Home');
-        // } else {
-        //     setMessage(result.data.message);
-        // }
+        if (result.data.success){
+            reset();
+            navigate('/Home', { 
+                replace: true,
+                state: { reload: true }
+            });
+        } else {
+            setMessage(result.data.message);
+        }
+        setUpdate(false)
     };
 
   return (
@@ -63,7 +71,7 @@ const Welcome = () => {
                         <p className='font-semibold text-base md:text-xl'>Please fill in your details</p>
                     </div>
 
-                    <form  className='pt-4 font-normal text-sm' onSubmit={up?handleSubmit(onSubmitHandler):handleSubmit(onSignInHandler)}> 
+                    <form  className='pt-4 font-normal text-sm' id='welcome-form' onSubmit={up?handleSubmit(onSubmitHandler):handleSubmit(onSignInHandler)}> 
                         {
                         up? 
                             <div className='space-y-2 pt-7'>
@@ -92,8 +100,9 @@ const Welcome = () => {
                             {/* #ffb7ce #cccccc #fff1f5 #ff00ff */}
                         <div className="buttons w-5/6 md:w-4/6 mx-auto mt-5 space-y-3 text-sm md:text-base ">
                             {message && <h6 className='text-red-500 tex-center tex-sm'>{message}</h6>}
-                            <button type='submit' className='uppercase rounded-3xl tracking-wider py-1 md:py-2 font-bold  bg-[#ffb7ce] w-5/6 mx-auto'>
+                            <button type='submit' className='uppercase rounded-3xl tracking-wider py-1 md:py-2 font-bold flex gap-x-2 items-center justify-center  bg-[#ffb7ce] w-5/6 mx-auto'>
                                 {up?'Sign up':'Sign in'}
+                                <AiOutlineLoading3Quarters className={`animate-spin ${update? 'block':'hidden'}`}/>
                             </button>
 
                             {/* <button 

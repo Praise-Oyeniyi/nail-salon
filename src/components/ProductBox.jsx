@@ -1,18 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { FaRegHeart, FaHeart, FaRegStar } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import {CartContextProvider} from '../context/CartContext';
 
 const ProductBox = ({ image, id, name, price, alt, info, item}) => {
     const [like, setLike] = useState(false)
-    const {addtoCart, setSaved, saved, addToSave} = useContext(CartContextProvider)
+    const {addToSave} = useContext(CartContextProvider)
+    
     
 
-    const handleLikeAndSave = (id) => {
+    const handleLikeAndSave = (item) => {
         const newLikeState = !like;
         setLike(newLikeState);
     
-        addToSave(id, newLikeState)
+        addToSave(item, newLikeState)
     };
     
 
@@ -22,7 +23,7 @@ const ProductBox = ({ image, id, name, price, alt, info, item}) => {
             <Link to={`/details/${id}`}>
                 <img src={image} alt={alt} className='min-w-full min-h-[12em] max-h-[12em] object-center object-cover md:min-h-[22em] md:max-h-[22em] flex justify-center items-center'/>
             </Link>
-            <div className='bg-[#ff00ff] p-2 text-sm md:text-base absolute top-3 right-3 w-fit rounded-full' onClick={() => handleLikeAndSave(id)}>
+            <div className='bg-[#ff00ff] p-2 text-sm md:text-base absolute top-3 right-3 w-fit rounded-full' onClick={() => handleLikeAndSave(item)}>
                 {like? <FaHeart  className="text-red-700"/>
                 :
                 <FaRegHeart color="#fff"/>
@@ -42,7 +43,9 @@ const ProductBox = ({ image, id, name, price, alt, info, item}) => {
                     <h6 className='text-xs font-normal flex-shrink-0'>(In stock)</h6>
                 </div>
                 
-                <button className='flex px-2 mt-2 w-fit rounded-2xl text-xs border border-[#ff00ff7e]' onClick={()=>addtoCart(item)}>Add to Cart</button>
+                <Link to={`/details/${id}`}>
+                    <button className='flex px-2 mt-2 w-fit rounded-2xl text-xs border border-[#ff00ff7e]'>Add to Cart</button>
+                </Link>
             </div>
         </div>
 

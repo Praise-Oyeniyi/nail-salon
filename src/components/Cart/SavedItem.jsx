@@ -6,8 +6,7 @@ import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 const SavedItem = ({image, name, price, info, color, item}) => {
     const [like, setLike] = useState(true)
-    const {data} = useContext(ProductContextProvider)
-    const {addtoCart, removedItem, total, setSum, setTotal} = useContext(CartContextProvider);
+    const {addtoCart} = useContext(CartContextProvider);
   
     return (
         <div className='w-full flex items-center gap-x-3 border-b border-b-gray-300'>

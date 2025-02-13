@@ -1,5 +1,6 @@
 import {
     createContext,
+    useCallback,
     useContext,
     useEffect,
     useState,
@@ -17,26 +18,28 @@ const CartContext = ({children}) => {
     const [cart, setCart] = useState([]);
     const [sum, setSum] = useState(0)
     const [saved, setSaved] = useState([]);
-    
-    
-    useEffect(() => {
-        fetch('https://wittynailtip.com/backend/cart.php', {
-            method: 'GET',
-            credentials: 'include',
-            headers: {
-                'Accept': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => setCart(data.data))
-        .catch(error => console.error('Error fetching cart:', error));
-    }, []);
-    
+    const [savedItems, setSavedItems] = useState([])
+
+
+    const fetchCartItems = useCallback(async () => {
+        try {
+            const response = await fetch('https://wittynailtip.com/backend/cart.php', {
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            const data = await response.json();
+            setCart(data.data || []);
+        } catch (error) {
+            console.error('Error fetching cart:', error);
+        }
+    }, [setCart]);
 
     useEffect(() => {
-        const savedItems = JSON.parse(localStorage.getItem('savedItems') || '[]');
-        setSaved(savedItems);
-    }, []);
+        fetchCartItems();
+    }, [fetchCartItems]);
+    
 
     const addCartApi = (id, amount) =>{
         const cartProd = {"product_id":id, "quantity":amount, "color":'color', size:'size'};
@@ -91,45 +94,117 @@ const CartContext = ({children}) => {
         
         addCartApi(productId, newQuantity);
     };
-    
-    const addToSave = (id, newLikeState) => {
-        const prod = {"product_id":id}
-        const savedItems = JSON.parse(localStorage.getItem('savedItems') || '[]');
-    
-        if (newLikeState) {
-            if (!savedItems.includes(id)) {
-                const updatedSavedItems = [...savedItems, id];
-                setSaved(updatedSavedItems);
-                
-                localStorage.setItem('savedItems', JSON.stringify(updatedSavedItems));
-                
-                fetch('https://wittynailtip.com/backend/add-to-fav.php', {
+
+
+    const deleteCartItem = async (cartId) => {
+        const cartDel = { "cart_id": cartId };
+        
+        try {
+            const newCart = cart.filter(item => item.cart_id !== cartId);
+            setCart(newCart);
+            
+            const response = await fetch('https://wittynailtip.com/backend/del-cart.php', {
                 method: 'POST',
-                credentials: 'include', 
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify(prod)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Added to favorites:', data);
-                })
-                .catch(error => console.error('Error adding to favorites:', error));
-                }
-        } else {
-            const updatedSavedItems = savedItems.filter(savedId => savedId !== id);
-            setSaved(updatedSavedItems);
+                body: JSON.stringify(cartDel)
+            });
             
-            localStorage.setItem('savedItems', JSON.stringify(updatedSavedItems));
+            const data = await response.json();
+            
+            if (data.success) {
+                fetchCartItems();
+                alert('Cart Item Deleted');
+            } else {
+                fetchCartItems();
+                alert('Failed to delete item. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error deleting cart item:', error);
+            // Revert optimistic update on error
+            fetchCartItems();
+            alert('Error deleting item. Please try again.');
         }
-    }
+    };
 
+
+
+
+    useEffect(() => {
+        fetchSavedItems();
+    }, []);
+
+    // Function to fetch saved items
+    const fetchSavedItems = () => {
+        fetch('https://wittynailtip.com/backend/fav.php', {
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            setSavedItems(data.data);
+        })
+        .catch(error => console.error('Error fetching saved:', error));
+    };
+
+    const addToSave = async (item, newLikeState) => {
+        if (newLikeState) {
+            // Check if item is not already saved
+            if (!savedItems.some(savedItem => savedItem.id === item.id)) {
+                const prod = { "product_id": item.id };
+
+                try {
+                    const response = await fetch('https://wittynailtip.com/backend/add-to-fav.php', {
+                        method: 'POST',
+                        credentials: 'include',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(prod)
+                    });
+                    const data = await response.json();
+                    console.log('Added to favorites:', data);
+                    
+                    // Fetch updated saved items after successful addition
+                    fetchSavedItems();
+                } catch (error) {
+                    console.error('Error adding to favorites:', error);
+                }
+            }
+        } else {
+            const itemToUnsave = savedItems.find((e) => e.id === item.id);
+            if (itemToUnsave) {
+                const itemPrep = { "fav_id": itemToUnsave.fav_id };
+
+                try {
+                    const response = await fetch('https://wittynailtip.com/backend/del-fav.php', {
+                        method: 'POST',
+                        credentials: 'include',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(itemPrep)
+                    });
+                    const data = await response.json();
+                    alert('Item deleted from favorites');
+                    fetchSavedItems();
+                } catch (error) {
+                    console.error('Error deleting fav:', error);
+                }
+            }
+        }
+    };
 
 
     return (
-        <CartContextProvider.Provider value={{cart, setCart, addtoCart, removedItem, total, sum, setSum, setTotal, saved, setSaved, addToSave }}>
+        <CartContextProvider.Provider value={{cart,addtoCart, removedItem, total, sum, setSum, setTotal, saved, setSaved, addToSave, savedItems, deleteCartItem }}>
             {children}
         </CartContextProvider.Provider>
     );

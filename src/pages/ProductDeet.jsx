@@ -5,13 +5,14 @@ import {FaRegStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { CartContextProvider } from '../context/CartContext';
 import { ProductContextProvider } from '../context/Product';
+import ProductDeetLoader from '../components/PDdetails/ProductDeetLoader';
 
 const ProductDeet = () => {
     const { productId} = useParams();
     const {data} = useContext(ProductContextProvider);
     const {cart, addtoCart, removedItem} = useContext(CartContextProvider);
-    const pdDetails = data.find((e)=> e?.id == productId);
-    const initCount = cart.filter((e)=> e.product_id === productId)
+    const pdDetails = data?.find((e)=> e?.id == productId);
+    const initCount = cart?.filter((e)=> e.product_id === productId)
     const [item, setItems] = useState(initCount[0]?.quantity || 0)
 
 
@@ -34,13 +35,14 @@ const ProductDeet = () => {
   return (
     <div className='md:mb-14 mb-10'>
         <Navbar/>
-        <div className='md:w-4/6 w-[90%] mx-auto mt-5 md:mt-0'>
-            <h6 className='text-gray-400 md:text-base text-sm font-normal  md:pl-3 pb-1 md:pb-2'>Nails/ Exclusive/ High quality/ Shop by nail type/ <span className='font-bold text-gray-900'>Cortex</span></h6>
+        { data && cart?
+            <div className='md:w-4/6 w-[90%] mx-auto mt-5 md:mt-0'>
+            {/* <h6 className='text-gray-400 md:text-base text-sm font-normal  md:pl-3 pb-1 md:pb-2'>Nails/ Exclusive/ High quality/ Shop by nail type/ <span className='font-bold text-gray-900'>Cortex</span></h6> */}
             <div className='w-full mx-auto md:space-y-5 space-y-3'>
                 <div className='w-full h-[20em] md:h-[30em] bg-[#fff1f5] rounded-lg shadow-xl shadow-gray-300 overflow-hidden'>
                     <img 
                         src={pdDetails?.images[0]}
-                        className="w-5/6 ml-auto md:w-full lg:mx-auto !h-full object-cover object-center lg:object-center" 
+                        className="w-full ml-auto md:min-w-full lg:mx-auto !h-full object-cover object-center lg:object-center" 
                         alt="full product view in product details page" 
                     />
 
@@ -55,12 +57,12 @@ const ProductDeet = () => {
                             <p className='font-medium text-sm md:text-base leading-tight'>
                                 {pdDetails?.description}
                             </p>
-                            <div className='flex cursor-pointer gap-x-1 text-[#ff00ff]'>{[1,2,3,4,5].map(()=>(<FaRegStar />))}</div>
+                            <div className='flex cursor-pointer gap-x-1 text-[#ff00ff]'>{[1,2,3,4,5].map((_, index)=>(< FaRegStar key={index}/>))}</div>
                         </div>
 
                         <div className="right w-auto md:pl-5">
                             <div className='border-b-2 border-b-gray-300 pt-3 md:pt-0 pb-3'>
-                                <h4 className='uppercase text-xl md:text-3xl font-bold'><span className='line-through'>${pdDetails?.prices[0]?.unit_amount *5}</span> /${pdDetails?.prices[0].unit_amount}</h4>
+                                <h4 className='uppercase text-xl md:text-3xl font-bold'><span className='line-through'>${pdDetails?.prices[0]?.unit_amount + (0.2*pdDetails?.prices[0]?.unit_amount)}</span> /${pdDetails?.prices[0].unit_amount}</h4>
                                 <p className='font-medium text-sm md:text-base leading-tight'>20% Discount Price on our products</p>
                             </div>
                             
@@ -69,14 +71,21 @@ const ProductDeet = () => {
                 </div>
 
                 <div className="choose-color border-b border-b-gray-300 space-y-3">
-                    <h4 className='font-bold text-lg tracking-wide '>Choose any color</h4>
-                    <div className='md:flex items-center justify-between space-y-2 md:space-y-0'>
-                        <div className='flex items-center'>
-                            {[1,2,3,4,5].map(()=>(<div className="md:w-14 w-10 h-10 md:h-14 rounded-full border bg-black border-[#ff00ff]"></div>))}
-                        </div>
+                    <h4 className='font-bold text-lg tracking-wide '>Choose color & Size</h4>
+                    <div className='md:flex items-center justify-between space-y-2 md:space-y-0 gap-x-7'>
+                        <div className='space-y-3'>
+                            <div className='flex items-center max-w-full overflow-x-auto gap-x-3'>
+                                {['black','brown','transparent'].map((e, index)=>(<button key={index} className="px-3 min-w-fit h-8 capitalize md:px-5 flex justify-center items-center rounded-xl border bg-transparent  border-[#ff00ff]">{e}</button>))}
+                            </div>
 
-                        <div className="items flex  items-center md:block gap-x-2">
-                            <div className='font-bold text-base md:text-xl bg-[#fff1f5] flex rounded-2xl items-center gap-x-8 px-5 py-2'>
+                            <div className='flex items-center max-w-full overflow-x-auto gap-x-3'>
+                                {['S','M','L', 'XL'].map((e, index)=>(<button key={index} className="px-3 min-w-fit h-8 md:px-5 flex justify-center items-center rounded-xl border bg-transparent  border-[#ff00ff]">{e}</button>))}
+                            </div>
+                        </div>
+                        
+
+                        <div className="items flex  items-center md:block gap-x-3 flex-shrink-0 pt-5 md:pt-0">
+                            <div className='font-bold text-base md:text-xl bg-[#ffeef3] flex rounded-2xl items-center gap-x-8 px-5 py-2'>
                                 <button onClick={()=>removeItem(productId)}>-</button>
                                 <h3>{item}</h3>
                                 <button onClick={()=>addToItem()}>+</button>
@@ -104,7 +113,7 @@ const ProductDeet = () => {
                         </div>
                     </div>
 
-                    <div className='w-full'>
+                    {/* <div className='w-full'>
                         <div className='flex min-w-[25%] items-center justify-center gap-x-5'>
                             {[1,2,3,4].map(()=>(
                                 <div className='w-full shadow-xl shadow-gray-300 rounded-lg bg-[#fff1f5]'>
@@ -118,7 +127,7 @@ const ProductDeet = () => {
                             ))}
                         </div>
                         
-                    </div>
+                    </div> */}
                     
                     
                     
@@ -126,6 +135,9 @@ const ProductDeet = () => {
             </div>
             
         </div>
+        :
+        <ProductDeetLoader/>
+    }
 
     </div>
   )
