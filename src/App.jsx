@@ -9,6 +9,7 @@ import CartContext from './context/CartContext';
 import Product from './context/Product';
 import EditProfile from './pages/EditProfile';
 import Saved from './pages/Saved';
+import OrdersPage from './components/Order/OrdersPage';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
             <Route
               path="order"
               element={
-                <OrderIndex/>
+                <OrdersPage/>
               }
             />
             <Route path="details/:productId" element={<ProductDeet/>} />
