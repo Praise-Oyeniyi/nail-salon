@@ -120,7 +120,7 @@ const CartContext = ({children}) => {
                 alert('Cart Item Deleted');
             } else {
                 fetchCartItems();
-                alert('Failed to delete item. Please try again.');
+                alert('Failed to delete item. Please login and try again.');
             }
         } catch (error) {
             console.error('Error deleting cart item:', error);
