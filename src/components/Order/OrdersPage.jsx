@@ -21,7 +21,6 @@ const OrdersPage = () => {
         .catch(error => console.error('Error fetching Product details:', error));
     }, []);
 
-    console.log(order)
 
   return (
     <div className=''>
