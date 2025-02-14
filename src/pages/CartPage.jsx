@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { CartContextProvider } from '../context/CartContext';
 import Navbar from '../components/Navbar'
 import CartItem from '../components/Cart/CartItem'
+import { Link } from 'react-router-dom';
 
 const CartPage = () => {
     const {cart} = useContext(CartContextProvider);
@@ -57,7 +58,6 @@ const CartPage = () => {
         .catch(error => console.error('Error clearing cart:', error));
     }
     
-
   return (
     <div className=''>
         <Navbar/>
@@ -95,10 +95,14 @@ const CartPage = () => {
                             <span>{`{${cart?.length}}`}</span>
                     </button>
                 </div>
+                :!cart?
+                (
+                    <h3 className='md:w-5/6 w-[90%] pl-[10%] flex justify-start items-center gap-x-2 italic'>You have no item in cart. Please <Link to='/'><span className='text-[#ff00ff] cursor-pointer font-semibold'>login</span></Link> and check again!</h3>
+                )
                 :
-                <div className='md:w-5/6 w-[90%] mx-auto flex items-center justify-between z-10'>
-                    <h3>Cart is empty. Start Shopping NOW!</h3>
-                </div>
+                    <div className='md:w-5/6 w-[90%] mx-auto flex items-center justify-between z-10 italic'>
+                        <h3>Cart is empty. Start Shopping NOW!</h3>
+                    </div>
             }
 
         </div>

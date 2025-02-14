@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 import SavedItem from '../components/Cart/SavedItem';
 import Loader from '../components/Loader';
 import Navbar from '../components/Navbar';
@@ -37,8 +38,8 @@ const Saved = () => {
                         <SavedItem price={e?.prices[0].unit_amount} id={e?.id} info={e?.description} name={e?.name} color={e?.color} image={e?.images[0]} item={e}/>
                     </div>
                 ))
-                    :
-                    <Loader what={"Your saved items are"}/>
+                :
+                <Loader what={"Your saved items are"}/>
                 }
             </div>
 
@@ -46,7 +47,16 @@ const Saved = () => {
         </div>
         <div className="cart-footer flex items-center w-full fixed bottom-0 h-16 bg-[#fff1f5] shadow-[0_-4px_7px_-1px_rgba(0,0,0,0.1)]">
             <div className='md:w-5/6 w-[90%] mx-auto flex items-center justify-between z-10'>
-                {savedItems?.length >0? <button className='bg-red-500 flex justify-center items-center rounded-2xl cursor-pointer px-3 py-1' onClick={()=>deleteSaved()}>Delete All Saved Items</button> : <h3>You have not saved any item</h3>}
+                {savedItems?.length >0? 
+                    <button className='bg-red-500 flex justify-center items-center rounded-2xl cursor-pointer px-3 py-1' 
+                        onClick={()=>deleteSaved()}>Delete All Saved Items</button> 
+                :!savedItems?
+                (
+                    <h3 className='flex justify-center items-center gap-x-2 italic'>You have no saved item. Please <Link to='/'><span className='text-[#ff00ff] cursor-pointer font-semibold'>login</span></Link> and check again!</h3>
+                )
+                :
+                    <h3 className='italic'>You have not saved any item</h3>
+                }
                 
             </div>
         </div>

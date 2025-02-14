@@ -1,7 +1,6 @@
 import {
     createContext,
     useCallback,
-    useContext,
     useEffect,
     useState,
 } from "react";
@@ -30,7 +29,12 @@ const CartContext = ({children}) => {
                 }
             });
             const data = await response.json();
-            setCart(data.data || []);
+            if(data.success){
+                setCart(data.data || []);
+            }else{
+                setCart(null)
+            }
+            
         } catch (error) {
             console.error('Error fetching cart:', error);
         }
@@ -58,7 +62,7 @@ const CartContext = ({children}) => {
     }
 
     const addtoCart = (item) => {
-        const existingItemIndex = cart.findIndex(cartItem => cartItem.product_id === item.product_id);
+        const existingItemIndex = cart.findIndex(cartItem => cartItem.product_id === item.product_id || cartItem.product_id ===item.id);
     
         if (existingItemIndex > -1) {
             const updatedCart = cart.map((cartItem, index) => {
@@ -68,17 +72,17 @@ const CartContext = ({children}) => {
                 return cartItem;
             });
             setCart(updatedCart);
-            addCartApi(item?.product_id, updatedCart[existingItemIndex].quantity);
+            addCartApi(item?.product_id || item.id, updatedCart[existingItemIndex].quantity);
         } else {
-            const newCartItem = { ...item, quantity: 1, product_id: item.product_id };
+            const newCartItem = { ...item, quantity: 1, product_id: item.product_id || item.id };
             setCart([...cart, newCartItem]);
-            addCartApi(item?.product_id, 1);
+            addCartApi(item?.product_id || item.id, 1);
         }
     };
 
     const removedItem = (productId) => {
         const updatedCart = cart.map((item) => {
-            if (item.product_id === productId) {
+            if (item.product_id === productId || item.id === productId) {
                 if (item.quantity > 1) {
                     return { ...item, quantity: item.quantity - 1 };
                 }
@@ -89,7 +93,7 @@ const CartContext = ({children}) => {
         
         setCart(updatedCart);
         
-        const updatedItem = updatedCart.find(item => item.product_id === productId);
+        const updatedItem = updatedCart.find(item => item.product_id === productId || item.id === productId);
         const newQuantity = updatedItem ? updatedItem.quantity : 0;
         
         addCartApi(productId, newQuantity);

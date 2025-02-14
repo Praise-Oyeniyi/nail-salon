@@ -25,6 +25,12 @@ function App() {
                 <OrdersPage/>
               }
             />
+            <Route
+              path="order/:orderInfo"
+              element={
+                <OrderIndex/>
+              }
+            />
             <Route path="details/:productId" element={<ProductDeet/>} />
             <Route path="cart" element={<CartPage/>} />
             <Route path="edit-profile" element={<EditProfile/>} />
