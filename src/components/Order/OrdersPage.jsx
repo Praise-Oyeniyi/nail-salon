@@ -21,6 +21,7 @@ const OrdersPage = () => {
         .catch(error => console.error('Error fetching Product details:', error));
     }, []);
 
+    console.log(order)
 
   return (
     <div className=''>
@@ -28,10 +29,10 @@ const OrdersPage = () => {
         <div className='md:w-5/6 w-[90%] mx-auto mt-5 md:mt-7 h-full mb-20'>
             <div className='w-full space-y-3'>
                 {order?.length <1 ? Array(5).fill(0).map((_, index) => (
-                    <OrderSkeleton  key={index}/>
+                    <OrderSkeleton key={index}/>
                 ))
                 :
-                !order?
+                order === undefined? 
                 (
                     <div className="cart-footer flex items-center min-w-full fixed left-0 bottom-0 h-16 bg-[#fff1f5] shadow-[0_-4px_7px_-1px_rgba(0,0,0,0.1)]">
                         <div className='md:w-5/6 w-[90%] mx-auto flex items-center justify-between z-10'>
@@ -41,8 +42,8 @@ const OrdersPage = () => {
                 )
                 :
                 order?.map((e, index)=>(
-                    <Link to={`/order/${e?.order_id}`}>
-                        <div key={index} >
+                    <Link to={`/order/${e.order_id}`}>
+                        <div key={index} className="mb-3">
                             <OrderItem e={e}/>
                         </div>
                     </Link>

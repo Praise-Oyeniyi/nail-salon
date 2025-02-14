@@ -4,7 +4,7 @@ import { IoBagCheckOutline } from "react-icons/io5";
 import { CiMail} from "react-icons/ci";
 import { RiMapLine } from "react-icons/ri";
 
-const OrderSide = () => {
+const OrderSide = ({user}) => {
   return (
     <div className='w-full text-sm font-medium space-y-2'>
         <div className='space-y-1 border border-gray-300 rounded-lg px-3 py-1'>
@@ -20,7 +20,7 @@ const OrderSide = () => {
             <div className='space-y-1 text-sm md:text-base'>
                 <div className="flex items-center gap-x-1">
                     <RxAvatar className='md:text-lg'/>
-                    <h6>Timmy Witty</h6>
+                    <h6>{user?.full_name}</h6>
                 </div>
 
                 <div className="flex items-center gap-x-1">
@@ -39,12 +39,12 @@ const OrderSide = () => {
             <div className='space-y-1 text-sm md:text-base'>
                 <div className="flex items-center gap-x-1">
                     <CiMail className='md:text-lg'/>
-                    <h6>timmywitty44@gmail.com</h6>
+                    <h6 className='w-5/6 truncate'>{user?.email}</h6>
                 </div>
 
                 <div className="flex items-center gap-x-1">
                     <h6 className="font-bold">Phone No:</h6>
-                    <h6>+1 (95) 456 789 123</h6>
+                    <h6>{user?.phone_number}</h6>
                 </div>
             </div>
         </div>
@@ -54,11 +54,11 @@ const OrderSide = () => {
             <div className='space-y-1 text-sm md:text-base'>
                 <div className="flex items-center gap-x-1">
                     <RxAvatar className='md:text-lg'/>
-                    <h6>Timmy Witty</h6>
+                    <h6 className='w-5/6 truncate'>{user?.full_name}</h6>
                 </div>
 
                 <div className="text-sm md:text-base">
-                    <p className='w-5/6'>1345 Subway extension Ikeja park CA 945086 United States</p>
+                    <p className='w-5/6 truncate'>{user?.billing_address}</p>
                     <h6 className='font-bold text-[#ff00ff] flex items-center gap-x-1'>
                         <span className='md:text-lg'><RiMapLine /></span>
                         View Map

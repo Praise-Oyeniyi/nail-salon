@@ -26,7 +26,7 @@ function App() {
               }
             />
             <Route
-              path="order/:orderInfo"
+              path="order/:orderId"
               element={
                 <OrderIndex/>
               }

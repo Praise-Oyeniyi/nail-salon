@@ -60,10 +60,8 @@ const EditProfile = () => {
   const Logout = () =>{
     fetch('https://wittynailtip.com/backend/logout.php', 
     {
-      method: 'GET',
       credentials: 'include', 
       headers: {
-        'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
     })

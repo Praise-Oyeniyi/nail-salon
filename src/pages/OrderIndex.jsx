@@ -1,12 +1,54 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import OrderInfo from '../components/Order/OrderInfo'
 import OrderSide from '../components/Order/OrderSide'
 import OrderSumry from '../components/Order/OrderSumry'
+import { useParams } from 'react-router-dom'
 
 
 const OrderIndex = () => {
+    const { orderId} = useParams();
     const [side, setSide] = useState(false);
+    const [orderItem, setOrderItem] = useState([])
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        fetch('https://wittynailtip.com/backend/profile.php', {
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            setUser(data.data)
+        })
+        .catch(error => {
+            console.error('Error fetching profile:', error)
+            setUser(null)
+        });
+    }, []);
+
+
+    useEffect(() => {
+        const order = {"order_id":orderId}
+        fetch('https://wittynailtip.com/backend/order-info.php', {
+            method: 'POST',
+            credentials: 'include', 
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(order)
+        })
+        .then(response => response.json())
+        .then(data => {
+          setOrderItem(data.order)
+        })
+        .catch(error => {
+          console.error('Error fetching profile:', error)
+        });
+      }, []);
 
   return (
     <div className='w-full md:flex justify-start items-start overflow-x-hidden '>
@@ -31,10 +73,10 @@ const OrderIndex = () => {
                 <div className="order-head flex justify-between items-center relative">
                     <div className='relative'>
                         <div className="id flex items-center gap-x-1 md:gap-x-3 font-bold">
-                            <h3 className='md:text-2xl text-lg'>Order ID:55432176708</h3>
-                            <h5 className='uppercase text-[#ff00ff] md:tracking-wider px-1 text-xs md:text-sm bg-[#fff1f5]'>payment Pending</h5>
+                            <h3 className='md:text-2xl text-lg'>Order ID: {orderItem.order_id}</h3>
+                            <h5 className='uppercase text-[#ff00ff] md:tracking-wider px-1 text-xs md:text-sm bg-[#fff1f5]'>{orderItem.tracking}</h5>
                         </div>
-                        <p className='font-medium md:text-sm text-xs'>{'December 8, 2024 at 9:59pm from cart orders'}</p>
+                        <p className='font-medium md:text-sm text-xs'>{orderItem.order_date}</p>
                     </div>
                     <div className="profile-image hidden lg:fixed lg:block md:right-5 w-10 h-10 md:w-12 md:h-12 bg-black rounded-full">
 
@@ -43,11 +85,11 @@ const OrderIndex = () => {
                 </div>
                 <div className="lg:w-[71%] lg:max-w-[72%] h-full block lg:flex justify-between items-start gap-x-5 space-y-2 ">
                     <div className="w-full space-y-3">
-                        <OrderInfo/>
-                        <OrderSumry/>
+                        <OrderInfo  ordered={orderItem}/>
+                        <OrderSumry ordered={orderItem} user={user}/>
                     </div>
                     <div className='lg:w-[20%] w-full lg:!max-w-[20%] lg:!h-5/6 lg:max-h-[83%] lg:fixed right-4 overflow-y-auto z-40'>
-                        <OrderSide/>
+                        <OrderSide user={user}/>
                     </div>
                 </div>
             </div>
