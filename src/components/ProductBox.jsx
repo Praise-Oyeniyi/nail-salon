@@ -24,10 +24,7 @@ const ProductBox = ({ image, id, name, price, alt, info, item}) => {
                 <img src={image} alt={alt} className='min-w-full min-h-[12em] max-h-[12em] object-center object-cover md:min-h-[22em] md:max-h-[22em] flex justify-center items-center'/>
             </Link>
             <div className='bg-[#ff00ff] p-2 text-sm md:text-base absolute top-3 right-3 w-fit rounded-full' onClick={() => handleLikeAndSave(item)}>
-                {like? <FaHeart  className="text-red-700"/>
-                :
-                <FaRegHeart color="#fff"/>
-                }
+                <FaHeart  className={`${like?'text-red-700':'text-[#fff1f5]'}`}/>
             </div>
         </div>
         <div className="pd-info font-medium py-3 pb-5 px-2 md:mt-0">

@@ -2,12 +2,19 @@ import React, { useContext, useState } from 'react'
 import { CartContextProvider } from '../../context/CartContext';
 import { ProductContextProvider } from '../../context/Product';
 import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 
 const SavedItem = ({image, name, price, info, color, item}) => {
     const [like, setLike] = useState(true)
-    const {addtoCart} = useContext(CartContextProvider);
-    console.log(item)
+    const {addToSave} = useContext(CartContextProvider);
+
+    const handleLikeAndSave = (item) => {
+        const newLikeState = !like;
+        setLike(newLikeState);
+    
+        addToSave(item, newLikeState)
+    };
   
     return (
         <div className='w-full flex items-center gap-x-3 border-b border-b-gray-300'>
@@ -25,8 +32,8 @@ const SavedItem = ({image, name, price, info, color, item}) => {
                 <div className='flex gap-x-3 items-center'>
                 <h5 className='md:text-xl text-lg font-bold'>${price}</h5>
                 <div className='font-bold text-base bg-[#fff1f5] flex rounded-2xl items-center gap-x-5 px-3 py-1'>
-                    <button onClick={()=>{}}>{like? <FaHeart  className="text-red-700"/>:<FaRegHeart color="#fff"/>}</button>
-                    <button onClick={()=>addtoCart(item)}>Add To Cart</button>
+                    <button onClick={()=>handleLikeAndSave(item)}><FaHeart  className={`${like?'text-red-700':'text-[#fff1f5]'}`}/></button>
+                    <Link to={`/details/${item.id}`}><button >Add To Cart</button></Link>            
                 </div>
                 </div>
             </div>

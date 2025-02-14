@@ -2,7 +2,6 @@ import {useState, useEffect} from 'react'
 import Sidebar from '../components/Sidebar';
 import { FaUser } from "react-icons/fa";
 import { Link } from 'react-router-dom';
-import Loader from '../components/Loader';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { Navigate } from 'react-router-dom';
 import ProfileLoader from '../components/ProfileLoader';
@@ -66,7 +65,7 @@ const EditProfile = () => {
       },
     })
       .then(response => response.json())
-      .then(data => {alert(data.message); Navigate('/home')})
+      .then(data => {alert(data.message); window.reload()})
       .catch(error => console.error('Error Logging Out', error));
   }
 

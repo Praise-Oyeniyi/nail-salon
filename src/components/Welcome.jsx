@@ -24,31 +24,39 @@ const Welcome = () => {
     
 
     const onSubmitHandler = async (data) => {
-        setUpdate(true)
-        const result = await submitData(data, 'https://wittynailtip.com/backend/signup.php');
-        if (result.data.success) {
-            reset();
-            navigate('/Home');
-        } else {
-            setMessage(result.data.message);
+        try {
+            setUpdate(true)
+            const result = await submitData(data, 'https://wittynailtip.com/backend/signup.php');
+            if (result.data.success){
+                reset();
+                window.location.href = '/Home';
+            } else {
+                setMessage(result.data.message);
+                setUpdate(false);
+            }
+        } catch (error) {
+            setMessage('An error occurred');
+            setUpdate(false);
         }
-        setUpdate(false)
     };
     
     const onSignInHandler = async (data) => {
-        setUpdate(true)
-        const result = await submitData(data, 'https://wittynailtip.com/backend/login.php');
-        if (result.data.success){
-            reset();
-            navigate('/Home', { 
-                replace: true,
-                state: { reload: true }
-            });
-        } else {
-            setMessage(result.data.message);
+        try {
+            setUpdate(true)
+            const result = await submitData(data, 'https://wittynailtip.com/backend/login.php');
+            if (result.data.success){
+                reset();
+                window.location.href = '/Home';
+            } else {
+                setMessage(result.data.message);
+                setUpdate(false);
+            }
+        } catch (error) {
+            setMessage('An error occurred');
+            setUpdate(false);
         }
-        setUpdate(false)
     };
+
 
   return (
     <div className='w-full mx-auto h-full'>
