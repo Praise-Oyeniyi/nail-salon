@@ -45,7 +45,7 @@ const ProductDeet = () => {
     }
 
   return (
-    <div className='md:mb-14 mb-10'>
+    <div className='md:mb-14 mb-10 font-jost'>
         <Navbar/>
         { data?
             <div className='md:w-4/6 w-[90%] mx-auto mt-5 md:mt-0'>

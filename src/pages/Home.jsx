@@ -9,7 +9,7 @@ const Home = () => {
 
 
   return (
-    <div>
+    <div className='font-jost'>
         <div>
           <Navbar/>
           <div>

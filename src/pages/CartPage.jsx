@@ -59,7 +59,7 @@ const CartPage = () => {
     }
     
   return (
-    <div className=''>
+    <div className='font-jost'>
         <Navbar/>
         <div className='md:w-5/6 w-[90%] mx-auto mt-5 md:mt-7 h-full mb-20'>
             <div className='w-full'>

@@ -71,7 +71,7 @@ const EditProfile = () => {
 
 
   return (
-    <div className='w-full md:flex justify-start items-start overflow-x-hidden '>
+    <div className='w-full md:flex justify-start items-start overflow-x-hidden font-jost'>
       <div className='px-3 h-14 flex justify-between items-center lg:hidden'>
           <div className='cursor-pointer p-2' onClick={()=>setSide(!side)}>
               <div className='w-5 h-1 bg-black mb-[2px]'></div>

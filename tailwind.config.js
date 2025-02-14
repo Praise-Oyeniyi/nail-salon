@@ -8,7 +8,11 @@ module.exports = {
   plugins: [require("tw-elements/plugin.cjs")],
   darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'jost': ['Jost', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }
