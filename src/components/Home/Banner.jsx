@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import BannerImage from '../images/IMAGE3.webp'
 import BannerImage1 from '../../images/1.webp'
 import BannerImage2 from '../../images/2.webp'
 import BannerImage3 from '../../images/3.webp'

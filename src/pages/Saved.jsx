@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { fetchApi } from '../apis/Index';
 import SavedItem from '../components/Cart/SavedItem';
 import Loader from '../components/Loader';
 import Navbar from '../components/Navbar';
@@ -15,16 +16,18 @@ const Saved = () => {
       }
   }, [savedItems])
     
-    const deleteSaved = ()=> {
-        fetch('https://wittynailtip.com/backend/empty-fav.php', {
-          credentials: 'include',
-          headers: {
-            'Accept': 'application/json'
-          }
-        })
-        .then(response => response.json())
-        .then(data => {console.log(data); window.location.reload()})
-        .catch(error => console.error('Error Deleting saved:', error));
+    const deleteSaved = async ()=> {
+        const deleteSavedApi = 'https://wittynailtip.com/backend/empty-fav.php';
+        try {
+            const result = await fetchApi(deleteSavedApi)
+            if (result.data.success){
+                window.location.reload()
+            } else {
+                console.log(result.data.message);
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
   return (

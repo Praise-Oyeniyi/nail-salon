@@ -4,6 +4,7 @@ import {FaRegStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { CartContextProvider } from '../context/CartContext';
 import ProductDeetLoader from '../components/PDdetails/ProductDeetLoader';
+import { sendApi } from '../apis/Index';
 
 const ProductDeet = () => {
     const { productId} = useParams();
@@ -12,18 +13,21 @@ const ProductDeet = () => {
     const [item, setItems] = useState(data?.quantity || 0)
 
     useEffect(() => {
-        fetch('https://wittynailtip.com/backend/product-info.php', {
-            credentials: 'include',
-            method:"POST",
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({"product_id":productId})
-        })
-        .then(response => response.json())
-        .then(data => setData(data.data))
-        .catch(error => console.error('Error fetching Product details:', error));
+        const prodApi = 'https://wittynailtip.com/backend/product-info.php'
+        const prodId = {"product_id":productId};
+        async function fetchData(){
+            try {
+                const result = await sendApi(prodId, prodApi)
+                if (result.data.success){
+                    setData(result.data.data)
+                } else {
+                    console.log(result.data.message);
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchData();
     }, []);
 
 

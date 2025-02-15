@@ -3,8 +3,8 @@ import Sidebar from '../components/Sidebar';
 import { FaUser } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { Navigate } from 'react-router-dom';
 import ProfileLoader from '../components/ProfileLoader';
+import { fetchApi, sendApi } from '../apis/Index';
 
 const EditProfile = () => {
   const [side, setSide] = useState(false);
@@ -14,24 +14,29 @@ const EditProfile = () => {
   const [update, setUpdate] = useState(false)
 
   useEffect(() => {
-    fetch('https://wittynailtip.com/backend/profile.php', {
-        credentials: 'include',
-        headers: {
-            'Accept': 'application/json'
+    const profileApi = 'https://wittynailtip.com/backend/del-cart.php'
+    async function fetchData(){
+          try {
+            const result = await fetchApi(profileApi)
+            if (result.data.success){
+                console.log(result.data.message)             
+                setUser(result.data.data)
+                setLoad(true); 
+            } else {
+                console.log(result.data.message);
+                setUser(null)
+                setLoad(true); 
+            }
+        } catch (error) {
+            console.log(error)
         }
-    })
-    .then(response => response.json())
-    .then(data => {
-      setUser(data.data)
-      setLoad(true); 
-    })
-    .catch(error => {
-      console.error('Error fetching profile:', error)
-      setUser(null)
-    });
+    }
+    fetchData();
   }, []);
 
-  const UpdateProfile = (e) =>{
+  console.log(user)
+
+  const UpdateProfile = async (e) =>{
     setUpdate(true)
     e.preventDefault()
     const full_name = e.target.name.value;
@@ -42,31 +47,33 @@ const EditProfile = () => {
 
 
     const updatedProfile = {"name":full_name, "username":username, "number":phone_number, "email":email, "billing":billing_address}
-    fetch('https://wittynailtip.com/backend/edit-profile.php', {
-      method: 'POST',
-      credentials: 'include', 
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(updatedProfile)
-    })
-      .then(response => response.json())
-      .then(data => {console.log(data); alert(data.message); setUpdate(false)})
-      .catch(error => console.error('Error saving updates:', error));
+    const updateProfileApi = 'https://wittynailtip.com/backend/edit-profile.php'
+      try {
+          const result = await sendApi(updatedProfile, updateProfileApi)
+          if (result.data.success){
+            setUpdate(false)
+          } else {
+              console.log(result.data.message);
+          }
+      } catch (error) {
+          console.log(error)
+      }
   }
 
-  const Logout = () =>{
-    fetch('https://wittynailtip.com/backend/logout.php', 
-    {
-      credentials: 'include', 
-      headers: {
-        'Accept': 'application/json'
-      },
-    })
-      .then(response => response.json())
-      .then(data => {alert(data.message); window.reload()})
-      .catch(error => console.error('Error Logging Out', error));
+  const Logout = async () =>{
+    const logoutApi = 'https://wittynailtip.com/backend/logout.php'
+        try {
+            const result = await fetchApi(logoutApi)
+            if (result.data.success){
+                console.log(result.data.message)
+                window.location.reload();
+            } else {
+                // alert('Failed to fetch saved items. Please login and try again.');
+                console.log(result.data.message);
+            }
+        } catch (error) {
+            console.log(error)
+        }
   }
 
 

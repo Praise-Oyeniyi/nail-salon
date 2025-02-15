@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { FaRegHeart, FaHeart, FaRegStar } from "react-icons/fa";
+import { FaHeart, FaRegStar } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import {CartContextProvider} from '../context/CartContext';
 

@@ -9,43 +9,24 @@ import { IoClose } from "react-icons/io5";
 
 const CartItem = ({image, count, name, price, info, color, id, cartId}) => {
   const {data} = useContext(ProductContextProvider)
-  const {addtoCart, removedItem, total, setTotal, deleteCartItem} = useContext(CartContextProvider);
+  const {addtoCart, removedItem,deleteCartItem} = useContext(CartContextProvider);
 
   const addToItem = () => {
     const cartAdd = data.filter((e)=>e?.id === id);
-    console.log(...cartAdd)
     addtoCart(...cartAdd)   
-    
   }
 
   const removeItem = (itemId) => {
     removedItem(itemId)
   }
 
- 
-  const updateTotal = (e) => {
-    if (e.target.checked) {
-      // Checkbox is checked, add the item's total to the list
-      setTotal([...total, price * count]);
-      // setSum(total.reduce((a, b) => a + b, 0))
-    } else {
-      // Checkbox is unchecked, remove the item's total from the list
-      const itemTotal = price * count;
-      const index = total.indexOf(itemTotal);
-      if (index > -1) {
-        total.splice(index, 1);
-        setTotal([...total])
-      }
-      // setSum(total.reduce((a, b) => a + b, 0))
 
-    }
-  }
 
   return (
     <div className='w-full flex items-center gap-x-3 border-b border-b-gray-300 relative'>
       <input type="checkbox" 
           className='accent-[#ff00ff] w-4 h-4 md:h-5 md:w-5 !outline-none border !border-[#ff00ff]'
-          name="cart-select" id="cart-select" onChange={(e)=>updateTotal(e)}
+          name="cart-select" id="cart-select" onChange={(e)=>{}}
       />
                     
       <div className='md:py-3 py-2'>

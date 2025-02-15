@@ -3,25 +3,25 @@ import { CartContextProvider } from '../context/CartContext';
 import Navbar from '../components/Navbar'
 import CartItem from '../components/Cart/CartItem'
 import { Link } from 'react-router-dom';
+import { fetchApi, sendApi } from '../apis/Index';
 
 const CartPage = () => {
     const {cart} = useContext(CartContextProvider);
     const [pay, setPay] = useState(false);
 
-    const payOrder = () => {
+    const payOrder = async () => {
         const payPend = {"pay":"pay"}
-        fetch('https://wittynailtip.com/backend/pend-order.php', {
-            credentials: 'include',
-            method:"POST",
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(payPend)
-        })
-        .then(response => response.json())
-        .then(data => {setPay(true)})
-        .catch(error => console.error('Error in pend order:', error));
+        const payApi = 'https://wittynailtip.com/backend/add-to-cart.php'
+        try {
+            const result = await sendApi(payPend, payApi)
+            if (result.data.success){
+                setPay(true)
+            } else {
+                console.log(result.data.message);
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
     
     
@@ -32,30 +32,36 @@ const CartPage = () => {
 
 
     useEffect(() => {
+        const stripePay = 'https://wittynailtip.com/backend/pay-api.php';
         if(pay){
-            fetch('https://wittynailtip.com/backend/pay-api.php', {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Accept': 'application/json'
+            async function fetchData(){
+                try {
+                    const result = await fetchApi(stripePay)
+                    if (result.data.success){
+                        window.location.href = result.data.url
+                    } else {
+                        console.log(result.data.message);
+                    }
+                } catch (error) {
+                    console.log(error)
                 }
-            })
-            .then(response => response.json())
-            .then(data => window.location.href = data.url)
-            .catch(error => alert('Error in payment:', error));
+            }
+            fetchData();
         }
     }, [pay]);
 
-    const emptyCart = () =>{
-        fetch('https://wittynailtip.com/backend/empty-cart.php', {
-          credentials: 'include',
-          headers: {
-            'Accept': 'application/json'
-          }
-        })
-        .then(response => response.json())
-        .then(data => {console.log(data); window.location.reload()})
-        .catch(error => console.error('Error clearing cart:', error));
+    const emptyCart = async () =>{
+        const emptyCart = 'https://wittynailtip.com/backend/empty-cart.php';
+        try {
+            const result = await fetchApi(emptyCart)
+            if (result.data.success){
+                window.location.reload()
+            } else {
+                console.log(result.data.message);
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
     
   return (

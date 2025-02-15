@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { CartContextProvider } from '../../context/CartContext';
-import { ProductContextProvider } from '../../context/Product';
-import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 
 

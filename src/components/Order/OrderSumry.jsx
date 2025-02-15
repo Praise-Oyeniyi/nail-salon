@@ -69,13 +69,15 @@ const OrderSumry = ({ordered, user}) => {
                     
             </div>
 
-            <div className='md:h-10 font-medium md:text-sm text-xs flex justify-between items-center w-full md:px-5 px-2 bg-[#ffb7ce46] '>
-                <p className='w-3/6 md:w-auto'>Review your order at glance in our order summary page</p>
-                <div className='flex items-center md:gap-x-2 gap-x-1 text-xs my-2 md:my-0'>
-                    <button className='md:px-2 border md:border-2 border-gray-700 rounded-xl py-1 '>Send Invoice</button>
-                    <button className='md:px-2 bg-[#ff00ff] rounded-xl py-1 text-gray-100 '>Confirm Payment</button>
+            {!ordered.tracking === "paid" &&
+                <div className='md:h-10 font-medium md:text-sm text-xs flex justify-between items-center w-full md:px-5 px-2 bg-[#ffb7ce46] '>
+                    <p className='w-3/6 md:w-auto'>Review your order at glance in our order summary page</p>
+                    <div className='flex items-center md:gap-x-2 gap-x-1 text-xs my-2 md:my-0'>
+                        <button className='md:px-2 border md:border-2 border-gray-700 rounded-xl py-1 '>Send Invoice</button>
+                        <button className='md:px-2 bg-[#ff00ff] rounded-xl py-1 text-gray-100 '>Confirm Payment</button>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
 
         <div className="timeline border-2 border-gray-300 rounded-md md:px-5 px-3 md:py-3 py-2">

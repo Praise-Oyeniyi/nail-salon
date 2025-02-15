@@ -4,6 +4,7 @@ import OrderInfo from '../components/Order/OrderInfo'
 import OrderSide from '../components/Order/OrderSide'
 import OrderSumry from '../components/Order/OrderSumry'
 import { useParams } from 'react-router-dom'
+import { fetchApi, sendApi } from '../apis/Index'
 
 
 const OrderIndex = () => {
@@ -13,41 +14,40 @@ const OrderIndex = () => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        fetch('https://wittynailtip.com/backend/profile.php', {
-            credentials: 'include',
-            headers: {
-                'Accept': 'application/json'
+        const profileApi = 'https://wittynailtip.com/backend/profile.php';
+        async function fetchData(){
+            try {
+                const result = await fetchApi(profileApi)
+                if (result.data.success){
+                    setUser(result.data.data)
+                } else {
+                    console.log(result.data.message);
+                }
+            } catch (error) {
+                console.log(error)
             }
-        })
-        .then(response => response.json())
-        .then(data => {
-            setUser(data.data)
-        })
-        .catch(error => {
-            console.error('Error fetching profile:', error)
-            setUser(null)
-        });
-    }, []);
+        }
+        fetchData();
+        }, []);
 
 
     useEffect(() => {
         const order = {"order_id":orderId}
-        fetch('https://wittynailtip.com/backend/order-info.php', {
-            method: 'POST',
-            credentials: 'include', 
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(order)
-        })
-        .then(response => response.json())
-        .then(data => {
-          setOrderItem(data.order)
-        })
-        .catch(error => {
-          console.error('Error fetching profile:', error)
-        });
+        const orderApi = 'https://wittynailtip.com/backend/order-info.php'
+        async function fetchData(){
+            try {
+                const result = await sendApi(order, orderApi)
+                if (result.data.success){
+                    setOrderItem(result.data.order)
+                } else {
+                    // please login to add to cart
+                    console.log(result.data.message);
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchData();
       }, []);
 
   return (
