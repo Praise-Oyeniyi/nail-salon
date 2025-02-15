@@ -14,12 +14,11 @@ const EditProfile = () => {
   const [update, setUpdate] = useState(false)
 
   useEffect(() => {
-    const profileApi = 'https://wittynailtip.com/backend/del-cart.php'
+    const profileApi = 'https://wittynailtip.com/backend/profile.php'
     async function fetchData(){
           try {
             const result = await fetchApi(profileApi)
-            if (result.data.success){
-                console.log(result.data.message)             
+            if (result.data.status){        
                 setUser(result.data.data)
                 setLoad(true); 
             } else {
@@ -34,16 +33,15 @@ const EditProfile = () => {
     fetchData();
   }, []);
 
-  console.log(user)
 
   const UpdateProfile = async (e) =>{
     setUpdate(true)
     e.preventDefault()
-    const full_name = e.target.name.value;
+    const full_name = e.target.name.value || user?.username;
     const username = user?.username;
-    const phone_number = e.target.phone.value;
+    const phone_number = e.target.phone.value || user?.phone_number;
     const email = user?.email;
-    const billing_address = e.target.address.value;
+    const billing_address = e.target.address.value || user?.billing_address;
 
 
     const updatedProfile = {"name":full_name, "username":username, "number":phone_number, "email":email, "billing":billing_address}

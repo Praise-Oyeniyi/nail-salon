@@ -15,7 +15,6 @@ const Product = ({children}) => {
         const result = await fetchApi(productApi)
         if (result.success){
           setData(result.data.data)
-          console.log(result.data.data)
         } else {
             console.log(result.data.message);
         }
