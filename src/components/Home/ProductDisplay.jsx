@@ -9,10 +9,10 @@ const ProductDisplay = ({data, productName}) => {
         setRangeValue(e.target.value);
     };
 
-    const filteredData = data.filter(product => 
+    const filteredData = data ? data.filter(product => 
         (rangeValue === 0 || rangeValue === "0" || product.prices[0].unit_amount <= rangeValue) &&
         (productName === "" || product.name.toLowerCase().includes(productName.toLowerCase()))
-    );
+    ) : [];
 
     return (
         <div className='mb-14 w-full'>

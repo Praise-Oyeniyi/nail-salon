@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Logo from "../images/logo.webp";
 
 // #ffb7ce #cccccc #fff1f5 #ff00ff
-const Sidebar = ({ open, setSide, setProductName }) => {
+const Sidebar = ({ open, setSide, setProductName, noSearch=false, }) => {
   const handleSearchChange = (e) => {
     setProductName(e.target.value);
   };
@@ -22,7 +22,7 @@ const Sidebar = ({ open, setSide, setProductName }) => {
       lg:px-10 px-7 lg:py-7 py-3  bg-[#ffb7ce] lg:bg-[#fff1f5]">
         <div className="sidebar-header flex items-center gap-x-3">
           <div className="logo h-12 w-12 bg-black rounded-full overflow-hidden">
-            <Link to="/home">
+            <Link to="/">
               <img src={Logo} alt="" className="w-full" />
             </Link>
           </div>
@@ -37,7 +37,7 @@ const Sidebar = ({ open, setSide, setProductName }) => {
         </div>
         <ul className="space-y-7 font-normal cursor-pointer !z-[999]">
           <li className="">
-            <Link className="flex gap-x-1 items-center" to="/home">
+            <Link className="flex gap-x-1 items-center" to="/">
               Home
             </Link>
           </li>
@@ -69,6 +69,7 @@ const Sidebar = ({ open, setSide, setProductName }) => {
               Account
             </Link>
           </li>
+          {!noSearch && 
           <li className="relative bg-[#fff1f5] lg:bg-[#ffb7ce] rounded-2xl py-1 px-2">
             <input
               type="text"
@@ -79,7 +80,7 @@ const Sidebar = ({ open, setSide, setProductName }) => {
             <span className="absolute top-[50%] right-2 -translate-y-[50%]  text-gray-700">
               <CiSearch onClick={() => setSide(false)}/>
             </span>
-          </li>
+          </li>}
         </ul>
       </div>
     </div>

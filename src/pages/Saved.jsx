@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 import { fetchApi } from '../apis/Index';
 import SavedItem from '../components/Cart/SavedItem';
 import Loader from '../components/Loader';

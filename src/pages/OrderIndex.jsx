@@ -5,7 +5,7 @@ import OrderSide from '../components/Order/OrderSide'
 import OrderSumry from '../components/Order/OrderSumry'
 import { useParams } from 'react-router-dom'
 import { fetchApi, sendApi } from '../apis/Index'
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { ToastContainer } from 'react-toastify'
 
 
