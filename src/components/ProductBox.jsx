@@ -38,13 +38,14 @@ const ProductBox = ({ image, id, name, price, alt, info, item}) => {
                 </div>
                 
                 <p className='text-xs md:text-base truncate font-normal'>{info}</p>
-                <div className='ratings flex items-center gap-x-2 pt-1'>
+                {/* <div className='ratings flex items-center gap-x-2 pt-1'>
                     <div className='flex cursor-pointer gap-x-1 text-[#ff00ff] text-xs md:text-base truncate'>{[1,2,3,4,5].map((e,index)=>(<FaRegStar key={index}/>))}</div>
                     <h6 className='text-xs font-normal flex-shrink-0'>(In stock)</h6>
-                </div>
+                </div> */}
                 
                 <Link to={`/details/${id}`}>
-                    <button className='flex px-2 py-1 md:px-3 mt-2 w-fit rounded-2xl text-xs border border-[#ff00ff7e]'>Add to Cart</button>
+                    <button className='flex px-2 py-1 md:px-3 mt-2 font-normal
+                    w-fit rounded-2xl text-xs border border-[#ff00ff7e]'>Add to Cart</button>
                 </Link>
             </div>
         </div>

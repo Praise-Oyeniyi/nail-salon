@@ -61,7 +61,8 @@ function App() {
             <Route path="cart" element={<CartPage/>} />
             <Route path="edit-profile" element={<EditProfile/>} />
             <Route path="saved" element={<Saved/>} />
-          </Routes>
+            <Route path="*" element={<div>Page Not found</div>} />
+            </Routes>
 
         </BrowserRouter>
       </CartContext>

@@ -102,7 +102,8 @@ const EditProfile = () => {
           :
           user ===null || user === undefined || user?.status === 'error'?
             <div className='flex items-center justify-center h-screen w-full'>
-              {load && <h3 className='flex justify-start items-center gap-x-2 italic'>You are not logged in. Please <Link to='/'><span className='text-[#ff00ff] cursor-pointer font-semibold'>login</span></Link> to view your profile</h3>}
+              {load && <h3 className='flex justify-start items-center gap-x-2 italic'>You are not logged in. Please 
+                <Link to='/auth'><span className='text-[#ff00ff] cursor-pointer font-semibold'>login</span></Link> to view your profile</h3>}
             </div>
             :
           <div className="profile-inner space-y-3">

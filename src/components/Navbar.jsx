@@ -53,7 +53,7 @@ const Navbar = () => {
         <div className='w-full h-14 hidden md:flex items-center max-md:px-10 mt-3 mb-5'>
             <div className="top-header w-3/6">
                 <div className="logo h-12 w-12 bg-black rounded-full overflow-hidden">
-                    <Link to="/home"><img src={Logo} alt="" className='w-full'/></Link>
+                    <Link to="/"><img src={Logo} alt="" className='w-full'/></Link>
                 </div>
                 
             </div>

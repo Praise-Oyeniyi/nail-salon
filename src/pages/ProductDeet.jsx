@@ -55,7 +55,8 @@ const ProductDeet = () => {
             <div className='md:w-4/6 w-[90%] mx-auto mt-5 md:mt-0'>
             {/* <h6 className='text-gray-400 md:text-base text-sm font-normal  md:pl-3 pb-1 md:pb-2'>Nails/ Exclusive/ High quality/ Shop by nail type/ <span className='font-bold text-gray-900'>Cortex</span></h6> */}
             <div className='w-full mx-auto md:space-y-5 space-y-3'>
-                <div className='w-full h-[20em] md:h-[30em] bg-[#fff1f5] rounded-lg shadow-xl shadow-gray-300 overflow-hidden'>
+                <div className='w-full h-[20em] md:h-[30em] bg-[#fff1f5] rounded-lg 
+                shadow-xl shadow-gray-300 overflow-hidden'>
                     <img 
                         src={data?.images[0]}
                         className="w-full ml-auto md:min-w-full lg:mx-auto !h-full object-cover object-center lg:object-center" 
@@ -120,12 +121,20 @@ const ProductDeet = () => {
                     <div className="pd-perks md:w-3/6">
                         <div className='py-3 border-b-2 border-b-gray-300'>
                             <h5 className='font-bold md:text-lg text-base leading-tight'>Free Delivery</h5>
-                            <p className='text-gray-400 text-sm md:text-base font-medium underline'>Enter your postal code for delivery Availability</p>
+
+                            <div className='flex items-center gap-x-3'>
+                                <p className='text-gray-400 text-sm md:text-base font-medium underline'>Enter your postal code for delivery Availability</p>
+                                <p className="text-[#ff00ff]">Coming soon</p>
+                            </div>                            
                         </div>
 
                         <div className='py-3'>
                             <h5 className='font-bold md:text-lg text-base leading-tight'>Return Delivery</h5>
-                            <p className='text-gray-400  text-sm md:text-base font-medium underline'>Free 30Days Delivery Returns <span className='text-gray-900 cursor-pointer'>Details</span></p>
+
+                            <div className='flex items-center gap-x-3'>
+                                <p className='text-gray-400  text-sm md:text-base font-medium underline'>Free 30Days Delivery Returns <span className='text-gray-900 cursor-pointer'>Details</span></p>
+                                <p className='text-[#ff00ff]'>Coming soon</p>
+                            </div>
                         </div>
                     </div>
 

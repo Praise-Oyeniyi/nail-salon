@@ -10,12 +10,7 @@ const ProductDisplay = ({data}) => {
     <div className='mb-14 w-full'>
         <div className='w-full'>
             <div className="fiter w-full hidden md:block">
-                <ul className='flex w-full items-center md:text-sm text-xs gap-x-2 md:gap-x-5 cursor-pointer'>
-                    {['Nails Type','Price','Reviews','Colors'].map((e, index)=>(
-                        <li className='filter-bg px-3 rounded-2xl flex items-center gap-x-2' key={index}>{e}
-                        <span><FaAngleDown /></span></li>
-                    ))}
-                </ul>
+                
             </div>
 
             <div className="products md:mt-10 mt-7 md:space-y-5 space-y-3 w-full">

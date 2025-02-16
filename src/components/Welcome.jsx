@@ -17,6 +17,7 @@ const Welcome = () => {
     const navigate = useNavigate();
     const [message,setMessage] = useState(null)
     const [up, setUp]= useState(true);
+    const [loading, setIsLoading]= useState(false);
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         resolver: yupResolver(up?authSchema:loginSchema),
         mode: "onChange"
@@ -26,12 +27,13 @@ const Welcome = () => {
 
     const onSubmitHandler = async (data) => {
         try {
-            setUpdate(true)
+            setUpdate(true);
+            setIsLoading(true);
             const result = await submitData(data, 'https://wittynailtip.com/backend/signup.php');
             if (result.data.success){
                 toast.success(result.data.message);
                 reset();
-                window.location.href = '/Home';
+                setUp(false);
             } else {
                 toast.error(result.data.message);
                 setMessage(result.data.message);
@@ -41,16 +43,20 @@ const Welcome = () => {
             setMessage('An error occurred');
             setUpdate(false);
         }
+        finally{    
+            setIsLoading(false);
+        }
     };
     
     const onSignInHandler = async (data) => {
         try {
+            setIsLoading(true);
             setUpdate(true)
             const result = await submitData(data, 'https://wittynailtip.com/backend/login.php');
             if (result.data.success){
                 toast.success(result.data.message);
                 reset();
-                window.location.href = '/Home';  
+                window.location.href = '/';  
             } else {
                 toast.error(result.data.message);
                 setMessage(result.data.message);
@@ -59,6 +65,9 @@ const Welcome = () => {
         } catch (error) {
             setMessage('An error occurred');
             setUpdate(false);
+        }
+        finally{    
+            setIsLoading(false);
         }
     };
 
@@ -117,7 +126,9 @@ const Welcome = () => {
                             <button type='submit' className='uppercase rounded-3xl tracking-wider py-1 
                             md:py-2 font-medium flex gap-x-2 items-center justify-center  bg-[#ffb7ce] w-5/6 mx-auto'>
                                 {up?'Sign up':'Sign in'}
-                                <AiOutlineLoading3Quarters className={`animate-spin ${update? 'block':'hidden'}`}/>
+                                {loading &&
+                                    <AiOutlineLoading3Quarters className={`animate-spin ${update? 'block':'hidden'}`}/>
+                                }
                             </button>
 
                             {/* <button 

@@ -3,7 +3,7 @@ import { ProductContextProvider } from '../context/Product'
 import Navbar from '../components/Navbar'
 import Banner from '../components/Home/Banner'
 import ProductDisplay from '../components/Home/ProductDisplay'
-import Footer from '../components/Footer'
+import FooterSection from '../components/Footer'
 
 const Home = () => {
   const {data} = useContext(ProductContextProvider)
@@ -23,8 +23,8 @@ const Home = () => {
               <ProductDisplay data={data}/>
             </div>
           </div>
-          <Footer />
         </div>
+        <FooterSection />
     </div>
   )
 }
