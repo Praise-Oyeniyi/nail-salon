@@ -43,8 +43,8 @@ function App() {
         <ToastContainer position="bottom-center" autoClose={3000} />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<SignUp/>} />
-            <Route path="Home" element={<Home/>} />
+            <Route path="/" element={<Home/>} />
+            <Route path="auth" element={<SignUp/>} />
             <Route
               path="order"
               element={
