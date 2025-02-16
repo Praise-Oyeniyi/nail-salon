@@ -21,7 +21,7 @@ const Home = () => {
             <div 
             id='products-section'
             className='max-w-[90%] w-[90%] overflow-x-hidden mx-auto mt-5'>
-              <ProductDisplay data={data} name={name}/>
+              <ProductDisplay data={data} productName={name}/>
             </div>
           </div>
         </div>

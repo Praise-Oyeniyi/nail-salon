@@ -2,17 +2,17 @@ import React from 'react'
 import ProductBox from '../ProductBox'
 import ProductLoader from './ProductLoader';
 
-const ProductDisplay = ({data, name}) => {
+const ProductDisplay = ({data, productName}) => {
     const [rangeValue, setRangeValue] = React.useState(0);
 
     const handleRangeChange = (e) => {
         setRangeValue(e.target.value);
     };
 
-    const filteredData = (rangeValue === 0 || rangeValue === "0") ? 
-    data : data.filter(product => product.prices[0].unit_amount <= rangeValue);
-
-    console.log(name)
+    const filteredData = data.filter(product => 
+        (rangeValue === 0 || rangeValue === "0" || product.prices[0].unit_amount <= rangeValue) &&
+        (productName === "" || product.name.toLowerCase().includes(productName.toLowerCase()))
+    );
 
     return (
         <div className='mb-14 w-full'>
