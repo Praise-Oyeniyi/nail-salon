@@ -5,10 +5,12 @@ import CartItem from '../components/Cart/CartItem'
 import { Link } from 'react-router-dom';
 import { fetchApi, sendApi } from '../apis/Index';
 import { toast } from 'react-hot-toast';
+import { RiLoader4Fill } from 'react-icons/ri';
 
 const CartPage = () => {
     const {cart, cartError} = useContext(CartContextProvider);
     const [pay, setPay] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (cartError) {
@@ -18,8 +20,9 @@ const CartPage = () => {
 
     const payOrder = async () => {
         const payPend = {"pay":"pay"}
-        const payApi = 'https://wittynailtip.com/backend/add-to-cart.php'
+        const payApi = 'https://wittynailtip.com/backend/pend-order.php'
         try {
+            setIsLoading(true)
             const result = await sendApi(payPend, payApi)
             if (result.data.success){
                 setPay(true)
@@ -28,6 +31,8 @@ const CartPage = () => {
             }
         } catch (error) {
             console.log(error)
+        } finally {
+            setIsLoading(false)
         }
     }
     
@@ -43,6 +48,7 @@ const CartPage = () => {
         if(pay){
             async function fetchData(){
                 try {
+                    setIsLoading(true)
                     const result = await fetchApi(stripePay)
                     if (result.data.success){
                         window.location.href = result.data.url
@@ -51,6 +57,8 @@ const CartPage = () => {
                     }
                 } catch (error) {
                     console.log(error)
+                } finally {
+                    setIsLoading(false)
                 }
             }
             fetchData();
@@ -104,8 +112,15 @@ const CartPage = () => {
 
                     <button 
                         onClick={()=>payOrder()} 
-                        className='md:text-lg text-sm uppercase cursor-pointer text-white tracking-wide font-bold px-3 py-1 rounded-2xl bg-[#ff00ff]'>
-                            Make Payment 
+                        className='md:text-lg text-sm uppercase cursor-pointer 
+                        flex items-center justify-center text-center
+                        text-white tracking-wide font-bold px-3 py-1 rounded-2xl bg-[#ff00ff]'>
+                           {isLoading ? 
+                            <>
+                            Processing...
+                            <RiLoader4Fill className='animate-spin' />
+                            </> :
+                            'Make Payment'}
                             <span>{`{${cart?.length}}`}</span>
                     </button>
                 </div>
