@@ -6,7 +6,7 @@ import Sidebar from './Sidebar';
 import Logo from '../images/logo.webp'
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({setProductName}) => {
     const [side, setSide] = useState(false);
     const [city, setCity] = useState(null)
     const [error, setError] = useState(null)
@@ -48,6 +48,10 @@ const Navbar = () => {
       }, []);
 
 
+  const handleSearchChange = (e) => {
+    setProductName(e.target.value);
+  };
+
   return (
     <div className='w-full relative md:w-[90%] mx-auto'>
         <div className='w-full h-14 hidden md:flex items-center max-md:px-10 mt-3 mb-5'>
@@ -66,7 +70,7 @@ const Navbar = () => {
                     <li className='relative bg-[#fff1f5] rounded-2xl py-1 px-5'>
                         <input type="text" placeholder='search product'  
                         className='w-full bg-transparent placeholder:text-sm
-                         text-sm outline-none accent-gray-700 font-light'/>
+                         text-sm outline-none accent-gray-700 font-light' onChange={handleSearchChange}/>
                         <span className='absolute top-[50%] right-2 -translate-y-[50%]  text-gray-700'><CiSearch /></span>
                     </li>
                     <li><Link className='flex gap-x-1 items-center' to='/order'>My Orders</Link></li>     
@@ -97,7 +101,9 @@ const Navbar = () => {
                                 <div className='w-5 h-1 bg-black ml-2'></div>
                             </li>
                             <li className='relative bg-[#fff1f5] rounded-2xl py-1 px-2 hidden md:block'>
-                                <input type="text" placeholder='search product'  className='w-full bg-transparent text-sm outline-none accent-gray-700'/>
+                                <input type="text" placeholder='search product'  
+                                className='w-full bg-transparent text-sm outline-none accent-gray-700'
+                                 onChange={handleSearchChange}/>
                                 <span className='absolute top-[50%] right-2 -translate-y-[50%]  text-gray-700'><CiSearch /></span>
                             </li>
                         
@@ -109,7 +115,10 @@ const Navbar = () => {
                     </div>
                 </div> 
                 <div className={`absolute !z-[99999]`}>
-                    <Sidebar open={side}/>
+                    <Sidebar 
+                    open={side} 
+                    setSide={setSide} 
+                    setProductName={setProductName}/>
                 </div>
                 
             </div>

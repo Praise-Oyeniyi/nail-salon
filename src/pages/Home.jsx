@@ -6,13 +6,14 @@ import ProductDisplay from '../components/Home/ProductDisplay'
 import FooterSection from '../components/Footer'
 
 const Home = () => {
-  const {data} = useContext(ProductContextProvider)
+  const {data} = useContext(ProductContextProvider);
+  const [name, setProductName] = React.useState('')
 
 
   return (
     <div className='font-jost'>
         <div>
-          <Navbar/>
+          <Navbar setProductName={setProductName}/>
           <div>
             <div className='w-[90%] mx-auto mt-7 md:mt-0'>
               <Banner/>
@@ -20,7 +21,7 @@ const Home = () => {
             <div 
             id='products-section'
             className='max-w-[90%] w-[90%] overflow-x-hidden mx-auto mt-5'>
-              <ProductDisplay data={data}/>
+              <ProductDisplay data={data} name={name}/>
             </div>
           </div>
         </div>
