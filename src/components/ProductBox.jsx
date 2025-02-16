@@ -21,7 +21,8 @@ const ProductBox = ({ image, id, name, price, alt, info, item}) => {
     <div className='w-full shadow-md shadow-gray-200' >
         <div className="image relative bg-[#fff1f5] min-w-full">
             <Link to={`/details/${id}`}>
-                <img src={image} alt={alt} className='min-w-full min-h-[12em] max-h-[12em] object-center object-cover md:min-h-[22em] md:max-h-[22em] flex justify-center items-center'/>
+                <img src={image} alt={alt} className='min-w-full min-h-[10em] max-h-[10em]
+                 object-center object-cover md:min-h-[18em] md:max-h-[18em] flex justify-center items-center'/>
             </Link>
             <div className='bg-[#ff00ff] p-2 text-sm md:text-base absolute top-3 right-3 w-fit rounded-full' onClick={() => handleLikeAndSave(item)}>
                 <FaHeart  className={`${like?'text-red-700':'text-[#fff1f5]'}`}/>
@@ -30,8 +31,10 @@ const ProductBox = ({ image, id, name, price, alt, info, item}) => {
         <div className="pd-info font-medium py-3 pb-5 px-2 md:mt-0">
             <div className='flex flex-col gap-y-1'>
                 <div className='flex items-start justify-between gap-x-4'>
-                    <h4 className='text-base md:text-lg tracking-tight md:tracking-normal font-bold uppercase truncate'>{name}</h4>
-                    <h4 className='text-base md:text-xl flex-shrink-0'>$ {price}</h4>
+                    <h4 className='text-base md:text-lg tracking-tight md:tracking-normal 
+                    font-semibold uppercase truncate'>{name}</h4>
+                    <h4 className='text-base md:text-xl flex-shrink-0
+                    font-light'>${price}</h4>
                 </div>
                 
                 <p className='text-xs md:text-base truncate font-normal'>{info}</p>
@@ -41,7 +44,7 @@ const ProductBox = ({ image, id, name, price, alt, info, item}) => {
                 </div>
                 
                 <Link to={`/details/${id}`}>
-                    <button className='flex px-2 mt-2 w-fit rounded-2xl text-xs border border-[#ff00ff7e]'>Add to Cart</button>
+                    <button className='flex px-2 py-1 md:px-3 mt-2 w-fit rounded-2xl text-xs border border-[#ff00ff7e]'>Add to Cart</button>
                 </Link>
             </div>
         </div>

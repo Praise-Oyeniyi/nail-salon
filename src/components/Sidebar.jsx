@@ -9,7 +9,9 @@ import Logo from '../images/logo.webp';
 const Sidebar = ({open}) => {
   
   return (
-    <div className={`h-screen overflow-hidden !z-[99] ${open? 'top-12 lg:top-0 lg block ': '-top-[999px] hidden' } left-0  fixed w-full  backdrop-blur-sm lg:backdrop-blur-0`}>
+    <div className={`h-screen overflow-hidden !z-[99] 
+    ${open? 'top-12 lg:top-0 lg block ': '-top-[999px] hidden' } 
+    left-0  fixed w-full  backdrop-blur-sm lg:backdrop-blur-0`}>
         <div className='w-5/6 !z-[999] h-full md:w-[25%] space-y-7 lg:space-y-10 rounded-r-xl shadow-md lg:shadow-none shadow-gray-300 lg:rounded-r-none lg:px-10 px-7 lg:py-7 py-3  bg-[#ffb7ce] lg:bg-[#fff1f5]'>
             <div className="sidebar-header flex items-center gap-x-3">
                 <div className="logo h-12 w-12 bg-black rounded-full overflow-hidden">
@@ -23,7 +25,7 @@ const Sidebar = ({open}) => {
                   </h3>
                 </div>
             </div>
-            <ul className='space-y-7 font-medium cursor-pointer !z-[999]'>
+            <ul className='space-y-7 font-normal cursor-pointer !z-[999]'>
                 <li className=''><Link className='flex gap-x-1 items-center' to='/home'>Home</Link></li>
                 {/* <li className='flex gap-x-1 items-center'>Categories <span><FaAngleDown /></span></li> */}
                 <li><Link className='flex gap-x-1 items-center' to='/saved'>Saved Items</Link></li>

@@ -12,11 +12,34 @@ import EditProfile from './pages/EditProfile';
 import Saved from './pages/Saved';
 import OrdersPage from './components/Order/OrdersPage';
 import { ToastContainer } from 'react-toastify';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
     <Product>
       <CartContext>
+        <Toaster 
+        toastOptions={{
+          style: {
+            fontSize: '14px',
+          },
+          success: {
+            style: {
+              background: '#E1F7EB',
+              color: '#20AA5F',
+              borderColor:"#20AA5F",
+              borderWidth:0.5
+            }
+          },
+          error: {
+            style: {
+              background: '#F7EAE9',
+              color: '#FF3B30',
+              borderColor:"#FF3B30",
+              borderWidth:0.5
+            }
+          },
+        }}/>
         <ToastContainer position="bottom-center" autoClose={3000} />
         <BrowserRouter>
           <Routes>

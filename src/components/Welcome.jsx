@@ -10,6 +10,7 @@ import {FormComp, PassFormComp} from './FormComp';
 import {submitData} from '../../src/apis/Auth';
 import { useNavigate} from 'react-router-dom'
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import toast from 'react-hot-toast'
 
 
 const Welcome = () => {
@@ -28,9 +29,11 @@ const Welcome = () => {
             setUpdate(true)
             const result = await submitData(data, 'https://wittynailtip.com/backend/signup.php');
             if (result.data.success){
+                toast.success(result.data.message);
                 reset();
                 window.location.href = '/Home';
             } else {
+                toast.error(result.data.message);
                 setMessage(result.data.message);
                 setUpdate(false);
             }
@@ -45,9 +48,11 @@ const Welcome = () => {
             setUpdate(true)
             const result = await submitData(data, 'https://wittynailtip.com/backend/login.php');
             if (result.data.success){
+                toast.success(result.data.message);
                 reset();
-                window.location.href = '/Home';
+                window.location.href = '/Home';  
             } else {
+                toast.error(result.data.message);
                 setMessage(result.data.message);
                 setUpdate(false);
             }
@@ -76,10 +81,11 @@ const Welcome = () => {
                     
                     <div className="inner-text leading-tight">
                         <h2 className='md:text-4xl text-3xl lg:text-5xl font-bold tracking-wide'>Welcome{up? '!':' back!'}</h2>
-                        <p className='font-semibold text-base md:text-xl'>Please fill in your details</p>
+                        <p className='font-normal text-base md:text-xl'>Please fill in your details</p>
                     </div>
 
-                    <form  className='pt-4 font-normal text-sm' id='welcome-form' onSubmit={up?handleSubmit(onSubmitHandler):handleSubmit(onSignInHandler)}> 
+                    <form  className='pt-4 font-normal text-sm' id='welcome-form' 
+                    onSubmit={up?handleSubmit(onSubmitHandler):handleSubmit(onSignInHandler)}> 
                         {
                         up? 
                             <div className='space-y-2 pt-7'>
@@ -101,14 +107,15 @@ const Welcome = () => {
                         }
                         <div className='mt-2 flex items-center space-x-2 cursor-pointer'>
                             <input type="checkbox" name="remember" id="remember " className='accent-black w-4 h-4' />
-                            <h6 className='text-gray-400 text-sm font-medium'>Remember me</h6>
+                            <h6 className='text-gray-400 text-sm font-normal'>Remember me</h6>
                         </div>
 
 
                             {/* #ffb7ce #cccccc #fff1f5 #ff00ff */}
                         <div className="buttons w-5/6 md:w-4/6 mx-auto mt-5 space-y-3 text-sm md:text-base ">
-                            {message && <h6 className='text-red-500 tex-center tex-sm'>{message}</h6>}
-                            <button type='submit' className='uppercase rounded-3xl tracking-wider py-1 md:py-2 font-bold flex gap-x-2 items-center justify-center  bg-[#ffb7ce] w-5/6 mx-auto'>
+                            {/* {message && <h6 className='text-red-500 tex-center tex-sm'>{message}</h6>} */}
+                            <button type='submit' className='uppercase rounded-3xl tracking-wider py-1 
+                            md:py-2 font-medium flex gap-x-2 items-center justify-center  bg-[#ffb7ce] w-5/6 mx-auto'>
                                 {up?'Sign up':'Sign in'}
                                 <AiOutlineLoading3Quarters className={`animate-spin ${update? 'block':'hidden'}`}/>
                             </button>
@@ -120,13 +127,13 @@ const Welcome = () => {
                                 <span className='text-base md:text-xl'><FaGoogle /></span>{up?'Sign up with google':'Sign in with google'}
                             </button> */}
 
-
-                            <p className='font-normal text-sm md:text-base pt-9 cursor-pointer'>{up? 'Already have an account?':"Don't have an account?" }<Link to href={up?'/signin':'/'}><span onClick={()=>setUp(!up)} className='uppercase font-bold pl-2'>{up? 'Sign In': 'Sign up'}</span></Link> </p>
+                            <p className='font-normal text-sm md:text-base pt-9 cursor-pointer'>
+                                {up? 'Already have an account?':"Don't have an account?" }
+                            <Link to href={up?'/signin':'/'}
+                            ><span onClick={()=>setUp(!up)} className='uppercase font-semibold pl-2'>
+                            {up? 'Sign In': 'Sign up'}</span>
+                            </Link> </p>
                         </div>
-                        
-                        
-
-
                     </form>
                 </div>
             </div>

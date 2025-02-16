@@ -13,21 +13,21 @@ const Banner = () => {
 
   const slides = [
     {
-      description: "Grab upto 10% off on selected nails",
+      description: "Discover our exclusive nail designs",
       image: BannerImage1
     },
     {
-      description: "Grab upto 20% off on selected nails",
+      description: "Experience the best in nail care",
       image: BannerImage2
     },
     {
-      description: "Grab upto 30% off on selected nails",
+      description: "Transform your nails with our top picks",
       image: BannerImage3
     },
     {
-        description: "Grab upto 40% off on selected nails",
-        image: BannerImage4
-      }
+      description: "Indulge in luxury nail treatments",
+      image: BannerImage4
+    }
   ];
 
   const nextSlide = () => {
@@ -89,9 +89,15 @@ const Banner = () => {
                   : 'opacity-0 z-0'
               }`}
             >
-              <h2 className="text-3xl md:text-5xl tracking-wide font-bold leading-tighter md:pl-5 z-20">{slide.description}</h2>
+              <h2 className="text-3xl md:text-5xl tracking-wide font-semibold
+               leading-tighter md:pl-5 lg:pl-8 z-20">{slide.description}</h2>
                 <button 
-                    className='w-fit z-[99] mx-auto md:mx-0 bg-black text-base font-semibold text-white mt-2 md:mt-5 flex justify-center items-center rounded-3xl py-2 px-5 uppercase tracking-wide'>
+                 onClick={() => {
+                  document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
+                }}
+                className='w-fit z-[99] mx-auto md:mx-0 bg-black text-base 
+                font-semibold text-white mt-2 md:mt-5 md:ml-5 lg:ml-8 flex justify-center 
+                items-center rounded-3xl py-2 px-5 uppercase tracking-wide'>
                     shop now
                 </button>
             </div>
@@ -99,7 +105,8 @@ const Banner = () => {
         </div>
 
         {/* Image Section */}
-        <div className="h-full w-full md:w-1/2 banner-inner md:relative lg:after:absolute after:w-full after:h-full after:top-0 after:left-0 lg:after:bg-white/30 after:z-10">
+        <div className="h-full w-full md:w-1/2 banner-inner md:relative lg:after:absolute   
+        after:w-full after:h-full after:top-0 after:left-0 lg:after:bg-white/30 after:z-10">
           {slides.map((slide, index) => (
             <div
               key={index}

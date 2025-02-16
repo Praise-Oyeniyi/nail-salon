@@ -12,13 +12,14 @@ const ProductDisplay = ({data}) => {
             <div className="fiter w-full hidden md:block">
                 <ul className='flex w-full items-center md:text-sm text-xs gap-x-2 md:gap-x-5 cursor-pointer'>
                     {['Nails Type','Price','Reviews','Colors'].map((e, index)=>(
-                        <li className='filter-bg px-3 rounded-2xl flex items-center gap-x-2' key={index}>{e}<span><FaAngleDown /></span></li>
+                        <li className='filter-bg px-3 rounded-2xl flex items-center gap-x-2' key={index}>{e}
+                        <span><FaAngleDown /></span></li>
                     ))}
                 </ul>
             </div>
 
             <div className="products md:mt-10 mt-7 md:space-y-5 space-y-3 w-full">
-                <h3 className='capitalize font-bold text-2xl md:text-3xl'>Nails for you!</h3>
+                <h3 className='capitalize font-medium text-2xl md:text-3xl'>Nails for you!</h3>
                 <div className='flex items-start w-full mx-auto max-w-full gap-x-4 md:gap-x-6 gap-y-3 md:gap-y-5 justify-start flex-wrap'>
                     {data === null?                             
                             [...Array(6)].map((_, index) => (
