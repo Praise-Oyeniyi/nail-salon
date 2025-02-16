@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { fetchApi } from '../apis/Index';
 import SavedItem from '../components/Cart/SavedItem';
 import Loader from '../components/Loader';
@@ -7,14 +9,20 @@ import Navbar from '../components/Navbar';
 import { CartContextProvider } from '../context/CartContext';
 
 const Saved = () => {
-    const {savedItems} = useContext(CartContextProvider);
+    const {savedItems, favError} = useContext(CartContextProvider);
     const [load, setLoad] = useState(false)
 
     useEffect(() => {
       if (savedItems) {
           setLoad(true)
       }
-  }, [savedItems])
+    }, [savedItems])
+
+    useEffect(() => {
+        if (favError) {
+            toast.error(favError);
+        }
+    }, [favError]);
     
     const deleteSaved = async ()=> {
         const deleteSavedApi = 'https://wittynailtip.com/backend/empty-fav.php';
@@ -32,6 +40,7 @@ const Saved = () => {
 
   return (
     <div className='font-jost'>
+        <ToastContainer position="bottom-center" autoClose={2000} />
         <Navbar/>
         <div className='md:w-5/6 w-[90%] mx-auto mt-5 md:mt-7 h-full mb-20'>
             <div className='w-full'>

@@ -4,6 +4,7 @@ import {
     useEffect,
     useState,
 } from "react";
+import { toast } from "react-toastify";
 import { fetchApi, sendApi } from "../apis/Index";
 
 
@@ -12,23 +13,27 @@ export const CartContextProvider = createContext();
 
 const CartContext = ({children}) => {
     const [cart, setCart] = useState([]);
-    const [sum, setSum] = useState(0)
     const [saved, setSaved] = useState([]);
     const [savedItems, setSavedItems] = useState([])
+    const [cartError, setCartError] = useState(null);
+    const [favError, setFavError] = useState(null);
 
 
-    const fetchCartItems = useCallback(async () => {
+    const fetchCartItems = useCallback(() => {
         const fetchCartApi = 'https://wittynailtip.com/backend/cart.php';
-        try {
-            const result = await fetchApi(fetchCartApi)
-            if (result.data.success){
-                setCart(result.data.data || []);
-            } else {
-                setCart([])
+        async function fetchData(){try {
+                const result = await fetchApi(fetchCartApi)
+                if (result.data.success){
+                    setCart(result.data.data || []);
+                } else {
+                    setCart([])
+                    setCartError(result.data.message)
+                }
+            } catch (error) {
+                setCartError(error)
             }
-        } catch (error) {
-            console.log(error)
         }
+        fetchData();
     }, [setCart]);
 
     useEffect(() => {
@@ -43,9 +48,9 @@ const CartContext = ({children}) => {
             const result = await sendApi(cartProd, atcApi)
             if (result.data.success){
                 fetchCartItems()
+                toast.success("Added to cart")
             } else {
-                // please login to add to cart
-                console.log(result.data.message);
+                toast.error(result.data.message)
             }
         } catch (error) {
             console.log(error)
@@ -104,7 +109,7 @@ const CartContext = ({children}) => {
             } else {
                 fetchCartItems();
                 alert('Failed to delete item. Please login and try again.');
-                console.log(result.data.message);
+                toast.error(result.data.message)
             }
         } catch (error) {
             console.log(error)
@@ -124,11 +129,10 @@ const CartContext = ({children}) => {
                 setSavedItems(result.data.data);
                 // alert('Item Saved fetched');
             } else {
-                // alert('Failed to fetch saved items. Please login and try again.');
-                console.log(result.data.message);
+                setFavError(result.data.message)
             }
         } catch (error) {
-            console.log(error)
+            setFavError(error)
         }
     };
 
@@ -146,8 +150,9 @@ const CartContext = ({children}) => {
                     if (result.data.success){
                         // added to save
                         fetchSavedItems();
+                        toast.success('Item saved')
                     } else {
-                        console.log(result.data.message);
+                        toast.error(result.data.message)
                     }
                 } catch (error) {
                     console.log(error)
@@ -162,11 +167,10 @@ const CartContext = ({children}) => {
                 try {
                     const result = await sendApi(itemPrep, delFavApi)
                     if (result.data.success){
-                        alert('Item deleted from favorites');
                         fetchSavedItems();
+                        toast.success('Item removed from saved')
                     } else {
-                        // please login to add to cart
-                        console.log(result.data.message);
+                        toast.error(result.data.message)
                         alert('error in saved')
                     }
                 } catch (error) {
@@ -178,7 +182,19 @@ const CartContext = ({children}) => {
 
 
     return (
-        <CartContextProvider.Provider value={{cart,addtoCart, removedItem, sum, setSum, saved, setSaved, addToSave, savedItems, deleteCartItem }}>
+        <CartContextProvider.Provider value={
+            {
+                cart,
+                cartError,
+                addtoCart, 
+                removedItem,
+                saved,
+                favError, 
+                setSaved, 
+                addToSave, 
+                savedItems, 
+                deleteCartItem 
+            }}>
             {children}
         </CartContextProvider.Provider>
     );

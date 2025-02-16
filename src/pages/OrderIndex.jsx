@@ -5,6 +5,8 @@ import OrderSide from '../components/Order/OrderSide'
 import OrderSumry from '../components/Order/OrderSumry'
 import { useParams } from 'react-router-dom'
 import { fetchApi, sendApi } from '../apis/Index'
+import { toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 
 
 const OrderIndex = () => {
@@ -40,11 +42,10 @@ const OrderIndex = () => {
                 if (result.data.success){
                     setOrderItem(result.data.order)
                 } else {
-                    // please login to add to cart
-                    console.log(result.data.message);
+                    toast.error(result.data.message);
                 }
             } catch (error) {
-                console.log(error)
+                toast.error(error)
             }
         }
         fetchData();
@@ -52,6 +53,7 @@ const OrderIndex = () => {
 
   return (
     <div className='w-full md:flex justify-start items-start overflow-x-hidden font-jost'>
+        <ToastContainer position="bottom-center" autoClose={2000} />
         <div className='px-3 h-14 flex justify-between items-center lg:hidden'>
             <div className='cursor-pointer p-2' onClick={()=>setSide(!side)}>
                 <div className='w-5 h-1 bg-black mb-[2px]'></div>

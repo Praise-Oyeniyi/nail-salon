@@ -7,7 +7,7 @@ export const sendApi = async (data, endpoint) => {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify(data)
+            body:JSON.stringify(data)
         });
   
         if (!response.ok) {

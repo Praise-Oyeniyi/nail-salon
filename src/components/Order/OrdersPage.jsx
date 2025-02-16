@@ -1,29 +1,44 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import { sendApi } from '../../apis/Index';
 import Navbar from '../../components/Navbar'
 import OrderItem from './OrderItem';
 import OrderSkeleton from './OrderSkeleton';
 
 const OrdersPage = () => {
     const [order, setOrder] = useState([]);
+    const [orderError, setOrderError] = useState(null)
 
     useEffect(() => {
-        fetch('https://wittynailtip.com/backend/my-orders.php', {
-            credentials: 'include',
-            method:"POST",
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Accept': 'application/json'
-            },
-        })
-        .then(response => response.json())
-        .then(data => {setOrder(data.orders); console.log(data.orders)})
-        .catch(error => console.error('Error fetching Product details:', error));
+        const moApi = 'https://wittynailtip.com/backend/my-orders.php'
+        async function fetchData(){
+            try {
+                const result = await sendApi(undefined,moApi)
+                if (result.data.success){
+                    setOrder(result.data.orders)
+
+                } else {
+                    setOrderError(result.data.message)
+                }
+            } catch (error) {
+                setOrderError(error)
+            }
+        }
+        fetchData()
     }, []);
+
+    useEffect(() => {
+        if (orderError) {
+            toast.error(orderError);
+        }
+    }, [orderError]);
 
 
   return (
     <div className='font-jost'>
+        <ToastContainer position="bottom-center" autoClose={2000} />
         <Navbar/>
         <div className='md:w-5/6 w-[90%] mx-auto mt-5 md:mt-7 h-full mb-20'>
             <div className='w-full space-y-3'>

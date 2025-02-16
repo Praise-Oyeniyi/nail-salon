@@ -4,10 +4,18 @@ import Navbar from '../components/Navbar'
 import CartItem from '../components/Cart/CartItem'
 import { Link } from 'react-router-dom';
 import { fetchApi, sendApi } from '../apis/Index';
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 const CartPage = () => {
-    const {cart} = useContext(CartContextProvider);
+    const {cart, cartError} = useContext(CartContextProvider);
     const [pay, setPay] = useState(false);
+
+    useEffect(() => {
+        if (cartError) {
+            toast.error(cartError);
+        }
+    }, [cartError]);
 
     const payOrder = async () => {
         const payPend = {"pay":"pay"}
@@ -66,6 +74,7 @@ const CartPage = () => {
     
   return (
     <div className='font-jost'>
+        <ToastContainer position="bottom-center" autoClose={2000} />
         <Navbar/>
         <div className='md:w-5/6 w-[90%] mx-auto mt-5 md:mt-7 h-full mb-20'>
             <div className='w-full'>

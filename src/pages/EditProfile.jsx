@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import ProfileLoader from '../components/ProfileLoader';
 import { fetchApi, sendApi } from '../apis/Index';
+import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const EditProfile = () => {
   const [side, setSide] = useState(false);
@@ -20,14 +22,13 @@ const EditProfile = () => {
             const result = await fetchApi(profileApi)
             if (result.data.status){        
                 setUser(result.data.data)
-                setLoad(true); 
             } else {
-                console.log(result.data.message);
+                toast.error(result.data.message);
                 setUser(null)
-                setLoad(true); 
             }
+            setLoad(true); 
         } catch (error) {
-            console.log(error)
+            toast.error(error)
         }
     }
     fetchData();
@@ -37,7 +38,7 @@ const EditProfile = () => {
   const UpdateProfile = async (e) =>{
     setUpdate(true)
     e.preventDefault()
-    const full_name = e.target.name.value || user?.username;
+    const full_name = e.target.name.value || user?.full_name;
     const username = user?.username;
     const phone_number = e.target.phone.value || user?.phone_number;
     const email = user?.email;
@@ -49,34 +50,38 @@ const EditProfile = () => {
       try {
           const result = await sendApi(updatedProfile, updateProfileApi)
           if (result.data.success){
-            setUpdate(false)
+            toast.success(result.data.message);
           } else {
-              console.log(result.data.message);
+              toast.error(result.data.message);
           }
+          setUpdate(false);
+          setEdit(false);
       } catch (error) {
-          console.log(error)
+          toast.error(error)
       }
   }
 
-  const Logout = async () =>{
+  const Logout = async (e) =>{
+    e.preventDefault();
     const logoutApi = 'https://wittynailtip.com/backend/logout.php'
         try {
             const result = await fetchApi(logoutApi)
             if (result.data.success){
-                console.log(result.data.message)
+                toast.success('Logout successful')
                 window.location.reload();
+                console.log(result)
             } else {
-                // alert('Failed to fetch saved items. Please login and try again.');
-                console.log(result.data.message);
+                toast.error(result.data.message || result.data.error);
             }
         } catch (error) {
-            console.log(error)
+            toast.error(error)
         }
   }
 
 
   return (
     <div className='w-full md:flex justify-start items-start overflow-x-hidden font-jost'>
+      <ToastContainer position="bottom-center" autoClose={2000} />
       <div className='px-3 h-14 flex justify-between items-center lg:hidden'>
           <div className='cursor-pointer p-2' onClick={()=>setSide(!side)}>
               <div className='w-5 h-1 bg-black mb-[2px]'></div>
@@ -161,7 +166,7 @@ const EditProfile = () => {
                         <button className='bg-[#ffb7ce] p-2 px-3 rounded-full text-sm'>
                           Reset Password
                         </button>
-                        <button className='bg-[#ff00ff] p-2 px-3 rounded-full text-sm' onClick={()=>Logout()}>
+                        <button className='bg-[#ff00ff] p-2 px-3 rounded-full text-sm' onClick={(e)=>Logout(e)}>
                           Logout
                         </button>
                       </>

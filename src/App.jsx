@@ -1,4 +1,5 @@
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignUp from './pages/SignUp';
 import OrderIndex from './pages/OrderIndex';
@@ -10,11 +11,13 @@ import Product from './context/Product';
 import EditProfile from './pages/EditProfile';
 import Saved from './pages/Saved';
 import OrdersPage from './components/Order/OrdersPage';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
     <Product>
       <CartContext>
+        <ToastContainer position="bottom-center" autoClose={3000} />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<SignUp/>} />
