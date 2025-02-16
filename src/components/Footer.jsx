@@ -8,7 +8,7 @@ const FooterSection = () => {
   return (
     <footer className='bg-[#1C1B1C] text-white'>
         <div className='w-[90%] mx-auto py-5 md:py-20
-        grid grid-cols-1 md:grid-cols-4'>
+        grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6'>
 
           <div className="logo h-12 w-12 bg-black rounded-full overflow-hidden">
             <Link to="/"><img src={Logo} alt="" className='w-full'/></Link>
@@ -16,7 +16,7 @@ const FooterSection = () => {
 
           <div>
             <h4 className='font-semibold text-lg mt-3'>Quick Links</h4>
-            <ul className='mt-2 text-sm md:text-base flex flex-col gap-2 md:gap-4 '>
+            <ul className='mt-2 text-sm md:text-base flex flex-col gap-4 '>
               <li><Link to='/'>Home</Link></li>
               <li><Link to='/#products-section'>Products</Link></li>
               <li><Link to='/edit-profile'>Profile</Link></li>
@@ -24,7 +24,7 @@ const FooterSection = () => {
             </ul>
           </div>
 
-          <div className='flex flex-col gap-2 md:gap-4'>
+          <div className='flex flex-col gap-4'>
             <h4 className='font-semibold text-lg mt-3'>Contact Us</h4>
             <p className='text-sm md:text-base'>Ikole, Plot 5, Nigeria.</p>
             <p>
