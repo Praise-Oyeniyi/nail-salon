@@ -26,7 +26,7 @@ const FooterSection = () => {
 
           <div className='flex flex-col gap-4'>
             <h4 className='font-semibold text-lg mt-3'>Contact Us</h4>
-            <p className='text-sm md:text-base'>USA.</p>
+            <p className='text-sm md:text-base'>Houston, TX, USA.</p>
             <p>
               <Link to='mailto:info@wittynailtip.com'>
               info@wittynailtip.com</Link>
@@ -38,9 +38,12 @@ const FooterSection = () => {
 
           <div>
             <div className='mt-2 flex gap-4 md:gap-5 lg:gap-7'>
-              <Link to='/'><FaFacebook size={24}/> </Link>
-              <Link to='/'><FaTwitter size={24}/></Link>
-              <Link to='/'><FaInstagram size={24}/></Link>
+              <div><FaFacebook size={24}/> </div>
+              <div><FaTwitter size={24}/></div>
+              <Link 
+              target='_blank'
+              to='https://www.instagram.com/wittynailtips?igsh=MW12anV0dmE2NXR3Yg=='>
+              <FaInstagram size={24}/></Link>
             </div>
           </div>
 

@@ -19,18 +19,18 @@ const ProductDisplay = ({data, productName}) => {
             <div className='w-full'>
                 <div className="fiter w-full block">
                     <div className="flex items-center">
-                        <label htmlFor="sort" className="mr-2">Sort by quantity:</label>
+                        <label htmlFor="sort" className="mr-2">Sort by price range:</label>
                         <input 
                             type="range" 
                             id="sort" 
                             name="sort" 
                             min="0" 
-                            max="10" 
+                            max="50" 
                             className="slider accent-[#ff00ff] bg-white" 
                             value={rangeValue}
                             onChange={handleRangeChange} 
                         />
-                        <span className="ml-2">{rangeValue}</span>
+                        <span className="ml-2">${rangeValue}</span>
                     </div>
                 </div>
 
