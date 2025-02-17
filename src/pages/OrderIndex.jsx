@@ -20,7 +20,7 @@ const OrderIndex = () => {
         async function fetchData(){
             try {
                 const result = await fetchApi(profileApi)
-                if (result.data.success){
+                if (result.data.status){
                     setUser(result.data.data)
                 } else {
                     console.log(result.data.message);
@@ -30,7 +30,7 @@ const OrderIndex = () => {
             }
         }
         fetchData();
-        }, []);
+    }, []);
 
 
     useEffect(() => {
