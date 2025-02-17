@@ -2,7 +2,7 @@ import React from 'react'
 
 const ProductLoader = () => {
     return (
-        <div className="md:w-[23.5%] w-[47.2%] shadow-md shadow-gray-200">
+        <div className="w-full shadow-md shadow-gray-200">
         <div className="relative bg-gray-100 min-w-full min-h-[12em] md:min-h-[22em] animate-pulse">
             <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-gray-200 animate-pulse" />
         </div>

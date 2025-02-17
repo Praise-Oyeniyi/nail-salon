@@ -4,7 +4,7 @@ import {
     useEffect,
     useState,
 } from "react";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { fetchApi, sendApi } from "../apis/Index";
 
 
@@ -17,6 +17,8 @@ const CartContext = ({children}) => {
     const [savedItems, setSavedItems] = useState([])
     const [cartError, setCartError] = useState(null);
     const [favError, setFavError] = useState(null);
+    const [favCheckError, setFavCheckError] = useState(true);
+    const [addingToCart, setAddingToCart] = useState(false);
 
 
     const fetchCartItems = useCallback(() => {
@@ -41,10 +43,11 @@ const CartContext = ({children}) => {
     }, [fetchCartItems]);
     
 
-    const addCartApi = async (id, amount) =>{
+    const addCartApi = async (id, amount, color, size) =>{
         const atcApi = 'https://wittynailtip.com/backend/add-to-cart.php'
-        const cartProd = { "product_id": id, "quantity": amount, "color": 'color', size: 'size' };
+        const cartProd = { "product_id": id, "quantity": amount, "color": color, "size": size };
         try {
+            setAddingToCart(true);
             const result = await sendApi(cartProd, atcApi)
             if (result.data.success){
                 fetchCartItems()
@@ -54,11 +57,14 @@ const CartContext = ({children}) => {
             }
         } catch (error) {
             console.log(error)
+        } finally {
+            setAddingToCart(false);
         }
     }
 
     const addtoCart = (item) => {
-        const existingItemIndex = cart.findIndex(cartItem => cartItem.product_id === item.product_id || cartItem.product_id ===item.id);
+        const existingItemIndex = cart.findIndex(cartItem => 
+            cartItem.product_id === item.product_id || cartItem.product_id ===item.id);
     
         if (existingItemIndex > -1) {
             const updatedCart = cart.map((cartItem, index) => {
@@ -68,11 +74,16 @@ const CartContext = ({children}) => {
                 return cartItem;
             });
             setCart(updatedCart);
-            addCartApi(item?.product_id || item.id, updatedCart[existingItemIndex].quantity);
+            addCartApi(
+                item?.product_id || item.id, 
+                item?.quantity,
+                updatedCart[existingItemIndex].color || item?.color,
+                updatedCart[existingItemIndex].size || item?.size,
+            );
         } else {
             const newCartItem = { ...item, quantity: 1, product_id: item.product_id || item.id };
             setCart([...cart, newCartItem]);
-            addCartApi(item?.product_id || item.id, 1);
+            addCartApi(item?.product_id || item.id, 1, item?.color, item?.size);
         }
     };
 
@@ -150,6 +161,7 @@ const CartContext = ({children}) => {
                     if (result.data.success){
                         // added to save
                         fetchSavedItems();
+                        setFavCheckError(false);
                         toast.success('Item saved')
                     } else {
                         toast.error(result.data.message)
@@ -190,10 +202,12 @@ const CartContext = ({children}) => {
                 removedItem,
                 saved,
                 favError, 
+                favCheckError,
                 setSaved, 
                 addToSave, 
                 savedItems, 
-                deleteCartItem 
+                deleteCartItem ,
+                addingToCart,
             }}>
             {children}
         </CartContextProvider.Provider>

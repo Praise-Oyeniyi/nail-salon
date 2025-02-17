@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import ProfileLoader from '../components/ProfileLoader';
 import { fetchApi, sendApi } from '../apis/Index';
-import { ToastContainer } from 'react-toastify';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 
 const EditProfile = () => {
   const [side, setSide] = useState(false);
@@ -81,7 +80,7 @@ const EditProfile = () => {
 
   return (
     <div className='w-full md:flex justify-start items-start overflow-x-hidden font-jost'>
-      <ToastContainer position="bottom-center" autoClose={2000} />
+      {/* <ToastContainer position="bottom-center" autoClose={2000} /> */}
       <div className='px-3 h-14 flex justify-between items-center lg:hidden'>
           <div className='cursor-pointer p-2' onClick={()=>setSide(!side)}>
               <div className='w-5 h-1 bg-black mb-[2px]'></div>
@@ -89,10 +88,10 @@ const EditProfile = () => {
           </div>
       </div>
       <div className='hidden lg:block'>    
-          <Sidebar open={true}/>
+          <Sidebar open={true} noSearch={true} />
       </div>
       <div className=''>
-          <Sidebar open={side}/>
+          <Sidebar open={side} noSearch={true}/>
       </div>
 
       {/* #ffb7ce #cccccc #fff1f5 #ff00ff */}
@@ -102,7 +101,9 @@ const EditProfile = () => {
           :
           user ===null || user === undefined || user?.status === 'error'?
             <div className='flex items-center justify-center h-screen w-full'>
-              {load && <h3 className='flex justify-start items-center gap-x-2 italic'>You are not logged in. Please <Link to='/'><span className='text-[#ff00ff] cursor-pointer font-semibold'>login</span></Link> to view your profile</h3>}
+              {load && <h3 className='flex flex-col justify-start items-center gap-x-2 italic'>
+                You are not logged in. Please 
+                <Link to='/auth'><span className='text-[#ff00ff] cursor-pointer font-semibold'>login</span></Link> to view your profile</h3>}
             </div>
             :
           <div className="profile-inner space-y-3">
