@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { sendApi } from '../../apis/Index';
 import Navbar from '../../components/Navbar'
 import OrderItem from './OrderItem';
 import OrderSkeleton from './OrderSkeleton';
+import { CartContextProvider } from '../../context/CartContext';
 
 const OrdersPage = () => {
     const [order, setOrder] = useState([]);
     const [orderError, setOrderError] = useState(null)
+    const {setShowLoginModal} = useContext(CartContextProvider)
 
     useEffect(() => {
         const moApi = 'https://wittynailtip.com/backend/my-orders.php'
@@ -20,6 +22,7 @@ const OrdersPage = () => {
 
                 } else {
                     setOrderError(result.data.message)
+                    setShowLoginModal(true);
                 }
             } catch (error) {
                 setOrderError(error)

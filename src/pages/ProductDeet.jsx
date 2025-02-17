@@ -122,9 +122,10 @@ const ProductDeet = () => {
                                 <button
                                     disabled={item < 1 || !selectedColor || !selectedSize}
                                     className={`h-10 w-40 rounded-3xl text-black tracking-wide 
+                                        disabled:bg-gray-200 disabled:cursor-not-allowed font-medium
                                         text-center flex items-center justify-center
                                         ${item < 1 || !selectedColor || !selectedSize ?
-                                         '!bg-[#ffb7ce86]/40 cursor-not-allowed' : 'bg-[#ffb7ce]'}`}
+                                         '' : 'bg-[#ffb7ce]'}`}
                                     onClick={addToItem}
                                 >
                                     {addingToCart ? 

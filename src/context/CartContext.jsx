@@ -6,6 +6,8 @@ import {
 } from "react";
 import { toast } from "react-hot-toast";
 import { fetchApi, sendApi } from "../apis/Index";
+import { VscClose } from "react-icons/vsc";
+import { IoLogInOutline } from "react-icons/io5";
 
 
 
@@ -19,6 +21,8 @@ const CartContext = ({children}) => {
     const [favError, setFavError] = useState(null);
     const [favCheckError, setFavCheckError] = useState(true);
     const [addingToCart, setAddingToCart] = useState(false);
+    const [deletingCartItem, setDeletingCartItem] = useState(false);
+    const [showLoginModal, setShowLoginModal] = useState(false);
 
 
     const fetchCartItems = useCallback(() => {
@@ -53,10 +57,12 @@ const CartContext = ({children}) => {
                 fetchCartItems()
                 toast.success("Added to cart")
             } else {
+                setShowLoginModal(true);
                 toast.error(result.data.message)
-            }
+        }
         } catch (error) {
-            console.log(error)
+            setCartError(error);
+            toast.error("An error occurred. Please login and try again.");
         } finally {
             setAddingToCart(false);
         }
@@ -102,8 +108,10 @@ const CartContext = ({children}) => {
         
         const updatedItem = updatedCart.find(item => item.product_id === productId || item.id === productId);
         const newQuantity = updatedItem ? updatedItem.quantity : 0;
+        const color = updatedItem ? updatedItem.color : null;
+        const size = updatedItem ? updatedItem.size : null;
         
-        addCartApi(productId, newQuantity);
+        addCartApi(productId, newQuantity, color, size);
     };
 
 
@@ -111,19 +119,22 @@ const CartContext = ({children}) => {
         const cartDel = { "cart_id": cartId };
         const dcApi = 'https://wittynailtip.com/backend/del-cart.php'
         try {
+            setDeletingCartItem(true);
             const newCart = cart.filter(item => item.cart_id !== cartId);
             setCart(newCart);
             const result = await sendApi(cartDel, dcApi)
             if (result.data.success){
                 fetchCartItems()
-                alert('Cart Item Deleted');
+                toast.success('Cart Item Deleted');
             } else {
                 fetchCartItems();
-                alert('Failed to delete item. Please login and try again.');
+                toast.error('Failed to delete item. Please login and try again.');
                 toast.error(result.data.message)
             }
         } catch (error) {
             console.log(error)
+        } finally {
+            setDeletingCartItem(false);
         }
     }
 
@@ -192,8 +203,33 @@ const CartContext = ({children}) => {
         }
     };
 
+    const handleLoginModalClose = () => {
+        setShowLoginModal(false);
+    };
+
 
     return (
+        <>
+        {showLoginModal && (
+            <div className="login-modal w-full h-full fixed top-0 
+            left-0 bg-black bg-opacity-10 z-50 flex items-start justify-center">
+                <div className="login-modal-content w-full text-center
+                relative mt-8 bg-white max-w-lg p-5 py-10 rounded-2xl">
+                    <span className="close absolute top-3 right-4" onClick={handleLoginModalClose}>
+                        <VscClose size={20} />
+                    </span>
+                    <h2 className="text-center text-[#ff00ff] font-jost font-medium text-xl">Login Required</h2>
+                    <p>You need to log in to continue.</p>
+                    <div className="flex justify-center mt-4">
+                        <IoLogInOutline size={45} strokeWidth={0} color="#ff00ff" />
+                    </div>
+                    <div className="flex justify-center mt-4">
+                        <a href="/auth" className="text-[#ff00ff] underline">Proceed to Login</a>
+                    </div>
+                </div>
+            </div>
+        )}
+        
         <CartContextProvider.Provider value={
             {
                 cart,
@@ -206,11 +242,14 @@ const CartContext = ({children}) => {
                 setSaved, 
                 addToSave, 
                 savedItems, 
-                deleteCartItem ,
+                deleteCartItem,
                 addingToCart,
+                setShowLoginModal,
+                deletingCartItem,
             }}>
             {children}
         </CartContextProvider.Provider>
+        </>
     );
 }
 
