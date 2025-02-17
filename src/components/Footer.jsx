@@ -26,13 +26,13 @@ const FooterSection = () => {
 
           <div className='flex flex-col gap-4'>
             <h4 className='font-semibold text-lg mt-3'>Contact Us</h4>
-            <p className='text-sm md:text-base'>Ikole, Plot 5, Nigeria.</p>
+            <p className='text-sm md:text-base'>USA.</p>
             <p>
-              <Link to='mailto:wittynails@gmail.com'>
-              wittynails@gmail.com</Link>
+              <Link to='mailto:info@wittynailtip.com'>
+              info@wittynailtip.com</Link>
             </p>
             <p>
-              <Link to='tel:+2347061234567'>+2347061234567</Link>
+              <Link to='tel:+18326774026'>+1 (832) 677-4026</Link>
             </p>
           </div>
 

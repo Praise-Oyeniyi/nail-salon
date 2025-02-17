@@ -29,7 +29,7 @@ const Saved = () => {
         try {
             const result = await fetchApi(deleteSavedApi)
             if (result.data.success){
-                window.location.reload()
+                window.location.reload();
             } else {
                 console.log(result.data.message);
             }

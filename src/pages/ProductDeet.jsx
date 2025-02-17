@@ -6,6 +6,7 @@ import { CartContextProvider } from '../context/CartContext';
 import ProductDeetLoader from '../components/PDdetails/ProductDeetLoader';
 import { sendApi } from '../apis/Index';
 import { RiLoader4Fill } from 'react-icons/ri';
+import FooterSection from '../components/Footer';
 
 const ProductDeet = () => {
     const { productId } = useParams();
@@ -50,10 +51,10 @@ const ProductDeet = () => {
     };
 
     return (
-        <div className='md:mb-14 mb-10 font-jost overflow-y-auto'>
+        <div className='font-jost overflow-y-auto'>
             <Navbar />
             {data ?
-                <div className='md:w-4/6 w-[90%] mx-auto mt-5 md:mt-0'>
+                <div className='md:w-4/6 w-[90%] mx-auto mt-5 md:mt-0 md:mb-14 mb-10 '>
                     <div className='w-full mx-auto md:space-y-5 space-y-3'>
                         <div className='w-full h-[20em] md:h-[30em] bg-[#fff1f5] rounded-lg shadow-xl shadow-gray-300 overflow-hidden'>
                             <img
@@ -112,7 +113,8 @@ const ProductDeet = () => {
                                         <h3>{item}</h3>
                                         <button onClick={() => setItems(prevItem => prevItem + 1)}>+</button>
                                     </div>
-                                    <p className='md:hidden font-medium text-sm md:text-base leading-tight'>Only <span className="text-[#ff00ff]">12</span> items left don't miss out!</p>
+                                    <p className='md:hidden font-medium text-sm md:text-base leading-tight'>
+                                        Don't miss out!</p>
                                 </div>
                                 <p className='font-medium hidden md:block text-base leading-tight'>Don't miss out!</p>
                             </div>
@@ -138,14 +140,14 @@ const ProductDeet = () => {
                                     <h5 className='font-bold md:text-lg text-base leading-tight'>Free Delivery</h5>
                                     <div className='flex items-center gap-x-3'>
                                         <p className='text-gray-400 text-sm md:text-base font-medium underline'>Enter your postal code for delivery Availability</p>
-                                        <p className="text-[#ff00ff]">Coming soon</p>
+                                        <p className="text-[#ff00ff] max-md:text-xs">Coming soon</p>
                                     </div>
                                 </div>
                                 <div className='py-3'>
                                     <h5 className='font-bold md:text-lg text-base leading-tight'>Return Delivery</h5>
                                     <div className='flex items-center gap-x-3'>
                                         <p className='text-gray-400 text-sm md:text-base font-medium underline'>Free 30Days Delivery Returns <span className='text-gray-900 cursor-pointer'>Details</span></p>
-                                        <p className='text-[#ff00ff]'>Coming soon</p>
+                                        <p className='text-[#ff00ff] max-md:text-xs'>Coming soon</p>
                                     </div>
                                 </div>
                             </div>
@@ -155,6 +157,7 @@ const ProductDeet = () => {
                 :
                 <ProductDeetLoader />
             }
+            <FooterSection />
         </div>
     );
 };

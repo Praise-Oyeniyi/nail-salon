@@ -76,7 +76,7 @@ const CartContext = ({children}) => {
             setCart(updatedCart);
             addCartApi(
                 item?.product_id || item.id, 
-                item?.quantity || updatedCart[existingItemIndex].quantity,
+                item?.quantity,
                 updatedCart[existingItemIndex].color || item?.color,
                 updatedCart[existingItemIndex].size || item?.size,
             );

@@ -103,18 +103,19 @@ const CartPage = () => {
                             name="cart-select" id="cart-select" 
                         />
                         <h4 className='font-bold md:text-xl text-lg'>ALL </h4> */}
-                        <button className='bg-red-500 flex justify-center items-center rounded-2xl cursor-pointer px-3 py-1' onClick={()=>emptyCart()}>Empty cart</button>
+                        <button className='bg-red-500 flex justify-center items-center 
+                        rounded-2xl cursor-pointer px-3 py-2' onClick={()=>emptyCart()}>Empty cart</button>
                     </div>
 
                     <div>
-                        <h4 className='md:text-3xl font-bold text-xl'>USD {total}</h4>
+                        <h4 className='md:text-3xl font-bold text-base'>USD {total}</h4>
                     </div>
 
                     <button 
                         onClick={()=>payOrder()} 
-                        className='md:text-lg text-sm uppercase cursor-pointer 
+                        className='md:text-lg text-xs uppercase cursor-pointer 
                         flex items-center justify-center text-center
-                        text-white tracking-wide font-bold px-3 py-1 rounded-2xl bg-[#ff00ff]'>
+                        text-white tracking-wide font-bold px-3 py-2 rounded-2xl bg-[#ff00ff]'>
                            {isLoading ? 
                             <>
                             Processing...
