@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { CiSearch } from "react-icons/ci";
-import { FaAngleDown } from "react-icons/fa6";
 import { FaShoppingCart, FaRegUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Logo from "../images/logo.webp";
@@ -67,6 +66,11 @@ const Sidebar = ({ open, setSide, setProductName, noSearch=false, }) => {
                 <FaRegUserCircle />{" "}
               </span>
               Account
+            </Link>
+          </li>
+          <li>
+            <Link className="flex gap-x-1 items-center" to="/how-to-use">
+              How to use
             </Link>
           </li>
           {!noSearch && 

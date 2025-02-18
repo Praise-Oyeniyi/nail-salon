@@ -76,7 +76,8 @@ const Navbar = ({setProductName}) => {
                     <li><Link className='flex gap-x-1 items-center' to='/order'>My Orders</Link></li>     
                     <li ><Link className='flex gap-x-1 items-center' to="/cart"><span><FaShoppingCart/></span>Cart</Link></li>
                     <li className='flex gap-x-1 items-center'><Link className='flex gap-x-1 items-center' to='/edit-profile'><span><FaRegUserCircle/> </span>Account</Link></li>
-                </ul>
+                    <li><Link className='flex gap-x-1 items-center' to='/how-to-use'> How to Use</Link></li>     
+                  </ul>
             </div>
             
         </div>

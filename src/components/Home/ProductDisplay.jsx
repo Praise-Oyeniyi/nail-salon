@@ -52,7 +52,7 @@ const ProductDisplay = ({data, productName}) => {
                                         name={e.name}
                                         id={e?.id}
                                         price={e?.prices[0].unit_amount} 
-                                        info={e?.description} 
+                                        // info={e?.description} 
                                         alt={'images'} 
                                         image={e?.images[0]} 
                                         item={e}

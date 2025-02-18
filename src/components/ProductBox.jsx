@@ -3,7 +3,7 @@ import { FaHeart, FaRegStar } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import {CartContextProvider} from '../context/CartContext';
 
-const ProductBox = ({ image, id, name, price, alt, info, item}) => {
+const ProductBox = ({ image, id, name, price, alt, item}) => {
     const [like, setLike] = useState(false)
     const {addToSave, favCheckError} = useContext(CartContextProvider)
 
@@ -38,7 +38,8 @@ const ProductBox = ({ image, id, name, price, alt, info, item}) => {
                     font-light'>${price}</h4>
                 </div>
                 
-                <p className='text-xs md:text-base truncate font-normal'>{info}</p>
+                {/* <p className='text-xs md:text-base truncate font-normal'>{info}</p> */}
+                
                 {/* <div className='ratings flex items-center gap-x-2 pt-1'>
                     <div className='flex cursor-pointer gap-x-1 text-[#ff00ff] text-xs md:text-base truncate'>{[1,2,3,4,5].map((e,index)=>(<FaRegStar key={index}/>))}</div>
                     <h6 className='text-xs font-normal flex-shrink-0'>(In stock)</h6>

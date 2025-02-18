@@ -13,10 +13,9 @@ const Banner = () => {
   const [isPaused, setIsPaused] = useState(false);
   const {userAvailable} = useContext(CartContextProvider);
 
-  const slides = [
+  const slides = userAvailable ? [
     {
-      description: userAvailable ? "Discover our exclusive nail designs" :
-       "Sign up with your gmail now and get 10% bonus on your product",
+      description: "Discover our exclusive nail designs",
       image: BannerImage1
     },
     {
@@ -30,6 +29,11 @@ const Banner = () => {
     {
       description: "Indulge in luxury nail treatments",
       image: BannerImage4
+    }
+  ] : [
+    {
+      description: "Sign up with your gmail now and get 10% bonus on your product",
+      image: BannerImage1
     }
   ];
 
@@ -96,12 +100,16 @@ const Banner = () => {
                leading-tighter md:pl-5 lg:pl-8 z-20">{slide.description}</h2>
                 <button 
                  onClick={() => {
-                  document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
+                    if (userAvailable) {
+                    document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                    window.location.href = '/auth';
+                    }
                 }}
                 className='w-fit z-[99] mx-auto md:mx-0 bg-black text-base 
                 font-semibold text-white mt-2 md:mt-5 md:ml-5 lg:ml-8 flex justify-center 
                 items-center rounded-3xl py-2 px-5 uppercase tracking-wide'>
-                    shop now
+                  {userAvailable ? 'shop now' : 'sign up'} 
                 </button>
             </div>
           ))}
@@ -130,34 +138,41 @@ const Banner = () => {
       </div>
 
       {/* Navigation Buttons */}
+      {slides.length > 1 && 
+      <>
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 visible md:invisible group-hover:visible -translate-y-1/2 bg-white/60 hover:bg-white p-2 rounded-full shadow-lg transition-all z-20"
+        className="absolute left-4 top-1/2 visible md:invisible group-hover:visible -translate-y-1/2 
+        bg-white/60 hover:bg-white p-2 rounded-full shadow-lg transition-all z-20"
         aria-label="Previous slide"
       >
         <FaChevronLeft className="md:w-6 w-4 h-4 md:h-6" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 z-20 top-1/2 visible md:invisible group-hover:visible -translate-y-1/2 bg-white/60 hover:bg-white p-2 rounded-full shadow-lg transition-all "
+        className="absolute right-4 z-20 top-1/2 visible md:invisible group-hover:visible -translate-y-1/2 
+        bg-white/60 hover:bg-white p-2 rounded-full shadow-lg transition-all "
         aria-label="Next slide"
       >
         <FaChevronRight  className="md:w-6 w-4 h-4 md:h-6" />
       </button>
+      </>}
 
       {/* Indicators */}
-      <div className="absolute bottom-4 left-1/4 -translate-x-1/2 md:flex gap-2 z-20 mx-auto hidden">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all ${
-              currentSlide === index ? 'bg-[#ff00ff] w-2 md:w-3' : 'bg-gray-400'
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
+      {slides.length > 1 && (
+        <div className="absolute bottom-4 left-1/4 -translate-x-1/2 md:flex gap-2 z-20 mx-auto hidden">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all ${
+                currentSlide === index ? 'bg-[#ff00ff] w-2 md:w-3' : 'bg-gray-400'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
