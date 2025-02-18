@@ -70,10 +70,10 @@ const EditProfile = () => {
                 window.location.reload();
                 console.log(result)
             } else {
-                toast.error(result.data.message || result.data.error);
+                console.log(result.data.message || result.data.error);
             }
         } catch (error) {
-            toast.error(error)
+            console.log(error)
         }
   }
 

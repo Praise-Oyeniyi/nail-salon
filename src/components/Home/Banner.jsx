@@ -1,19 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import BannerImage1 from '../../images/1.webp'
 import BannerImage2 from '../../images/2.webp'
 import BannerImage3 from '../../images/3.webp'
 import BannerImage4 from '../../images/4.webp'
 import { FaChevronLeft, FaChevronRight  } from "react-icons/fa";
+import { CartContextProvider } from '../../context/CartContext';
 
 
 const Banner = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const {userAvailable} = useContext(CartContextProvider);
 
   const slides = [
     {
-      description: "Discover our exclusive nail designs",
+      description: userAvailable ? "Discover our exclusive nail designs" :
+       "Sign up with your gmail now and get 10% bonus on your product",
       image: BannerImage1
     },
     {
@@ -69,7 +72,7 @@ const Banner = () => {
 
       return () => clearInterval(interval);
     }
-  }, [currentSlide, isPaused]);
+  }, [currentSlide, isPaused,]);
 
   return (
     <div 

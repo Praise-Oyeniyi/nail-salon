@@ -23,7 +23,7 @@ const CartContext = ({children}) => {
     const [addingToCart, setAddingToCart] = useState(false);
     const [deletingCartItem, setDeletingCartItem] = useState(false);
     const [showLoginModal, setShowLoginModal] = useState(false);
-
+    const [userAvailable, setUserAvailable] = useState(false);
 
     const fetchCartItems = useCallback(() => {
         const fetchCartApi = 'https://wittynailtip.com/backend/cart.php';
@@ -31,6 +31,7 @@ const CartContext = ({children}) => {
                 const result = await fetchApi(fetchCartApi)
                 if (result.data.success){
                     setCart(result.data.data || []);
+                    setUserAvailable(true);
                 } else {
                     setCart([])
                     setCartError(result.data.message)
@@ -246,6 +247,7 @@ const CartContext = ({children}) => {
                 addingToCart,
                 setShowLoginModal,
                 deletingCartItem,
+                userAvailable,
             }}>
             {children}
         </CartContextProvider.Provider>
