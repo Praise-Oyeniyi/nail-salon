@@ -52,6 +52,15 @@ const Sidebar = ({ open, setSide, setProductName, noSearch=false, }) => {
               My Orders
             </Link>
           </li>
+          <li>
+            <select className='border  border-[#ff00ff]/30 bg-white/30
+              py-1 text-sm outline-none rounded-md' defaultValue="" 
+              onChange={(e) => window.location.href = `/categories/${e.target.value}`}>
+              <option value="" disabled>Categories</option>
+              <option value="handmade">Handmade Nails</option>
+              <option value="machine">Machine Made Nails</option>
+            </select>
+          </li> 
           <li className="">
             <Link className="flex gap-x-1 items-center" to="/cart">
               <span>
