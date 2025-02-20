@@ -60,7 +60,7 @@ function App() {
               }
             />
             <Route path="details/:productId" element={<ProductDeet/>} />
-            <Route path="categories" element={<Categories/>} />
+            <Route path="categories/:category" element={<Categories/>} />
             <Route path="cart" element={<CartPage/>} />
             <Route path="edit-profile" element={<EditProfile/>} />
             <Route path="saved" element={<Saved/>} />
