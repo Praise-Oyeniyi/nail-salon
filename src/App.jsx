@@ -14,6 +14,7 @@ import OrdersPage from './components/Order/OrdersPage';
 import { ToastContainer } from 'react-toastify';
 import { Toaster } from 'react-hot-toast';
 import HowToUse from './pages/HowToUse';
+import Categories from './pages/Categories';
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
               }
             />
             <Route path="details/:productId" element={<ProductDeet/>} />
+            <Route path="categories" element={<Categories/>} />
             <Route path="cart" element={<CartPage/>} />
             <Route path="edit-profile" element={<EditProfile/>} />
             <Route path="saved" element={<Saved/>} />
