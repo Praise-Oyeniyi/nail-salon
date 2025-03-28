@@ -78,13 +78,12 @@ const Banner = () => {
 
       return () => clearInterval(interval);
     }
-  }, [currentSlide, isPaused,]);
+  }, [currentSlide, isPaused, slides, slides.length]);
 
-  if (!isPaused) {
+  if (!bannerData) {
     return (
-      <div className="bg-gray-200 md:bg-[#fff1f5] 
-      md:pl-10 md:pr-0 px-5 w-full 
-      py-14 md:py-0 md:h-[50vh] overflow-hidden relative">
+      <div className="bg-gray-100 md:bg-[#fff1f5] md:pl-10 md:pr-0 px-5 w-full 
+      py-24 max-md:animate-pulse md:py-0 md:h-[50vh] overflow-hidden relative">
         <div className="max-md:hidden flex justify-between 
         items-end gap-x-10 h-full animate-pulse">
           {/* Text Section Skeleton */}
@@ -100,6 +99,8 @@ const Banner = () => {
       </div>
     );
   }
+
+  console.log(slides)
 
   return (
     <div 
