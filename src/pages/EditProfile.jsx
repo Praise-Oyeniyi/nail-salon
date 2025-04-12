@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react'
 import Sidebar from '../components/Sidebar';
-import { FaUser } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import ProfileLoader from '../components/ProfileLoader';
@@ -110,7 +109,7 @@ const EditProfile = () => {
             <h3 className='font-semibold md:text-2xl text-lg'>Profile Picture</h3>
             <div className="pic-btn flex space-x-7">
               <div className="img-box rounded-full h-32 w-32 overflow-hidden flex justify-center items-center flex-shrink-0">
-                <img src="/logo.webp" className='w-full h-full object-cover'/>
+                <img alt='logo' src="/logo.webp" className='w-full h-full object-cover'/>
               </div>
             
                 <div className="btn flex md:flex-row flex-col justify-center gap-y-2 md:justify-start items-center md:space-x-3 text-white font-medium">

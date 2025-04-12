@@ -95,8 +95,10 @@ const ProductDeet = () => {
                                             value={selectedColor}
                                             onChange={(e) => setSelectedColor(e.target.value)}
                                         >
-                                            <option value="" disabled>Select color</option>
-                                            {['black', 'brown', 'transparent'].map((color, index) => (
+                                            <option value="" disabled>
+                                            {data?.colors?.length === 0 ? "No colors available" : "Select color"}
+                                            </option>
+                                            {data && data.colors.map((color, index) => (
                                                 <option key={index} value={color}>{color}</option>
                                             ))}
                                         </select>
@@ -129,11 +131,11 @@ const ProductDeet = () => {
                             </div>
                             <div className='pt-5 border-b-2 border-b-gray-300 pb-7 flex text-right font-bold w-full justify-center md:justify-end items-center gap-x-2 text-base md:text-lg'>
                                 <button
-                                    disabled={item < 1 || !selectedColor || !selectedSize}
+                                    disabled={item < 1 || !selectedSize}
                                     className={`h-10 w-40 rounded-3xl text-black tracking-wide 
                                         disabled:bg-gray-200 disabled:cursor-not-allowed font-medium
                                         text-center flex items-center justify-center
-                                        ${item < 1 || !selectedColor || !selectedSize ?
+                                        ${item < 1 || !selectedSize ?
                                          '' : 'bg-[#ffb7ce]'}`}
                                     onClick={addToItem}
                                 >
