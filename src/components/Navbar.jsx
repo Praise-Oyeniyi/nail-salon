@@ -80,7 +80,7 @@ const Navbar = ({setProductName}) => {
                        onChange={(e) => window.location.href = `/categories/${e.target.value}`}>
                         <option value="" disabled>Categories</option>
                         <option value="handmade">Handmade Nails</option>
-                        <option value="machine">Machine Made Nails</option>
+                        <option value="machine">24pcs Mechanical Nails</option>
                       </select>
                     </li> 
                     <li ><Link className='flex gap-x-1 items-center' to="/cart"><span><FaShoppingCart/></span>Cart</Link></li>

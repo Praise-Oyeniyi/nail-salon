@@ -58,7 +58,7 @@ const Sidebar = ({ open, setSide, setProductName, noSearch=false, }) => {
               onChange={(e) => window.location.href = `/categories/${e.target.value}`}>
               <option value="" disabled>Categories</option>
               <option value="handmade">Handmade Nails</option>
-              <option value="machine">Machine Made Nails</option>
+              <option value="machine">24pcs Mechanical Nails</option>
             </select>
           </li> 
           <li className="">
