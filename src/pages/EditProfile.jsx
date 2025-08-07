@@ -13,22 +13,41 @@ const EditProfile = () => {
   const [edit, setEdit] = useState(false)
   const [load, setLoad] = useState(false)
   const [update, setUpdate] = useState(false)
+  const [unauthorized, setUnauthorized] = useState(false);
 
   useEffect(() => {
     const profileApi = 'https://wittynailtip.com/backend/profile.php'
     async function fetchData(){
-          try {
-            const result = await fetchApi(profileApi)
-            if (result.data.status){        
+            setLoad(true);
+          try {  
+            const result = await fetch(profileApi, {
+        credentials: 'include' // if you need to send cookies
+      });
+            console.log("error:", result)
+
+            if (result.status === 401){
+              setUnauthorized(true);
+              toast.error('Please login to access your profile');
+              return;
+            }
+
+            if (result.data.status){  
                 setUser(result.data.data)
             } else {
                 toast.error(result.data.message);
                 setUser(null)
             }
-            setLoad(true); 
+            setLoad(false);
         } catch (error) {
-            toast.error(error)
+          if (error.response && error.response.status === 401) {
+            toast.error('Unauthorized: Please log in');
+            setUnauthorized(true);
+          }
+          console.error(error.message)
         }
+        // finally {
+        //     setLoad(false);
+        // }
     }
     fetchData();
   }, []);
@@ -56,7 +75,7 @@ const EditProfile = () => {
           setUpdate(false);
           setEdit(false);
       } catch (error) {
-          toast.error(error)
+          console.error(error.message)
       }
   }
 
@@ -73,7 +92,7 @@ const EditProfile = () => {
                 toast.error(result.data.message || result.data.error);
             }
         } catch (error) {
-            toast.error(error)
+            console.error(error.message)
         }
   }
 
@@ -82,10 +101,12 @@ const EditProfile = () => {
     <div className='w-full md:flex justify-start items-start overflow-x-hidden font-jost'>
       {/* <ToastContainer position="bottom-center" autoClose={2000} /> */}
       <div className='px-3 h-14 flex justify-between items-center lg:hidden'>
-          <div className='cursor-pointer p-2' onClick={()=>setSide(!side)}>
+          <button
+          type="button"
+          className='cursor-pointer p-2' onClick={()=>setSide(!side)}>
               <div className='w-5 h-1 bg-black mb-[2px]'></div>
               <div className='w-5 h-1 bg-[#ff00ff] ml-1'></div>
-          </div>
+          </button>
       </div>
       <div className='hidden lg:block'>    
           <Sidebar open={true} noSearch={true} />
@@ -99,11 +120,11 @@ const EditProfile = () => {
         {!load?
           <ProfileLoader/>
           :
-          user ===null || user === undefined || user?.status === 'error'?
+          unauthorized ?
             <div className='flex items-center justify-center h-screen w-full'>
               {load && <h3 className='flex flex-col justify-start items-center gap-x-2 italic'>
                 You are not logged in. Please 
-                <Link to='/auth'><span className='text-[#ff00ff] cursor-pointer font-semibold'>login</span></Link> to view your profile</h3>}
+                <Link to='/auth?login=true'><span className='text-[#ff00ff] cursor-pointer font-semibold'>login</span></Link> to view your profile</h3>}
             </div>
             :
           <div className="profile-inner space-y-3">
@@ -120,7 +141,9 @@ const EditProfile = () => {
                   <button className='bg-[#ff00ff] p-2 px-3 rounded-full text-base'>
                     Delete Picture
                   </button> */}
-                  <button className='bg-[#ff00ff] p-2 px-3 rounded-full text-base' onClick={()=>setEdit(true)}>
+                  <button 
+                  type="button"
+                  className='bg-[#ff00ff] p-2 px-3 rounded-full text-base' onClick={()=>setEdit(true)}>
                     Edit Profile
                   </button>
                 </div>
@@ -131,43 +154,50 @@ const EditProfile = () => {
                 <form action="" className="profile-details space-y-5 md:w-4/6 w-full mx-auto md:mx-0" onSubmit={(e)=>UpdateProfile(e)}>
                   <div className="profile-name">
                     <label htmlFor="name" className='block text-[#5f5f5f] font-semibold text-base'>FullName</label>
-                    <input disabled={!edit && true} type="text" name="name" id="name" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={user.full_name} />
+                    <input disabled={!edit && true} type="text" name="name" id="name" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' 
+                    placeholder={!unauthorized ? user?.full_name : ''}  />
                   </div>
 
                   <div className="profile-uname">
                     <label htmlFor="uname" className='block text-[#5f5f5f] font-semibold text-base'>Username</label>
-                    <input disabled type="text" name="uname" id="uname" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={user.username} />
+                    <input disabled type="text" name="uname" id="uname" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={!unauthorized ? user?.username : ''} />
                     <i className='text-[#cccccc] text-xs pl-3 font-medium'>Available change in 05/30</i>
                   </div>
 
                   <div className="profile-address">
                     <label htmlFor="address" className='block text-[#5f5f5f] font-semibold text-base'>Billing Address</label>
-                    <input disabled={!edit && true} type="text" name="address" id="address" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={user.billing_address}  />
+                    <input disabled={!edit && true} type="text" name="address" id="address" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={!unauthorized ? user?.billing_address : ''}  />
                   </div>
 
                   <div className="profile-email">
                     <label htmlFor="email" className='block text-[#5f5f5f] font-semibold text-base'>Email</label>
-                    <input disabled type="text" name="email" id="email" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={user.email}  />
+                    <input disabled type="text" name="email" id="email" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={ !unauthorized ? user?.email : ''} />
                   </div>
                   
 
                   <div className="profile-phone">
                     <label htmlFor="phone" className='block text-[#5f5f5f] font-semibold text-base'>Phone No</label>
-                    <input disabled={!edit && true} type="text" name="phone" id="phone" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={user.phone_number}  />
+                    <input disabled={!edit && true} type="text" name="phone" id="phone" className='h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder' placeholder={ !unauthorized ? user?.phone_number : ''}  />
                   </div>
 
                   <div className="submit-btns pt-3 flex justify-start items-center space-x-3 text-white font-medium">
                     {edit?
-                      <button className='bg-[#ffb7ce] p-2 px-3 rounded-full text-sm flex gap-x-2 items-center justify-center'>
+                      <button 
+                      type='button'
+                      className='bg-[#ffb7ce] p-2 px-3 rounded-full text-sm flex gap-x-2 items-center justify-center'>
                         Update Profile
                         <AiOutlineLoading3Quarters className={`animate-spin ${update? 'block':'hidden'}`}/>
                       </button>
                     :
                       <>
-                        <button className='bg-[#ffb7ce] p-2 px-3 rounded-full text-sm'>
+                        <button 
+                        type='button'
+                        className='bg-[#ffb7ce] p-2 px-3 rounded-full text-sm'>
                           Reset Password
                         </button>
-                        <button className='bg-[#ff00ff] p-2 px-3 rounded-full text-sm' onClick={(e)=>Logout(e)}>
+                        <button 
+                        type='button'
+                        className='bg-[#ff00ff] p-2 px-3 rounded-full text-sm' onClick={(e)=>Logout(e)}>
                           Logout
                         </button>
                       </>

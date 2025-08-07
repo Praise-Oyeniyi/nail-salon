@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import HandIn from '../images/IMAGE1.webp'
 import Hand from '../images/IMAGE2.webp'
@@ -8,13 +8,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { authSchema, loginSchema } from '../constants/schema/AuthSchema';
 import {FormComp, PassFormComp} from './FormComp';
 import {submitData} from '../../src/apis/Auth';
-import { useNavigate} from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import toast from 'react-hot-toast'
 
 
+
 const Welcome = () => {
     const navigate = useNavigate();
+     const [searchParams, setSearchParams] = useSearchParams();
     const [message,setMessage] = useState(null)
     const [up, setUp]= useState(true);
     const [loading, setIsLoading]= useState(false);
@@ -22,7 +24,15 @@ const Welcome = () => {
         resolver: yupResolver(up?authSchema:loginSchema),
         mode: "onChange"
     });
-    const [update, setUpdate] = useState(false)
+    const [update, setUpdate] = useState(false);
+
+    useEffect(() => {
+        if (searchParams.get('login') === 'true') {
+            setUp(false);
+            searchParams.delete('login');
+            setSearchParams(searchParams);
+        }
+    }, [searchParams, setSearchParams]);
     
 
     const onSubmitHandler = async (data) => {

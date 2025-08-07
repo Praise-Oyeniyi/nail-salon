@@ -92,6 +92,7 @@ const Banner = () => {
               <h2 className="text-3xl md:text-5xl tracking-wide font-semibold
                leading-tighter md:pl-5 lg:pl-8 z-20">{slide.description}</h2>
                 <button 
+                type="button"
                  onClick={() => {
                   document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
                 }}
@@ -128,6 +129,7 @@ const Banner = () => {
 
       {/* Navigation Buttons */}
       <button
+      type="button"
         onClick={prevSlide}
         className="absolute left-4 top-1/2 visible md:invisible group-hover:visible -translate-y-1/2 bg-white/60 hover:bg-white p-2 rounded-full shadow-lg transition-all z-20"
         aria-label="Previous slide"
@@ -135,6 +137,7 @@ const Banner = () => {
         <FaChevronLeft className="md:w-6 w-4 h-4 md:h-6" />
       </button>
       <button
+      type="button"
         onClick={nextSlide}
         className="absolute right-4 z-20 top-1/2 visible md:invisible group-hover:visible -translate-y-1/2 bg-white/60 hover:bg-white p-2 rounded-full shadow-lg transition-all "
         aria-label="Next slide"
@@ -146,6 +149,7 @@ const Banner = () => {
       <div className="absolute bottom-4 left-1/4 -translate-x-1/2 md:flex gap-2 z-20 mx-auto hidden">
         {slides.map((_, index) => (
           <button
+            type="button"
             key={index}
             onClick={() => goToSlide(index)}
             className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all ${
