@@ -8,13 +8,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { authSchema, loginSchema } from '../constants/schema/AuthSchema';
 import {FormComp, PassFormComp} from './FormComp';
 import {submitData} from '../../src/apis/Auth';
+import { useSearchParams } from 'react-router-dom'
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import toast from 'react-hot-toast'
 
 
 
 const Welcome = () => {
-    // const navigate = useNavigate();
+     const [searchParams, setSearchParams] = useSearchParams();
     const [message,setMessage] = useState(null)
     const [up, setUp]= useState(true);
     const [loading, setIsLoading]= useState(false);
@@ -50,6 +51,7 @@ const Welcome = () => {
         } catch (error) {
             setMessage('An error occurred');
             setUpdate(false);
+            console.error(error)
         }
         finally{    
             setIsLoading(false);
@@ -73,6 +75,7 @@ const Welcome = () => {
         } catch (error) {
             setMessage('An error occurred');
             setUpdate(false);
+            console.error(error)
         }
         finally{    
             setIsLoading(false);
@@ -146,12 +149,15 @@ const Welcome = () => {
                                 <span className='text-base md:text-xl'><FaGoogle /></span>{up?'Sign up with google':'Sign in with google'}
                             </button> */}
 
-                            <p className='font-normal text-sm md:text-base pt-9 cursor-pointer'>
+                            <div 
+                            className='flex items-center justify-center font-normal text-sm md:text-base pt-9 cursor-pointer'>
                                 {up? 'Already have an account?':"Don't have an account?" }
                             <Link to href={up?'/signin':'/'}
-                            ><span onClick={()=>setUp(!up)} className='uppercase font-semibold pl-2'>
-                            {up? 'Sign In': 'Sign up'}</span>
-                            </Link> </p>
+                            ><button
+                            type="button"
+                             onClick={()=>setUp(!up)} className='uppercase font-semibold pl-2'>
+                            {up? 'Sign In': 'Sign up'}</button>
+                            </Link> </div>
                         </div>
                     </form>
                 </div>

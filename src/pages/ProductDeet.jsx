@@ -1,10 +1,11 @@
+/** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
 import React, { useContext, useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import { FaTools, FaHands, FaRing, FaRegStar } from 'react-icons/fa';
 import { useParams } from "react-router-dom";
 import { CartContextProvider } from '../context/CartContext';
 import ProductDeetLoader from '../components/PDdetails/ProductDeetLoader';
-import { sendApi } from '../apis/Index';
+import { fetchApi, sendApi } from '../apis/Index';
 import { RiLoader4Fill } from 'react-icons/ri';
 import FooterSection from '../components/Footer';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -21,6 +22,26 @@ const ProductDeet = () => {
     const [selectedColor, setSelectedColor] = useState('');
     const [selectedSize, setSelectedSize] = useState('');
     const [mainImage, setMainImage] = useState('');
+    const [reviews, setReviews] = useState([]);
+
+     useEffect(() => {
+        const fetchReviews = async () => {
+            try {
+                const response = await sendApi(
+                    { product_id: productId },
+                    'https://wittynailtip.com/backend/reviews.php'
+                );
+                
+                if (response.data.success) {
+                    setReviews(response.data.reviews);
+                }
+            } catch (error) {
+                console.error('Error fetching reviews:', error);
+            }
+        };
+        
+        fetchReviews();
+    }, [productId]);
 
     useEffect(() => {
         const prodApi = 'https://wittynailtip.com/backend/product-info.php';
@@ -55,8 +76,8 @@ const ProductDeet = () => {
         const productDetails = {
             // ...data,
             product_id: data?.product_id,
-            color: selectedColor,
-            size: selectedSize,
+            color: data?.category?.toLowerCase() === 'accessory' ? 'none' : selectedColor,
+            size: data?.category?.toLowerCase() === 'accessory' ? 'none' : selectedSize,
             quantity: item
         };
         addtoCart(productDetails);
@@ -279,12 +300,16 @@ const ProductDeet = () => {
                                 <button
                                             type="button"
 
-                                    disabled={item < 1 || !selectedColor || !selectedSize}
+                                   disabled={
+                                        item < 1 || 
+                                        (data?.category?.toLowerCase() !== 'accessory' && 
+                                        (!selectedColor || !selectedSize))
+                                    }
                                     className={`h-10 w-40 rounded-3xl text-black tracking-wide 
                                         disabled:bg-gray-200 disabled:cursor-not-allowed font-medium
                                         text-center flex items-center justify-center
-                                        ${item < 1 || !selectedSize ?
-                                         '' : 'bg-[#ffb7ce]'}`}
+                                         ${item < 1 || (data?.category?.toLowerCase() !== 'accessory' && !selectedSize) ?
+                                        '' : 'bg-[#ffb7ce]'}`}
                                     onClick={addToItem}
                                 >
                                     {addingToCart ? 
@@ -311,6 +336,33 @@ const ProductDeet = () => {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div className="mt-10 border-t pt-8">
+                        <h3 className="text-xl font-bold mb-4">Customer Reviews</h3>
+                        {/* Reviews List */}
+                        <div className="space-y-6">
+                            {reviews.length > 0 ? (
+                                reviews.map((review, index) => (
+                                    <div key={index} className="border-b pb-4">
+                                        <div className="flex items-center mb-2">
+                                            <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-3">
+                                                {review.name.charAt(0).toUpperCase()}
+                                            </div>
+                                            <div>
+                                                <h4 className="font-medium">{review.name}</h4>
+                                                <p className="text-xs text-gray-500">
+                                                    {new Date(review.created_at).toLocaleDateString()}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <p className="text-gray-700">{review.text}</p>
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="text-gray-500">No reviews yet. Be the first to review!</p>
+                            )}
                         </div>
                     </div>
                 </div>

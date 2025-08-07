@@ -140,7 +140,9 @@ const EditProfile = () => {
                   <button className='bg-[#ff00ff] p-2 px-3 rounded-full text-base'>
                     Delete Picture
                   </button> */}
-                  <button className='bg-red-300 p-2 px-3 rounded-full text-base' onClick={()=>setEdit(true)}>
+                  <button
+                  type="button"
+                  className='bg-red-300 p-2 px-3 rounded-full text-base' onClick={()=>setEdit(true)}>
                     Edit Profile
                   </button>
                 </div>
@@ -188,11 +190,13 @@ const EditProfile = () => {
                     :
                       <>
                         <button 
-                        type='button'
+                        // type='submit'
                         className='bg-[#ffb7ce] p-2 px-3 rounded-full text-sm'>
                           Reset Password
                         </button>
-                        <button className='bg-red-300 p-2 px-3 rounded-full text-sm' onClick={(e)=>Logout(e)}>
+                        <button
+                          // type="submit"
+                         className='bg-red-300 p-2 px-3 rounded-full text-sm' onClick={(e)=>Logout(e)}>
                           Logout
                         </button>
                       </>

@@ -1,140 +1,162 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { CiSearch } from "react-icons/ci";
-import { FaShoppingCart,FaRegUserCircle, } from "react-icons/fa";
+import { FaShoppingCart, FaRegUserCircle } from "react-icons/fa";
 import { CiLocationOn } from "react-icons/ci";
 import Sidebar from './Sidebar';
-import Logo from '../images/logo.webp'
-import { Link } from 'react-router-dom';
+import Logo from '../images/logo.webp';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Navbar = ({setProductName}) => {
+const Navbar = ({ setProductName }) => {
+    const navigate = useNavigate();
     const [side, setSide] = useState(false);
-    const [city, setCity] = useState(null)
-    const [error, setError] = useState(null)
+    const [city, setCity] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchLocation = async () => {
           try {
-            // First, get the user's coordinates
             const position = await new Promise((resolve, reject) => {
               navigator.geolocation.getCurrentPosition(resolve, reject);
             });
     
             const { latitude, longitude } = position.coords;
-    
             const response = await fetch(
               `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
             );
     
-            if (!response.ok) {
-              throw new Error('Failed to fetch location data');
-            }
+            if (!response.ok) throw new Error('Failed to fetch location data');
     
             const data = await response.json();
             const cityName = data.address.city || data.address.town || data.address.village || data.address.suburb;
-            
             setCity(cityName);
           } catch (err) {
-            if (err.code === 1) {
-              setError('Please enable location access');
-            } else if (err.code === 2) {
-              setError('Location unavailable');
-            } else {
-              setError('Error fetching location');
-            }
+            setError(err.code === 1 ? 'Please enable location access' : 
+                    err.code === 2 ? 'Location unavailable' : 'Error fetching location');
           }
         };
     
         fetchLocation();
-      }, []);
+    }, []);
 
+    const handleSearchChange = (e) => setProductName(e.target.value);
 
-  const handleSearchChange = (e) => {
-    setProductName(e.target.value);
-  };
+    return (
+        <nav className="w-full bg-white shadow-sm sticky top-0 z-50">
+            {/* Desktop Navbar */}
+            <div className="hidden lg:flex container mx-auto px-4 py-3 items-center justify-between">
+                {/* Logo */}
+                <Link to="/" className="flex items-center">
+                    <img src={Logo} alt="Logo" className="h-10 w-10 rounded-full" />
+                </Link>
 
-  return (
-    <div className='w-full relative md:w-[90%] mx-auto'>
-        <div className='w-full h-14 hidden md:flex items-center max-md:px-10 mt-3 mb-5'>
-            <div className="top-header w-3/6">
-                <div className="logo h-12 w-12 bg-black rounded-full overflow-hidden">
-                    <Link to="/"><img src={Logo} alt="" className='w-full'/></Link>
+                {/* Search Bar */}
+                <div className="relative w-1/3 mx-4">
+                    <input 
+                        type="text" 
+                        placeholder="Search products..." 
+                        className="w-full py-2 px-4 pr-10 rounded-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pink-200 text-sm"
+                        onChange={handleSearchChange}
+                    />
+                    <CiSearch className="absolute right-3 top-2.5 text-gray-400 text-lg" />
                 </div>
-                
-            </div>
 
-            <div className="w-full">
-                <ul className='w-full relative font-normal flex cursor-pointer justify-between items-center'>
-                    {/* <li className='flex gap-x-1 items-center'>Categories <span><FaAngleDown /></span></li> */}
-                    <li><Link className='flex gap-x-1 items-center' to='/saved'>Saved Items</Link></li>
-                    {/* <li>Delivery</li> */}
-                    <li className='relative bg-[#fff1f5] rounded-2xl py-1 px-5'>
-                        <input type="text" placeholder='search product'  
-                        className='w-full bg-transparent placeholder:text-sm
-                         text-sm outline-none accent-gray-700 font-light' onChange={handleSearchChange}/>
-                        <span className='absolute top-[50%] right-2 -translate-y-[50%]  text-gray-700'><CiSearch /></span>
-                    </li>
-                    <li><Link className='flex gap-x-1 items-center' to='/order'>My Orders</Link></li>    
-                    <li>
-                      <select className='border  border-[#ff00ff]/30 bg-transparent
-                       py-1 text-sm outline-none rounded-md' defaultValue="" 
-                       onChange={(e) => window.location.href = `/categories/${e.target.value}`}>
-                        <option value="" disabled>Categories</option>
-                        <option value="handmade">Handmade Nails</option>
-                        <option value="machine">24pcs Mechanical Nails</option>
-                      </select>
-                    </li> 
-                    <li ><Link className='flex gap-x-1 items-center' to="/cart"><span><FaShoppingCart/></span>Cart</Link></li>
-                    <li className='flex gap-x-1 items-center'><Link className='flex gap-x-1 items-center' to='/edit-profile'><span><FaRegUserCircle/> </span>Account</Link></li>
-                    <li><Link className='flex gap-x-1 items-center' to='/how-to-use'> How to Use</Link></li>     
-                  </ul>
-            </div>
-            
-        </div>
+                {/* Navigation Links */}
+                <div className="flex items-center space-x-6">
+                    <Link to="/saved" className="text-gray-700 hover:text-pink-500 text-sm font-medium">Saved</Link>
+                    <Link to="/order" className="text-gray-700 hover:text-pink-500 text-sm font-medium">Orders</Link>
+                    <Link to="/how-to-use" className="text-gray-700 hover:text-pink-500 text-sm font-medium">How to use</Link>
 
-        <div>
-            <div className={`w-full h-12 md:hidden z-30 transition-all ease-in duration-200
-               ${side? "fixed top-0 left-0 bg-[#fff1f5fd]":"block"}`}>
-                <div className={`w-full h-full flex justify-between items-center`}>
-                    <div className='burger-menu w-1/6 h-full flex items-center justify-center'>
-                        <div className='cursor-pointer p-2' onClick={()=>setSide(!side)}>
-                            <div className='w-5 h-1 bg-black mb-[2px]'></div>
-                            <div className='w-5 h-1 bg-[#ff00ff] ml-1'></div>
+                    <div className="relative">
+                        <select 
+                            onChange={(e) => navigate(`/categories/${e.target.value}`)}
+                            className="appearance-none bg-gray-50 border-0 py-2 px-3 pr-8 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
+                        >
+                            <option value="" disabled selected>Categories</option>
+                            <option value="handmade">Handmade Nails</option>
+                            <option value="machine">Mechanical Nails</option>
+                            <option value="accessory">Accessories</option>
+                        </select>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg 
+                            className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <title>Svg</title>
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                            </svg>
                         </div>
                     </div>
 
-                    <div className='w-full border-b border-l h-full border-l-gray-300 border-b-gray-300 shadow-gray-300 shadow-sm'>
-                        
-                        <ul className='w-full h-full flex items-center justify-center z-50 gap-x-7 text-lg font-normal'>
-                            <li className='cursor-pointer hidden md:block' onClick={()=>setSide(!side)}>
-                                <div className='w-5 h-1 bg-black mb-[2px]'></div>
-                                <div className='w-5 h-1 bg-[#ff00ff] ml-1'></div>
-                                <div className='w-5 h-1 bg-black ml-2'></div>
-                            </li>
-                            <li className='relative bg-[#fff1f5] rounded-2xl py-1 px-2 hidden md:block'>
-                                <input type="text" placeholder='search product'  
-                                className='w-full bg-transparent text-sm outline-none accent-gray-700'
-                                 onChange={handleSearchChange}/>
-                                <span className='absolute top-[50%] right-2 -translate-y-[50%]  text-gray-700'><CiSearch /></span>
-                            </li>
-                        
-                            <li ><Link className='flex gap-x-1 items-center' to='/cart'><span><FaShoppingCart/></span>Cart</Link></li>
-                            
-                            <li className='flex gap-x-1 items-center'><span><CiLocationOn /></span>
-                            {city && city}</li>
-                        </ul>
+                    <Link to="/cart" className="flex items-center text-gray-700 hover:text-pink-500">
+                        <FaShoppingCart className="mr-1" />
+                        <span className="text-sm font-medium">Cart</span>
+                    </Link>
+
+                    <Link to="/edit-profile" className="flex items-center text-gray-700 hover:text-pink-500">
+                        <FaRegUserCircle className="mr-1" />
+                        <span className="text-sm font-medium">Account</span>
+                    </Link>
+
+                    {/* {city && (
+                        <div className="flex items-center text-gray-700">
+                            <CiLocationOn className="mr-1" />
+                            <span className="text-xs">{city}</span>
+                        </div>
+                    )} */}
+                </div>
+            </div>
+
+            {/* Mobile Navbar */}
+            <div className="lg:hidden bg-white shadow-sm">
+                <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+                    <button 
+                      type="button"
+                        onClick={() => setSide(!side)}
+                        className="p-2 focus:outline-none"
+                    >
+                        <div className="w-5 space-y-1">
+                            <div className="h-0.5 bg-black"></div>
+                            <div className="h-0.5 bg-pink-500"></div>
+                            <div className="h-0.5 bg-black"></div>
+                        </div>
+                    </button>
+
+                    <Link to="/" className="flex-1 flex justify-center">
+                        <img src={Logo} alt="Logo" className="h-8 w-8 rounded-full" />
+                    </Link>
+
+                    <div className="flex items-center space-x-4">
+                        <Link to="/cart" className="text-gray-700">
+                            <FaShoppingCart />
+                        </Link>
+                        {city && (
+                            <div className="flex items-center text-gray-700">
+                                <CiLocationOn />
+                            </div>
+                        )}
                     </div>
-                </div> 
-                <div className={`absolute !z-[99999]`}>
-                    <Sidebar 
+                </div>
+
+                {/* Mobile Search */}
+                <div className="px-4 pb-3">
+                    <div className="relative">
+                        <input 
+                            type="text" 
+                            placeholder="Search products..." 
+                            className="w-full py-2 px-4 pr-10 rounded-full bg-gray-50 focus:outline-none text-sm"
+                            onChange={handleSearchChange}
+                        />
+                        <CiSearch className="absolute right-3 top-2.5 text-gray-400 text-lg" />
+                    </div>
+                </div>
+
+                {/* Mobile Sidebar */}
+                <Sidebar 
                     open={side} 
                     setSide={setSide} 
-                    setProductName={setProductName}/>
-                </div>
-                
+                    setProductName={setProductName}
+                />
             </div>
-        </div>
-    </div>
-  )
-}
+        </nav>
+    );
+};
 
-export default Navbar
+export default Navbar;

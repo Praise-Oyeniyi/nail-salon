@@ -120,14 +120,16 @@ const CartPage = () => {
     <div className='font-jost relative'>
         {/* <ToastContainer position="bottom-center" autoClose={2000} /> */}
         <Navbar/>
+        {cart.length > 0 && 
         <div className="md:w-5/6 w-[90%] mx-auto flex justify-end mt-4">
             <button 
+            type='button'
                 onClick={() => setShowCouponModal(true)}
                 className="text-[#ff00ff] border border-[#ff00ff] px-4 py-2 rounded-lg hover:bg-[#fff1f5] transition"
             >
                 Apply Coupon
             </button>
-        </div>
+        </div>}
         <div className='md:w-5/6 w-[90%] mx-auto mt-5 md:mt-7 h-full mb-20'>
             <div className='w-full'>
                 {cart?.map((e, index)=>(
@@ -153,7 +155,7 @@ const CartPage = () => {
                             name="cart-select" id="cart-select" 
                         />
                         <h4 className='font-bold md:text-xl text-lg'>ALL </h4> */}
-                        <button className='bg-red-300 flex justify-center items-center 
+                        <button type="button" className='bg-red-300 flex justify-center items-center 
                         rounded-2xl cursor-pointer px-3 py-2' onClick={()=>emptyCart()}>Empty cart</button>
                     </div>
 
@@ -167,6 +169,7 @@ const CartPage = () => {
                     </div>
 
                     <button 
+                    type='button'
                         onClick={()=>payOrder()} 
                         className='md:text-lg text-xs uppercase cursor-pointer 
                         flex items-center justify-center text-center
@@ -206,6 +209,7 @@ const CartPage = () => {
                     
                     <div className="flex justify-end gap-2">
                         <button
+                        type="button"
                             onClick={() => {
                                 setShowCouponModal(false);
                             }}
@@ -214,6 +218,7 @@ const CartPage = () => {
                             Cancel
                         </button>
                         <button
+                        type="button"
                             onClick={validateCoupon}
                             disabled={isCouponLoading}
                             className="px-4 py-2 bg-[#ff00ff] text-white rounded disabled:opacity-50"

@@ -70,7 +70,7 @@ const OrderIndex = () => {
         <div className=''>
             <Sidebar open={side}/>
         </div>
-        <div className='w-full md:py-7 py-3 px-5 mx-auto lg:ml-[25%]'>
+        <div className='relative z-[100] w-full md:py-7 py-3 px-5 mx-auto lg:ml-[25%]'>
             <div className='w-full space-y-3'>
                 <div className="order-head flex justify-between items-center relative">
                     <div className='relative'>

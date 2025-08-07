@@ -30,7 +30,9 @@ const Categories = () => {
         <Navbar />
         <div className='max-w-[90%] w-[90%] overflow-x-hidden mx-auto'>
             <h3 className='my-7 capitalize font-medium text-2xl md:text-3xl'>
-            {category === 'machine' ? 'Machine Made Nails' : `${category} Nails`}
+            {category === 'machine' ? 'Machine Made Nails' : 
+            category === 'handmade' ? 'Handmade  Nails' : 
+            "Accessories"}
             </h3>
             <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-start w-full mx-auto max-w-full
                 gap-x-4 md:gap-x-6 gap-y-3 md:gap-y-5 justify-start flex-wrap'>

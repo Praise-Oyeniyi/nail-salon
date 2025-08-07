@@ -100,7 +100,7 @@ const Banner = () => {
     );
   }
 
-  console.log(slides)
+  // console.log(slides)
 
   return (
     <div 
@@ -194,6 +194,7 @@ const Banner = () => {
         <div className="absolute bottom-4 left-1/4 -translate-x-1/2 md:flex gap-2 z-20 mx-auto hidden">
           {slides.map((_, index) => (
             <button
+              type="button"
               key={index}
               onClick={() => goToSlide(index)}
               className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all ${

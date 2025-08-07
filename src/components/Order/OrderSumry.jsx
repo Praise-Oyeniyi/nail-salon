@@ -1,7 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { toast } from 'react-hot-toast';
+import { sendApi } from '../../apis/Index';
 
 // #ffb7ce #cccccc #fff1f5 #ff00ff
 const OrderSumry = ({ordered, user}) => {
+    const [comment, setComment] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleSubmitComment = async () => {
+        if (!comment.trim()) {
+            toast.error('Please enter a comment');
+            return;
+        }
+
+        setIsSubmitting(true);
+        try {
+            const response = await sendApi(
+                {
+                    order_id: ordered.order_id,
+                    text: comment
+                },
+                'https://wittynailtip.com/backend/add-review..php'
+            );
+
+            if (response.data.success) {
+                toast.success('Review submitted successfully!');
+                setComment('');
+            } else {
+                toast.error(response.data.message || 'Failed to submit review');
+            }
+        } catch (error) {
+            toast.error('An error occurred while submitting your comment');
+            console.error('Review submission error:', error);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
   return (
     <div className='space-y-3'>
         <div className='border border-gray-200 rounded-md text-summary'>
@@ -80,15 +114,36 @@ const OrderSumry = ({ordered, user}) => {
             }
         </div>
 
-        <div className="timeline border-2 border-gray-300 rounded-md md:px-5 px-3 md:py-3 py-2">
+        <div className="timeline relative border-2 border-gray-300 rounded-md md:px-5 px-3 md:py-3 py-2">
             <div className='text-sm'>
                 <h4 className='font-bold md:text-xl text-base'>Timeline</h4>
                 <p className='font-medium md:text-sm text-xs'>Review your order at a glance in our summary page</p>
                 <h6 className='name border border-gray-300 rounded-md px-2 w-fit my-1 font-bold text-sm md:text-base'>{user?.full_name}</h6>
 
-                <textarea name="comment" id="comment" cols="30" rows="5" 
+                <textarea 
+                    name="comment" 
+                    id="comment" 
+                    cols="30" 
+                    rows="5" 
+                    value={comment}
+                    onChange={(e) => {
+                        console.log('Typing:', e.target.value);
+                        setComment(e.target.value);
+                    }}
+
+                    disabled={isSubmitting}
                     className='w-5/6 md:w-3/6 bg-transparent rounded-lg p-3 outline-none border border-gray-300' 
-                    placeholder='Leave a comment' ></textarea>
+                    placeholder='Leave a comment' >
+                </textarea>
+
+                <button
+                type="button"
+                    onClick={handleSubmitComment}
+                    disabled={isSubmitting || !comment.trim()}
+                    className="mt-2 bg-[#FFB8CD] hover:bg-[#ff00ff] text-white px-4 py-2 rounded-lg disabled:opacity-50 text-sm"
+                >
+                    {isSubmitting ? 'Submitting...' : 'Submit Review'}
+                </button>
             </div>
         </div>
         

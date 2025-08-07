@@ -1,11 +1,12 @@
 import React from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaShoppingCart, FaRegUserCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../images/logo.webp";
 
 // #ffb7ce #cccccc #fff1f5 #ff00ff
 const Sidebar = ({ open, setSide, setProductName, noSearch=false, }) => {
+  const navigate = useNavigate();
   const handleSearchChange = (e) => {
     setProductName(e.target.value);
   };
@@ -53,12 +54,12 @@ const Sidebar = ({ open, setSide, setProductName, noSearch=false, }) => {
             </Link>
           </li>
           <li>
-            <select className='border  border-[#ff00ff]/30 bg-white/30
-              py-1 text-sm outline-none rounded-md' defaultValue="" 
-              onChange={(e) => window.location.href = `/categories/${e.target.value}`}>
+            <select className='bg-[#fff1f5] lg:bg-[#fdfdfd] relative right-3 border-0 py-1 px-3 pr-8 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-pink-200 outline-none' defaultValue="" 
+              onChange={(e) => navigate(`/categories/${e.target.value})`)}>
               <option value="" disabled>Categories</option>
               <option value="handmade">Handmade Nails</option>
               <option value="machine">24pcs Mechanical Nails</option>
+              <option value="accessory">Accessories</option>
             </select>
           </li> 
           <li className="">
@@ -83,7 +84,7 @@ const Sidebar = ({ open, setSide, setProductName, noSearch=false, }) => {
             </Link>
           </li>
           {!noSearch && 
-          <li className="relative bg-[#fff1f5] lg:bg-[#ffb7ce] rounded-2xl py-1 px-2">
+          <li className="relative bg-[#fff1f5] lg:bg-[#fdfdfd] rounded-2xl py-1 px-2 lg:hidden">
             <input
               type="text"
               placeholder="search product"
