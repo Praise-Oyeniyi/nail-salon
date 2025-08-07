@@ -73,10 +73,20 @@ const Navbar = ({setProductName}) => {
                          text-sm outline-none accent-gray-700 font-light' onChange={handleSearchChange}/>
                         <span className='absolute top-[50%] right-2 -translate-y-[50%]  text-gray-700'><CiSearch /></span>
                     </li>
-                    <li><Link className='flex gap-x-1 items-center' to='/order'>My Orders</Link></li>     
+                    <li><Link className='flex gap-x-1 items-center' to='/order'>My Orders</Link></li>    
+                    <li>
+                      <select className='border  border-[#ff00ff]/30 bg-transparent
+                       py-1 text-sm outline-none rounded-md' defaultValue="" 
+                       onChange={(e) => window.location.href = `/categories/${e.target.value}`}>
+                        <option value="" disabled>Categories</option>
+                        <option value="handmade">Handmade Nails</option>
+                        <option value="machine">24pcs Mechanical Nails</option>
+                      </select>
+                    </li> 
                     <li ><Link className='flex gap-x-1 items-center' to="/cart"><span><FaShoppingCart/></span>Cart</Link></li>
                     <li className='flex gap-x-1 items-center'><Link className='flex gap-x-1 items-center' to='/edit-profile'><span><FaRegUserCircle/> </span>Account</Link></li>
-                </ul>
+                    <li><Link className='flex gap-x-1 items-center' to='/how-to-use'> How to Use</Link></li>     
+                  </ul>
             </div>
             
         </div>

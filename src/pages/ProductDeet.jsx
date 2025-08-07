@@ -16,7 +16,7 @@ import 'swiper/css/pagination';
 const ProductDeet = () => {
     const { productId } = useParams();
     const [data, setData] = useState(null);
-    const { addtoCart, removedItem, addingToCart } = useContext(CartContextProvider);
+    const { addtoCart, addingToCart } = useContext(CartContextProvider);
     const [item, setItems] = useState(1);
     const [selectedColor, setSelectedColor] = useState('');
     const [selectedSize, setSelectedSize] = useState('');
@@ -62,10 +62,10 @@ const ProductDeet = () => {
         addtoCart(productDetails);
     };
 
-    const removeItem = (itemId) => {
-        removedItem(itemId);
-        setItems(prevItem => (prevItem <= 1 ? 1 : prevItem - 1));
-    };
+    // const removeItem = (itemId) => {
+    //     removedItem(itemId);
+    //     setItems(prevItem => (prevItem <= 1 ? 1 : prevItem - 1));
+    // };
 
     const getColors = () => {
         if (!data?.color_image_pairs) return [];
@@ -281,9 +281,10 @@ const ProductDeet = () => {
 
                                     disabled={item < 1 || !selectedColor || !selectedSize}
                                     className={`h-10 w-40 rounded-3xl text-black tracking-wide 
+                                        disabled:bg-gray-200 disabled:cursor-not-allowed font-medium
                                         text-center flex items-center justify-center
-                                        ${item < 1 || !selectedColor || !selectedSize ?
-                                         '!bg-[#ffb7ce86]/40 cursor-not-allowed' : 'bg-[#ffb7ce]'}`}
+                                        ${item < 1 || !selectedSize ?
+                                         '' : 'bg-[#ffb7ce]'}`}
                                     onClick={addToItem}
                                 >
                                     {addingToCart ? 

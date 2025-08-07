@@ -8,15 +8,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { authSchema, loginSchema } from '../constants/schema/AuthSchema';
 import {FormComp, PassFormComp} from './FormComp';
 import {submitData} from '../../src/apis/Auth';
-import { useNavigate, useSearchParams } from 'react-router-dom'
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import toast from 'react-hot-toast'
 
 
 
 const Welcome = () => {
-    const navigate = useNavigate();
-     const [searchParams, setSearchParams] = useSearchParams();
+    // const navigate = useNavigate();
     const [message,setMessage] = useState(null)
     const [up, setUp]= useState(true);
     const [loading, setIsLoading]= useState(false);
