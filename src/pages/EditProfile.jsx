@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react'
 import Sidebar from '../components/Sidebar';
-import { FaUser } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import ProfileLoader from '../components/ProfileLoader';
@@ -70,10 +69,10 @@ const EditProfile = () => {
                 window.location.reload();
                 console.log(result)
             } else {
-                toast.error(result.data.message || result.data.error);
+                console.log(result.data.message || result.data.error);
             }
         } catch (error) {
-            toast.error(error)
+            console.log(error)
         }
   }
 
@@ -109,8 +108,8 @@ const EditProfile = () => {
           <div className="profile-inner space-y-3">
             <h3 className='font-semibold md:text-2xl text-lg'>Profile Picture</h3>
             <div className="pic-btn flex space-x-7">
-              <div className="img-box rounded-full h-32 w-32 overflow-hidden bg-[#ffb7ce] flex justify-center items-center flex-shrink-0">
-                <FaUser className='text-5xl '/>
+              <div className="img-box rounded-full h-32 w-32 overflow-hidden flex justify-center items-center flex-shrink-0">
+                <img alt='logo' src="/logo.webp" className='w-full h-full object-cover'/>
               </div>
             
                 <div className="btn flex md:flex-row flex-col justify-center gap-y-2 md:justify-start items-center md:space-x-3 text-white font-medium">
@@ -120,7 +119,7 @@ const EditProfile = () => {
                   <button className='bg-[#ff00ff] p-2 px-3 rounded-full text-base'>
                     Delete Picture
                   </button> */}
-                  <button className='bg-[#ff00ff] p-2 px-3 rounded-full text-base' onClick={()=>setEdit(true)}>
+                  <button className='bg-red-300 p-2 px-3 rounded-full text-base' onClick={()=>setEdit(true)}>
                     Edit Profile
                   </button>
                 </div>
@@ -167,7 +166,7 @@ const EditProfile = () => {
                         <button className='bg-[#ffb7ce] p-2 px-3 rounded-full text-sm'>
                           Reset Password
                         </button>
-                        <button className='bg-[#ff00ff] p-2 px-3 rounded-full text-sm' onClick={(e)=>Logout(e)}>
+                        <button className='bg-red-300 p-2 px-3 rounded-full text-sm' onClick={(e)=>Logout(e)}>
                           Logout
                         </button>
                       </>

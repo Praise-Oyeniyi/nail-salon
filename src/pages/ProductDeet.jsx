@@ -7,11 +7,12 @@ import ProductDeetLoader from '../components/PDdetails/ProductDeetLoader';
 import { sendApi } from '../apis/Index';
 import { RiLoader4Fill } from 'react-icons/ri';
 import FooterSection from '../components/Footer';
+import { IoIosArrowDown } from 'react-icons/io';
 
 const ProductDeet = () => {
     const { productId } = useParams();
     const [data, setData] = useState(null);
-    const { addtoCart, removedItem, addingToCart } = useContext(CartContextProvider);
+    const { addtoCart, addingToCart } = useContext(CartContextProvider);
     const [item, setItems] = useState(1);
     const [selectedColor, setSelectedColor] = useState('');
     const [selectedSize, setSelectedSize] = useState('');
@@ -45,10 +46,10 @@ const ProductDeet = () => {
         addtoCart(productDetails);
     };
 
-    const removeItem = (itemId) => {
-        removedItem(itemId);
-        setItems(prevItem => (prevItem <= 1 ? 1 : prevItem - 1));
-    };
+    // const removeItem = (itemId) => {
+    //     removedItem(itemId);
+    //     setItems(prevItem => (prevItem <= 1 ? 1 : prevItem - 1));
+    // };
 
     return (
         <div className='font-jost overflow-y-auto'>
@@ -84,19 +85,29 @@ const ProductDeet = () => {
                             <h4 className='font-bold text-lg tracking-wide '>Choose color & Size</h4>
                             <div className='md:flex items-center justify-between space-y-2 md:space-y-0 gap-x-7'>
                                 <div className='space-y-3'>
-                                    <div className='flex items-center max-w-full overflow-x-auto gap-x-3'>
-                                        {['black', 'brown', 'transparent'].map((color, index) => (
-                                            <button
-                                                key={index}
-                                                className={`px-3 min-w-fit h-8 capitalize md:px-5 flex justify-center items-center rounded-xl border ${selectedColor === color ? 'bg-[#ff00ff] text-white' : 'bg-transparent border-[#ff00ff]'}`}
-                                                onClick={() => setSelectedColor(color)}
-                                            >
-                                                {color}
-                                            </button>
-                                        ))}
+                                    <div className='relative flex items-center w-fit pr-6 
+                                    border bg-transparent border-[#ff00ff]
+                                    overflow-x-auto gap-x-3 rounded-xl'>
+                                        <select
+                                            className='px-3 w-fit h-8 capitalize md:px-5 flex justify-center 
+                                            items-center bg-transparent border-none
+                                            focus-visible:ring-0 focus:ring-0 outline-none appearance-none'
+                                            value={selectedColor}
+                                            onChange={(e) => setSelectedColor(e.target.value)}
+                                        >
+                                            <option value="" disabled>
+                                            {data?.colors?.length === 0 ? "No colors available" : "Select color"}
+                                            </option>
+                                            {data && data.colors.map((color, index) => (
+                                                <option key={index} value={color}>{color}</option>
+                                            ))}
+                                        </select>
+                                        <span className='absolute right-3 top-1/2 transform -translate-y-1/2'>
+                                            <IoIosArrowDown />
+                                        </span>
                                     </div>
                                     <div className='flex items-center max-w-full overflow-x-auto gap-x-3'>
-                                        {['S', 'M', 'L', 'XL'].map((size, index) => (
+                                        {['Xs', 'S', 'M', 'L'].map((size, index) => (
                                             <button
                                                 key={index}
                                                 className={`px-3 min-w-fit h-8 md:px-5 flex justify-center items-center rounded-xl border ${selectedSize === size ? 'bg-[#ff00ff] text-white' : 'bg-transparent border-[#ff00ff]'}`}
@@ -120,11 +131,12 @@ const ProductDeet = () => {
                             </div>
                             <div className='pt-5 border-b-2 border-b-gray-300 pb-7 flex text-right font-bold w-full justify-center md:justify-end items-center gap-x-2 text-base md:text-lg'>
                                 <button
-                                    disabled={item < 1 || !selectedColor || !selectedSize}
+                                    disabled={item < 1 || !selectedSize}
                                     className={`h-10 w-40 rounded-3xl text-black tracking-wide 
+                                        disabled:bg-gray-200 disabled:cursor-not-allowed font-medium
                                         text-center flex items-center justify-center
-                                        ${item < 1 || !selectedColor || !selectedSize ?
-                                         '!bg-[#ffb7ce86]/40 cursor-not-allowed' : 'bg-[#ffb7ce]'}`}
+                                        ${item < 1 || !selectedSize ?
+                                         '' : 'bg-[#ffb7ce]'}`}
                                     onClick={addToItem}
                                 >
                                     {addingToCart ? 
