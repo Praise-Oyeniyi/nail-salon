@@ -53,6 +53,10 @@ export const fetchApi = async (endpoint) => {
         };
   
     } catch (error) {
+        if (error.message && error.message.includes('401')) {
+            console.error("Please login to access your profile");
+            window.location.href = '/auth?login=true';
+        }
         return {
             success: false,
             error: error

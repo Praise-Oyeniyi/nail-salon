@@ -20,7 +20,7 @@ const EditProfile = () => {
       setLoad(true);
       try {
         const result = await fetch(profileApi, {
-          credentials: "include", // if you need to send cookies
+          credentials: "include",
         });
         console.log("error:", result);
 

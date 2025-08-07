@@ -114,12 +114,25 @@ const ProductDeet = () => {
     };
 
     const getStockStatus = (quantity) => {
-        if (quantity === 0) {
-            return <span className="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Out of Stock</span>;
-        } else if (quantity <= 5) {
-            return <span className="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Low in Stock</span>;
-        }
-        return null;
+    if (quantity === 0) {
+        return <span className="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Out of Stock</span>;
+    } else if (quantity <= 5) {
+        return (
+            <div className="flex items-center gap-2">
+                <span className="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                    Only {quantity} left
+                </span>
+                <span className="text-xs text-gray-500">
+                    ({quantity} available)
+                </span>
+            </div>
+        );
+    }
+        return (
+            <span className="text-xs text-gray-500">
+                {quantity} available
+            </span>
+        );
     };
 
 
@@ -289,6 +302,7 @@ const ProductDeet = () => {
                                         <h3>{item}</h3>
                                         <button
                                             type="button"
+                                            disabled={item >= data?.total_quantity}
                                             onClick={() => setItems(prevItem => prevItem + 1)}>+</button>
                                     </div>
                                     <p className='md:hidden font-medium text-sm md:text-base leading-tight'>
@@ -302,6 +316,7 @@ const ProductDeet = () => {
 
                                    disabled={
                                         item < 1 || 
+                                        item > data?.total_quantity ||
                                         (data?.category?.toLowerCase() !== 'accessory' && 
                                         (!selectedColor || !selectedSize))
                                     }

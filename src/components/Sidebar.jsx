@@ -14,7 +14,7 @@ const Sidebar = ({ open, setSide, setProductName, noSearch = false }) => {
   return (
     <div
       className={`h-screen overflow-hidden !z-[99] 
-    ${open ? "top-12 lg:top-0 lg block " : "-top-[999px] hidden"} 
+    ${open ? "max-lg:!z-[101] top-12 lg:top-0 lg block " : "-top-[999px] hidden"} 
     left-0  fixed w-full  backdrop-blur-sm lg:backdrop-blur-0`}
     >
       <div

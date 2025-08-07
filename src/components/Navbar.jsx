@@ -41,7 +41,7 @@ const Navbar = ({ setProductName }) => {
     const handleSearchChange = (e) => setProductName(e.target.value);
 
     return (
-        <nav className="w-full bg-white shadow-sm sticky top-0 z-50">
+        <nav className="w-full mb-5 bg-white shadow-sm sticky top-0 z-50">
             {/* Desktop Navbar */}
             <div className="hidden lg:flex container mx-auto px-4 py-3 items-center justify-between">
                 {/* Logo */}

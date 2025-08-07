@@ -1,8 +1,6 @@
 import { createContext, useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { fetchApi, sendApi } from "../apis/Index";
-import { VscClose } from "react-icons/vsc";
-import { IoLogInOutline } from "react-icons/io5";
 
 export const CartContextProvider = createContext();
 
@@ -15,7 +13,6 @@ const CartContext = ({ children }) => {
   const [favCheckError, setFavCheckError] = useState(true);
   const [addingToCart, setAddingToCart] = useState(false);
   const [deletingCartItem, setDeletingCartItem] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
   const [userAvailable, setUserAvailable] = useState(false);
 
   const fetchCartItems = useCallback(() => {
@@ -56,7 +53,7 @@ const CartContext = ({ children }) => {
         fetchCartItems();
         toast.success("Added to cart");
       } else {
-        setShowLoginModal(true);
+        // setShowLoginModal(true);
         toast.error(result.data.message);
       }
     } catch (error) {
@@ -210,44 +207,8 @@ const CartContext = ({ children }) => {
       }
     }
   };
-
-  const handleLoginModalClose = () => {
-    setShowLoginModal(false);
-  };
-
   return (
     <>
-      {showLoginModal && (
-        <div
-          className="login-modal w-full h-full fixed top-0 
-            left-0 bg-black bg-opacity-10 z-50 flex items-start justify-center"
-        >
-          <div
-            className="login-modal-content w-full text-center
-                relative mt-8 bg-white max-w-lg p-5 py-10 rounded-2xl"
-          >
-            <span
-              className="close absolute top-3 right-4"
-              onClick={handleLoginModalClose}
-            >
-              <VscClose size={20} />
-            </span>
-            <h2 className="text-center text-[#FFB7CF] font-jost font-medium text-xl">
-              Login Required
-            </h2>
-            <p>You need to log in to continue.</p>
-            <div className="flex justify-center mt-4">
-              <IoLogInOutline size={45} strokeWidth={0} color="#FFB7CF" />
-            </div>
-            <div className="flex justify-center mt-4">
-              <a href="/auth" className="text-[#FFB7CF] underline">
-                Proceed to Login
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
-
       <CartContextProvider.Provider
         value={{
           cart,
@@ -262,7 +223,6 @@ const CartContext = ({ children }) => {
           savedItems,
           deleteCartItem,
           addingToCart,
-          setShowLoginModal,
           deletingCartItem,
           userAvailable,
         }}
