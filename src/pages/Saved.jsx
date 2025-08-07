@@ -1,99 +1,101 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import { toast } from 'react-hot-toast';
-import { fetchApi } from '../apis/Index';
-import SavedItem from '../components/Cart/SavedItem';
-import Loader from '../components/Loader';
-import Navbar from '../components/Navbar';
-import { CartContextProvider } from '../context/CartContext';
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-hot-toast";
+import { fetchApi } from "../apis/Index";
+import SavedItem from "../components/Cart/SavedItem";
+import Loader from "../components/Loader";
+import Navbar from "../components/Navbar";
+import { CartContextProvider } from "../context/CartContext";
 
 const Saved = () => {
-    const {savedItems, favError} = useContext(CartContextProvider);
-    const [load, setLoad] = useState(false)
+  const { savedItems, favError } = useContext(CartContextProvider);
+  const [load, setLoad] = useState(false);
 
-    useEffect(() => {
-      if (savedItems) {
-          setLoad(true)
-      }
-    }, [savedItems])
-
-    useEffect(() => {
-        if (favError) {
-            toast.error(favError);
-        }
-    }, [favError]);
-    
-    const deleteSaved = async ()=> {
-        const deleteSavedApi = 'https://wittynailtip.com/backend/empty-fav.php';
-        try {
-            const result = await fetchApi(deleteSavedApi)
-            if (result.data.success){
-                window.location.reload();
-            } else {
-                console.log(result.data.message);
-            }
-        } catch (error) {
-            console.log(error)
-        }
+  useEffect(() => {
+    if (savedItems) {
+      setLoad(true);
     }
+  }, [savedItems]);
 
-    const validSavedItems = savedItems?.filter(item => 
-        !item.error && item.prices?.[0]?.unit_amount !== undefined
-    );
+  useEffect(() => {
+    if (favError) {
+      toast.error(favError);
+    }
+  }, [favError]);
+
+  const deleteSaved = async () => {
+    const deleteSavedApi = "https://wittynailtip.com/backend/empty-fav.php";
+    try {
+      const result = await fetchApi(deleteSavedApi);
+      if (result.data.success) {
+        window.location.reload();
+      } else {
+        console.log(result.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const validSavedItems = savedItems?.filter(
+    (item) => !item.error && item.prices?.[0]?.unit_amount !== undefined
+  );
 
   return (
-    <div className='font-jost'>
-        <ToastContainer position="bottom-center" autoClose={2000} />
-        <Navbar/>
-        <div className='md:w-5/6 w-[90%] mx-auto mt-5 md:mt-7 h-full mb-20'>
-            <div className='w-full'>
-               {load ? (
-                validSavedItems?.length > 0 ? (
-                    validSavedItems.map((item, index) => (
-                        <SavedItem 
-                            key={index}
-                            price={item.prices[0].unit_amount} 
-                            id={item.id} 
-                            info={item.description} 
-                            name={item.name} 
-                            color={item.color} 
-                            image={item.images?.[0]} 
-                            item={item}
-                        />
-                    ))
-                ) : (
-                    <div className="text-center py-10">
-                        <h3 className='italic'>
-                            {savedItems?.some(item => item.error) ? 
-                                "Some items couldn't be loaded" : 
-                                "You have no saved items"
-                            }
-                        </h3>
-                        <Link to='/' className='text-[#ff00ff] cursor-pointer font-semibold block mt-2'>
-                            Continue Shopping
-                        </Link>
-                    </div>
-                )
-               ) : (
-                <Loader what={"Your saved items are"}/>
-               )}
-            </div>
+    <div className="font-jost">
+      <ToastContainer position="bottom-center" autoClose={2000} />
+      <Navbar />
+      <div className="md:w-5/6 w-[90%] mx-auto mt-5 md:mt-7 h-full mb-20">
+        <div className="w-full">
+          {load ? (
+            validSavedItems?.length > 0 ? (
+              validSavedItems.map((item, index) => (
+                <SavedItem
+                  key={index}
+                  price={item.prices[0].unit_amount}
+                  id={item.id}
+                  info={item.description}
+                  name={item.name}
+                  color={item.color}
+                  image={item.images?.[0]}
+                  item={item}
+                />
+              ))
+            ) : (
+              <div className="text-center py-10">
+                <h3 className="italic">
+                  {savedItems?.some((item) => item.error)
+                    ? "Some items couldn't be loaded"
+                    : "You have no saved items"}
+                </h3>
+                <Link
+                  to="/"
+                  className="text-[#FFB7CF] cursor-pointer font-semibold block mt-2"
+                >
+                  Continue Shopping
+                </Link>
+              </div>
+            )
+          ) : (
+            <Loader what={"Your saved items are"} />
+          )}
         </div>
-        {validSavedItems?.length > 0 && (
-            <div className="cart-footer flex items-center w-full fixed bottom-0 h-16 bg-[#fff1f5] shadow-[0_-4px_7px_-1px_rgba(0,0,0,0.1)]">
-                <div className='md:w-5/6 w-[90%] mx-auto flex items-center justify-between z-10'>
-                    <button 
-                        className='bg-red-500 text-white flex justify-center items-center rounded-2xl cursor-pointer px-3 py-1' 
-                        onClick={deleteSaved}
-                    >
-                        Delete All Saved Items
-                    </button> 
-                </div>
-            </div>
-        )}
+      </div>
+      {validSavedItems?.length > 0 && (
+        <div className="cart-footer flex items-center w-full fixed bottom-0 h-16 bg-[#fff1f5] shadow-[0_-4px_7px_-1px_rgba(0,0,0,0.1)]">
+          <div className="md:w-5/6 w-[90%] mx-auto flex items-center justify-between z-10">
+            <button
+              className="bg-red-500 text-white flex justify-center items-center rounded-2xl cursor-pointer px-3 py-1"
+              onClick={deleteSaved}
+            >
+              Delete All Saved Items
+            </button>
+          </div>
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Saved
+export default Saved;
