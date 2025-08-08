@@ -20,7 +20,7 @@ const OrderSumry = ({ ordered, user }) => {
 					order_id: ordered.order_id,
 					text: comment,
 				},
-				"https://wittynailtip.com/backend/add-review..php",
+				"https://wittynailtip.com/backend/add-review.php",
 			);
 
 			if (response.data.success) {

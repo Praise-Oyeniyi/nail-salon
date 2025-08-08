@@ -55,7 +55,7 @@ const OrdersPage = () => {
 								Please log in to view your orders
 							</h3>
 							<Link
-								to="/login"
+								to="/auth?login=true"
 								className="px-4 py-2 bg-[#FFB7CF] text-white rounded-lg hover:bg-[#ff9cbb] transition-colors"
 							>
 								Go to Login
