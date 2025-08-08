@@ -18,8 +18,8 @@ const SavedItem = ({ image, name, price, info, color, item }) => {
 		<div className="w-full flex items-center gap-x-3 border-b border-b-gray-300">
 			<div className="md:py-3 py-2">
 				<div className="flex items-center gap-x-3 md:gap-x-5">
-					<div className="shadow-lg w-[10em] h-[10em] bg-[#fff1f5] shadow-gray-300 rounded-xl overflow-hidden ">
-						<img src={image} alt="" className="w-full object-cover" />
+					<div className="shadow-lg w-[7em] h-[7em] bg-[#fff1f5] shadow-gray-300 rounded-xl overflow-hidden ">
+						<img src={image} alt="" className="w-full h-full object-cover" />
 					</div>
 
 					<div className="md:space-y-1">
