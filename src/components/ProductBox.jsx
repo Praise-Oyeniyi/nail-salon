@@ -61,7 +61,7 @@ const ProductBox = ({ image, id, name, price, alt, item }) => {
 
 					<Link to={`/details/${id}`}>
 						<button
-						type="button"
+							type="button"
 							className="flex px-2 py-1 md:px-3 mt-2 font-normal
                     w-fit rounded-2xl text-xs border border-[#FFB7CF7e]"
 						>

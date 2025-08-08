@@ -258,7 +258,9 @@ const ProductDeet = () => {
 								</h4>
 							)}
 							<div className="md:flex items-end justify-between space-y-2 md:space-y-0 gap-x-7">
-								<div className={`space-y-3 ${data?.category?.toLowerCase() === "accessory" && "hidden"}`}>
+								<div
+									className={`space-y-3 ${data?.category?.toLowerCase() === "accessory" && "hidden"}`}
+								>
 									{/* <div className='flex items-center max-w-full overflow-x-auto gap-x-3'>
                                         {getColors().map((color, index) => (
                                             <button
@@ -276,7 +278,7 @@ const ProductDeet = () => {
 										<div className="flex gap-4 overflow-x-auto w-full py-2 px-1">
 											{data?.category?.toLowerCase() !== "accessory" ? (
 												getColors().length > 0 ? (
-													<div className="flex flex-col items-center border-4">
+													<div className="flex flex-col items-center">
 														<div className="flex gap-4 overflow-x-auto w-full py-2 px-1">
 															{getColors().map((color, index) => {
 																const imageKey = `Image ${index + 1}`;
@@ -382,7 +384,7 @@ const ProductDeet = () => {
 										(data?.category?.toLowerCase() !== "accessory" &&
 											(!selectedColor || !selectedSize))
 									}
-									className={`h-10 w-40 rounded-3xl text-black tracking-wide 
+									className={`max-lg:w-full h-10 w-40 rounded-3xl text-black tracking-wide 
                                         disabled:bg-gray-200 disabled:cursor-not-allowed font-medium
                                         text-center flex items-center justify-center
                                          ${

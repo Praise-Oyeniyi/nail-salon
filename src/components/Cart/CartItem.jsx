@@ -53,7 +53,7 @@ const CartItem = ({
 				</div>
 			</div>
 			<button
-			type="button"
+				type="button"
 				className="absolute top-0 right-0 p-2 cursor-pointer"
 				onClick={() => deleteCartItem(cartId)}
 			>

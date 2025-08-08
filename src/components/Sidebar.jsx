@@ -59,7 +59,10 @@ const Sidebar = ({ open, setSide, setProductName, noSearch = false }) => {
 						<select
 							className="bg-[#fff1f5] lg:bg-[#fdfdfd] relative right-3 border-0 py-1 px-3 pr-8 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-pink-200 outline-none"
 							defaultValue=""
-							onChange={(e) => navigate(`/categories/${e.target.value}`)}
+							onChange={(e) => {
+								navigate(`/categories/${e.target.value}`);
+								setSide(false);
+							}}
 						>
 							<option value="" disabled>
 								Categories
@@ -90,7 +93,7 @@ const Sidebar = ({ open, setSide, setProductName, noSearch = false }) => {
 							How to use
 						</Link>
 					</li>
-					{!noSearch && (
+					{/* {!noSearch && (
 						<li className="relative bg-[#fff1f5] lg:bg-[#fdfdfd] rounded-2xl py-1 px-2 lg:hidden">
 							<input
 								type="text"
@@ -102,7 +105,7 @@ const Sidebar = ({ open, setSide, setProductName, noSearch = false }) => {
 								<CiSearch onClick={() => setSide(false)} />
 							</span>
 						</li>
-					)}
+					)} */}
 				</ul>
 			</div>
 		</div>

@@ -22,7 +22,11 @@ const OrderInfo = ({ ordered }) => {
 								<div className="left flex gap-x-2">
 									<div className="image bg-black overflow-hidden md:h-14 h-10 w-10 md:w-14">
 										{ordered.images && (
-											<img src={ordered.images[0]} alt="" className="w-full h-full object-cover" />
+											<img
+												src={ordered.images[0]}
+												alt=""
+												className="w-full h-full object-cover"
+											/>
 										)}
 									</div>
 									<div className="text-sm">

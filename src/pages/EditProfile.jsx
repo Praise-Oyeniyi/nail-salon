@@ -137,9 +137,7 @@ const EditProfile = () => {
 					</div>
 				) : (
 					<div className="profile-inner space-y-3">
-						<h3 className="font-semibold md:text-2xl text-lg">
-							Profile
-						</h3>
+						<h3 className="font-semibold md:text-2xl text-lg">Profile</h3>
 						<div className="pic-btn flex space-x-7">
 							<div className="img-box rounded-full h-32 w-32 overflow-hidden flex justify-center items-center flex-shrink-0">
 								<img

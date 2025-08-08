@@ -3,11 +3,13 @@ import { CiSearch } from "react-icons/ci";
 import { FaShoppingCart, FaRegUserCircle } from "react-icons/fa";
 import Sidebar from "./Sidebar";
 import Logo from "../images/logo.webp";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = ({ setProductName }) => {
 	const navigate = useNavigate();
+	const location = useLocation();
 	const [side, setSide] = useState(false);
+	const isHomepage = location.pathname === "/";
 
 	const handleSearchChange = (e) => setProductName(e.target.value);
 
@@ -21,15 +23,17 @@ const Navbar = ({ setProductName }) => {
 				</Link>
 
 				{/* Search Bar */}
-				<div className="relative w-1/3 mx-4">
-					<input
-						type="text"
-						placeholder="Search products..."
-						className="w-full py-2 px-4 pr-10 rounded-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pink-200 text-sm"
-						onChange={handleSearchChange}
-					/>
-					<CiSearch className="absolute right-3 top-2.5 text-gray-400 text-lg" />
-				</div>
+				{isHomepage && (
+					<div className="relative w-1/3 mx-4">
+						<input
+							type="text"
+							placeholder="Search products..."
+							className="w-full py-2 px-4 pr-10 rounded-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pink-200 text-sm"
+							onChange={handleSearchChange}
+						/>
+						<CiSearch className="absolute right-3 top-2.5 text-gray-400 text-lg" />
+					</div>
+				)}
 
 				{/* Navigation Links */}
 				<div className="flex items-center space-x-6">
