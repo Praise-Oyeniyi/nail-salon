@@ -59,7 +59,7 @@ const Sidebar = ({ open, setSide, setProductName, noSearch = false }) => {
 						<select
 							className="bg-[#fff1f5] lg:bg-[#fdfdfd] relative right-3 border-0 py-1 px-3 pr-8 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-pink-200 outline-none"
 							defaultValue=""
-							onChange={(e) => navigate(`/categories/${e.target.value})`)}
+							onChange={(e) => navigate(`/categories/${e.target.value}`)}
 						>
 							<option value="" disabled>
 								Categories
