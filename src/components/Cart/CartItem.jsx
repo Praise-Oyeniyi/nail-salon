@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import { useContext } from "react";
 import { CartContextProvider } from "../../context/CartContext";
-import { ProductContextProvider } from "../../context/Product";
 import { IoClose } from "react-icons/io5";
 
 const CartItem = ({
@@ -11,12 +10,10 @@ const CartItem = ({
 	info,
 	color,
 	size,
-	id,
+	// id,
 	cartId,
 }) => {
-	const { data } = useContext(ProductContextProvider);
-	const { addtoCart, removedItem, deleteCartItem } =
-		useContext(CartContextProvider);
+	const { deleteCartItem } = useContext(CartContextProvider);
 
 	return (
 		<div className="w-full flex items-center gap-x-3 border-b border-b-gray-300 relative">
@@ -27,7 +24,7 @@ const CartItem = ({
                      */}
 			<div className="md:py-3 py-2">
 				<div className="flex items-center gap-x-3 md:gap-x-5 relative">
-					<div className="shadow-lg w-[10em] md:w-[12em] md:h-[12em] bg-[#fff1f5] shadow-gray-300 rounded-xl overflow-hidden">
+					<div className="shadow-lg w-[10em] md:w-[7em] md:h-[7em] bg-[#fff1f5] shadow-gray-300 rounded-xl overflow-hidden">
 						<img src={image} alt="" className="w-full h-full object-cover" />
 					</div>
 
@@ -46,21 +43,22 @@ const CartItem = ({
 						</div>
 						<div className="flex gap-x-3 items-center">
 							<h5 className="md:text-xl text-lg font-bold">${price}</h5>
-							<div className="font-bold text-base bg-[#fff1f5] flex rounded-2xl items-center gap-x-5 px-3 py-1 opacity-0">
-								<button>-</button>
+							<div className="font-bold text-base bg-[#fff1f5] text-black flex rounded-2xl items-center gap-x-5 px-3 py-1 opacity-0">
+								<button type="button">-</button>
 								<h3>{count}</h3>
-								<button>+</button>
+								<button type="button">+</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div
+			<button
+			type="button"
 				className="absolute top-0 right-0 p-2 cursor-pointer"
 				onClick={() => deleteCartItem(cartId)}
 			>
 				<IoClose className=" text-red-500 text-2xl font-semibold " />
-			</div>
+			</button>
 		</div>
 	);
 };

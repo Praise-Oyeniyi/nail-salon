@@ -118,7 +118,7 @@ const EditProfile = () => {
 						<div>
 							<div className="flex items-center justify-center">
 								<img
-									src="/unauthorized.png"
+									src="/login.png"
 									alt="unauthorized user"
 									className="w-20"
 								/>

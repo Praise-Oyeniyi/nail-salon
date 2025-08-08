@@ -17,7 +17,7 @@ const OrderSumry = ({ ordered, user }) => {
 		try {
 			const response = await sendApi(
 				{
-					order_id: ordered.order_id,
+					product_id: ordered.order_id,
 					text: comment,
 				},
 				"https://wittynailtip.com/backend/add-review.php",
@@ -61,7 +61,7 @@ const OrderSumry = ({ ordered, user }) => {
 							</div>
 						</div>
 
-						<div className="">
+						{/* <div className="">
 							<div className="flex w-full justify-between items-center">
 								<h6 className="w-3/6">Discount</h6>
 								<div className="w-3/6 flex justify-between items-center">
@@ -69,9 +69,9 @@ const OrderSumry = ({ ordered, user }) => {
 									<h6>${"-20"}</h6>
 								</div>
 							</div>
-						</div>
+						</div> */}
 
-						<div className="">
+						{/* <div className="">
 							<div className="flex w-full justify-between items-center">
 								<h6 className="w-3/6">Shipping</h6>
 								<div className="w-3/6 flex justify-between items-center">
@@ -79,7 +79,7 @@ const OrderSumry = ({ ordered, user }) => {
 									<h6>${"0.0"}</h6>
 								</div>
 							</div>
-						</div>
+						</div> */}
 
 						<div className="flex font-bold w-full justify-between items-center">
 							<h6 className="w-3/6">Total</h6>
@@ -153,7 +153,7 @@ const OrderSumry = ({ ordered, user }) => {
 						type="button"
 						onClick={handleSubmitComment}
 						disabled={isSubmitting || !comment.trim()}
-						className="mt-2 bg-[#FFB8CD] hover:bg-[#FFB7CF] text-white px-4 py-2 rounded-lg disabled:opacity-50 text-sm"
+						className="mt-2 bg-[#FFB8CD] hover:bg-[#FFB7CF] text-gray-800 px-4 py-2 rounded-lg disabled:opacity-30 disabled:cursor-not-allowed text-sm"
 					>
 						{isSubmitting ? "Submitting..." : "Submit Review"}
 					</button>

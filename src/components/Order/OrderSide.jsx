@@ -1,13 +1,11 @@
-import React from "react";
 import { RxAvatar } from "react-icons/rx";
 import { IoBagCheckOutline } from "react-icons/io5";
 import { CiMail } from "react-icons/ci";
-import { RiMapLine } from "react-icons/ri";
 
 const OrderSide = ({ user }) => {
 	return (
 		<div className="w-full text-sm font-medium space-y-2">
-			<div className="space-y-1 border border-gray-300 rounded-lg px-3 py-1">
+			{/* <div className="space-y-1 border border-gray-300 rounded-lg px-3 py-1">
 				<h5 className="font-bold md:text-xl text-basefont-bold text-base first-line:">
 					Notes
 				</h5>
@@ -19,7 +17,7 @@ const OrderSide = ({ user }) => {
 					rows="3"
 					placeholder="Drop a note"
 				></textarea>
-			</div>
+			</div> */}
 
 			<div className="space-y-1 border border-gray-300 rounded-lg px-3 py-1">
 				<h5 className="font-bold md:text-xl text-base">Customer</h5>
@@ -63,12 +61,12 @@ const OrderSide = ({ user }) => {
 
 					<div className="text-sm md:text-base">
 						<p className="w-5/6 truncate">{user?.billing_address}</p>
-						<h6 className="font-bold text-[#FFB7CF] flex items-center gap-x-1">
+						{/* <h6 className="font-bold text-[#FFB7CF] flex items-center gap-x-1">
 							<span className="md:text-lg">
 								<RiMapLine />
 							</span>
 							View Map
-						</h6>
+						</h6> */}
 					</div>
 				</div>
 			</div>
@@ -78,13 +76,13 @@ const OrderSide = ({ user }) => {
 				<p>Same as shipping address</p>
 			</div>
 
-			<div className="space-y-1 border border-gray-300 rounded-lg px-3 py-1">
+			{/* <div className="space-y-1 border border-gray-300 rounded-lg px-3 py-1">
 				<h5 className="font-bold md:text-xl text-base">Conversion Summary</h5>
 				<div className="space-y-1">
 					<p className="w-4/6">No Converstaion details for this order</p>
 					<h6 className="font-bold text-[#FFB7CF]">Learn More</h6>
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 };
