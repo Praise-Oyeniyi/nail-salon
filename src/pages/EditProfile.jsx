@@ -152,7 +152,7 @@ const EditProfile = () => {
 							<div className="btn flex md:flex-row flex-col justify-center gap-y-2 md:justify-start items-center md:space-x-3 text-white font-medium">
 								<button
 									type="button"
-									className="bg-[#FFB7CF] p-2 px-3 rounded-full text-base"
+									className="bg-[#FFB7CF] text-gray-800 p-2 px-3 rounded-full text-base"
 									onClick={() => setEdit(true)}
 								>
 									Edit Profile

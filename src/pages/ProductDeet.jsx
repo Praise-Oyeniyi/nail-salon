@@ -257,7 +257,7 @@ const ProductDeet = () => {
 									Choose color & Size
 								</h4>
 							)}
-							<div className="md:flex items-center justify-between space-y-2 md:space-y-0 gap-x-7">
+							<div className="md:flex items-end justify-between space-y-2 md:space-y-0 gap-x-7">
 								<div className={`space-y-3 ${data?.category?.toLowerCase() === "accessory" && "hidden"}`}>
 									{/* <div className='flex items-center max-w-full overflow-x-auto gap-x-3'>
                                         {getColors().map((color, index) => (

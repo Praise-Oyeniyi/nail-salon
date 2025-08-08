@@ -170,7 +170,7 @@ const CartPage = () => {
                         <h4 className='font-bold md:text-xl text-lg'>ALL </h4> */}
 							<button
 								type="button"
-								className="bg-red-300 flex justify-center items-center 
+								className="bg-[#FFB7CF]/10 hover:bg-[#FFB7CF]/20 text-red-500 flex justify-center items-center 
                         rounded-2xl cursor-pointer px-3 py-2"
 								onClick={() => emptyCart()}
 							>
@@ -190,9 +190,9 @@ const CartPage = () => {
 						<button
 							type="button"
 							onClick={() => payOrder()}
-							className="md:text-lg text-xs uppercase cursor-pointer 
+							className="md:text-lg text-xs cursor-pointer 
                         flex items-center justify-center text-center
-                        text-white tracking-wide font-bold px-3 py-2 rounded-2xl bg-[#FFB7CF]"
+                        text-gray-800 tracking-wide font-medium px-3 py-2 rounded-2xl bg-[#FFB7CF]"
 						>
 							{isLoading ? (
 								<>

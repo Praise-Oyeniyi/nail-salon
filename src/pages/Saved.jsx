@@ -93,7 +93,7 @@ const Saved = () => {
 					<div className="md:w-5/6 w-[90%] mx-auto flex items-center justify-between z-10">
 						<button
 							type="button"
-							className="bg-red-500 text-white flex justify-center items-center rounded-2xl cursor-pointer px-3 py-1"
+							className="bg-[#FFB7CF]/10 hover:bg-[#FFB7CF]/20 text-red-500 flex justify-center items-center rounded-2xl cursor-pointer px-3 py-1"
 							onClick={deleteSaved}
 						>
 							Delete All Saved Items
