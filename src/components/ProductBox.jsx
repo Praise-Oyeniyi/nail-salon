@@ -27,12 +27,13 @@ const ProductBox = ({ image, id, name, price, alt, item }) => {
                  object-center object-cover md:min-h-[18em] md:max-h-[18em] flex justify-center items-center"
 					/>
 				</Link>
-				<div
+				<button
+					type="button"
 					className="bg-[#FFB7CF] p-2 text-sm md:text-base absolute top-3 right-3 w-fit rounded-full"
 					onClick={() => handleLikeAndSave(item)}
 				>
 					<FaHeart className={`${like ? "text-red-700" : "text-[#fff1f5]"}`} />
-				</div>
+				</button>
 			</div>
 			<div className="pd-info font-medium py-3 pb-5 px-2 md:mt-0">
 				<div className="flex flex-col gap-y-1">
@@ -60,6 +61,7 @@ const ProductBox = ({ image, id, name, price, alt, item }) => {
 
 					<Link to={`/details/${id}`}>
 						<button
+						type="button"
 							className="flex px-2 py-1 md:px-3 mt-2 font-normal
                     w-fit rounded-2xl text-xs border border-[#FFB7CF7e]"
 						>
