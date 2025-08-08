@@ -10,40 +10,34 @@ const EditProfile = () => {
   const [side, setSide] = useState(false);
   const [user, setUser] = useState(null);
   const [edit, setEdit] = useState(false);
-  const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState(true); // Changed to true initially
   const [update, setUpdate] = useState(false);
   const [unauthorized, setUnauthorized] = useState(false);
-  console.log(unauthorized)
 
   useEffect(() => {
     const profileApi = "https://wittynailtip.com/backend/profile.php";
     async function fetchData() {
       setLoad(true);
       try {
-        const result = await fetch(profileApi, {
+        const response = await fetch(profileApi, {
           credentials: "include",
         });
-        // console.log("error:", result);
-
+        const result = await response.json(); // Parse the JSON response
+        
         if (result.status === "unauthorized") {
           setUnauthorized(true);
-          toast.error("Please login to access your profile");
-          return;
-        }
-
-        if (result.data.status) {
-          setUser(result.data.data);
+          toast.error(result.message);
+        } else if (result.status) {
+          setUser(result.data);
         } else {
-          toast.error(result.data.message);
+          toast.error(result.message);
           setUser(null);
         }
         setLoad(false);
       } catch (error) {
-        console.error(error.message);
+        console.error(error);
+        setLoad(false);
       }
-      // finally {
-      //     setLoad(false);
-      // }
     }
     fetchData();
   }, []);
@@ -99,7 +93,6 @@ const EditProfile = () => {
 
   return (
     <div className="w-full md:flex justify-start items-start overflow-x-hidden font-jost">
-      {/* <ToastContainer position="bottom-center" autoClose={2000} /> */}
       <div className="px-3 h-14 flex justify-between items-center lg:hidden">
         <button
           type="button"
@@ -117,30 +110,28 @@ const EditProfile = () => {
         <Sidebar open={side} noSearch={true} />
       </div>
 
-      {/* #ffb7ce #cccccc #fff1f5 #FFB7CF */}
       <div className="profile-outer w-full md:py-7 py-3 px-5 mx-auto lg:ml-[25%] z-[999]">
-        {!load ? (
+        {load ? (
           <ProfileLoader />
         ) : unauthorized ? (
           <div className="flex items-center justify-center h-screen w-full">
-            {load && (
-              <div>
-                <div className="flex items-center justify-center">
-                    <img src="/unauthorized.png" alt="unauthorized user" className="w-20"/>
-                  </div>
-                <h3 className="flex flex-col justify-start items-center gap-x-2 italic">
-                  You are not logged in. Please
-                  <Link to="/auth?login=true"
-                  className="mt-2 px-4 py-2 bg-[#FFB7CF] text-white rounded-lg hover:bg-[#ff9cbb] transition-colors"
-                  >
-                    <span className="cursor-pointer font-semibold">
-                      login
-                    </span>
-                  </Link>{" "}
-                  to view your profile
-                </h3>
+            <div>
+              <div className="flex items-center justify-center">
+                <img src="/unauthorized.png" alt="unauthorized user" className="w-20"/>
               </div>
-            )}
+              <h3 className="flex flex-col justify-start items-center gap-x-2 italic">
+                You are not logged in. Please
+                <Link 
+                  to="/auth?login=true"
+                  className="mt-2 px-4 py-2 bg-[#FFB7CF] text-white rounded-lg hover:bg-[#ff9cbb] transition-colors"
+                >
+                  <span className="cursor-pointer font-semibold">
+                    login
+                  </span>
+                </Link>{" "}
+                to view your profile
+              </h3>
+            </div>
           </div>
         ) : (
           <div className="profile-inner space-y-3">
@@ -157,12 +148,6 @@ const EditProfile = () => {
               </div>
 
               <div className="btn flex md:flex-row flex-col justify-center gap-y-2 md:justify-start items-center md:space-x-3 text-white font-medium">
-                {/* <button className='bg-[#ffb7ce] p-2 px-3 rounded-full text-base'>
-                    Change Picture
-                  </button>
-                  <button className='bg-[#FFB7CF] p-2 px-3 rounded-full text-base'>
-                    Delete Picture
-                  </button> */}
                 <button
                   type="button"
                   className="bg-[#FFB7CF] p-2 px-3 rounded-full text-base"
@@ -173,7 +158,6 @@ const EditProfile = () => {
               </div>
             </div>
 
-            {/* #ffb7ce #cccccc #fff1f5 #FFB7CF */}
             <div className="profile-form">
               <form
                 action=""
@@ -193,7 +177,7 @@ const EditProfile = () => {
                     name="name"
                     id="name"
                     className="h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder"
-                    placeholder={!unauthorized ? user?.full_name : ""}
+                    placeholder={user?.full_name}
                   />
                 </div>
 
@@ -210,7 +194,7 @@ const EditProfile = () => {
                     name="uname"
                     id="uname"
                     className="h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder"
-                    placeholder={!unauthorized ? user?.username : ""}
+                    placeholder={user?.username}
                   />
                   <i className="text-[#cccccc] text-xs pl-3 font-medium">
                     Available change in 05/30
@@ -230,7 +214,7 @@ const EditProfile = () => {
                     name="address"
                     id="address"
                     className="h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder"
-                    placeholder={!unauthorized ? user?.billing_address : ""}
+                    placeholder={user?.billing_address}
                   />
                 </div>
 
@@ -247,7 +231,7 @@ const EditProfile = () => {
                     name="email"
                     id="email"
                     className="h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder"
-                    placeholder={!unauthorized ? user?.email : ""}
+                    placeholder={user?.email}
                   />
                 </div>
 
@@ -264,14 +248,14 @@ const EditProfile = () => {
                     name="phone"
                     id="phone"
                     className="h-8 text-lg w-full border boder-[#cccccc] rounded-md px-3 outline-none text-black placeholder-black placeholder"
-                    placeholder={!unauthorized ? user?.phone_number : ""}
+                    placeholder={user?.phone_number}
                   />
                 </div>
 
                 <div className="submit-btns pt-3 flex justify-start items-center space-x-3 text-white font-medium">
                   {edit ? (
                     <button
-                      type="button"
+                      type="submit"
                       className="bg-[#ffb7ce] p-2 px-3 rounded-full text-sm flex gap-x-2 items-center justify-center"
                     >
                       Update Profile
@@ -283,12 +267,12 @@ const EditProfile = () => {
                     </button>
                   ) : (
                     <>
-                      <button
+                      {/* <button
                         type='button'
                         className="bg-[#FFB7CF]/20 hover:bg-[#FFB7CF]/30 text-[#FFB7CF] border border-[#FFB7CF] p-2 px-3 rounded-full text-sm transition-colors"
                       >
                         Reset Password
-                      </button>
+                      </button> */}
                       <button
                         type="button"
                         className="bg-[#FFB7CF]/10 hover:bg-[#FFB7CF]/20 text-red-500 p-2 px-3 rounded-full text-sm"
