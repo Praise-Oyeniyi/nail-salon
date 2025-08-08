@@ -72,14 +72,14 @@ const OrderIndex = () => {
             <div className="relative">
               <div className="id flex items-center gap-x-1 md:gap-x-3 font-bold">
                 <h3 className="md:text-2xl text-lg">
-                  Order ID: {orderItem.order_id}
+                  Order ID: {orderItem?.order_id || ""}
                 </h3>
                 <h5 className="uppercase text-[#FFB7CF] md:tracking-wider px-1 text-xs md:text-sm bg-[#fff1f5]">
-                  {orderItem.tracking}
+                  {orderItem?.tracking || ""}
                 </h5>
               </div>
               <p className="font-medium md:text-sm text-xs">
-                {orderItem.order_date}
+                {orderItem?.order_date || ""}
               </p>
             </div>
             <div className="profile-image hidden lg:fixed lg:block md:right-5 w-10 h-10 md:w-12 md:h-12 bg-black rounded-full"></div>

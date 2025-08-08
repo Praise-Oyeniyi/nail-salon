@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-hot-toast";
@@ -50,9 +50,9 @@ const Saved = () => {
         <div className="w-full">
           {load ? (
             validSavedItems?.length > 0 ? (
-              validSavedItems.map((item, index) => (
+              validSavedItems.map((item) => (
                 <SavedItem
-                  key={index}
+                  key={item.fav_id}
                   price={item.prices[0].unit_amount}
                   id={item.id}
                   info={item.description}
@@ -63,15 +63,19 @@ const Saved = () => {
                 />
               ))
             ) : (
-              <div className="text-center py-10">
-                <h3 className="italic">
+              !load && <div className="text-center py-10">
+                <div className="flex items-center justify-center">
+                  <img src="/empty.png" alt="empty cart" className="w-20"/>
+                </div>
+
+                <h3 className="italic mb-4">
                   {savedItems?.some((item) => item.error)
                     ? "Some items couldn't be loaded"
                     : "You have no saved items"}
                 </h3>
                 <Link
                   to="/"
-                  className="text-[#FFB7CF] cursor-pointer font-semibold block mt-2"
+                  className="mt-8 px-4 py-2 bg-[#FFB7CF] text-white rounded-lg hover:bg-[#ff9cbb] transition-colors"
                 >
                   Continue Shopping
                 </Link>
@@ -86,6 +90,7 @@ const Saved = () => {
         <div className="cart-footer flex items-center w-full fixed bottom-0 h-16 bg-[#fff1f5] shadow-[0_-4px_7px_-1px_rgba(0,0,0,0.1)]">
           <div className="md:w-5/6 w-[90%] mx-auto flex items-center justify-between z-10">
             <button
+              type="button"
               className="bg-red-500 text-white flex justify-center items-center rounded-2xl cursor-pointer px-3 py-1"
               onClick={deleteSaved}
             >

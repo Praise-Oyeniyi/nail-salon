@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { CiSearch } from "react-icons/ci";
 import { FaShoppingCart, FaRegUserCircle } from "react-icons/fa";
-import { CiLocationOn } from "react-icons/ci";
 import Sidebar from './Sidebar';
 import Logo from '../images/logo.webp';
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,34 +8,6 @@ import { Link, useNavigate } from 'react-router-dom';
 const Navbar = ({ setProductName }) => {
     const navigate = useNavigate();
     const [side, setSide] = useState(false);
-    const [city, setCity] = useState(null);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const fetchLocation = async () => {
-          try {
-            const position = await new Promise((resolve, reject) => {
-              navigator.geolocation.getCurrentPosition(resolve, reject);
-            });
-    
-            const { latitude, longitude } = position.coords;
-            const response = await fetch(
-              `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
-            );
-    
-            if (!response.ok) throw new Error('Failed to fetch location data');
-    
-            const data = await response.json();
-            const cityName = data.address.city || data.address.town || data.address.village || data.address.suburb;
-            setCity(cityName);
-          } catch (err) {
-            setError(err.code === 1 ? 'Please enable location access' : 
-                    err.code === 2 ? 'Location unavailable' : 'Error fetching location');
-          }
-        };
-    
-        fetchLocation();
-    }, []);
 
     const handleSearchChange = (e) => setProductName(e.target.value);
 
@@ -127,11 +98,11 @@ const Navbar = ({ setProductName }) => {
                         <Link to="/cart" className="text-gray-700">
                             <FaShoppingCart />
                         </Link>
-                        {city && (
+                        {/* {city && (
                             <div className="flex items-center text-gray-700">
                                 <CiLocationOn />
                             </div>
-                        )}
+                        )} */}
                     </div>
                 </div>
 

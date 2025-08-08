@@ -13,6 +13,7 @@ const EditProfile = () => {
   const [load, setLoad] = useState(false);
   const [update, setUpdate] = useState(false);
   const [unauthorized, setUnauthorized] = useState(false);
+  console.log(unauthorized)
 
   useEffect(() => {
     const profileApi = "https://wittynailtip.com/backend/profile.php";
@@ -22,9 +23,9 @@ const EditProfile = () => {
         const result = await fetch(profileApi, {
           credentials: "include",
         });
-        console.log("error:", result);
+        // console.log("error:", result);
 
-        if (result.status === 401) {
+        if (result.status === "unauthorized") {
           setUnauthorized(true);
           toast.error("Please login to access your profile");
           return;
@@ -38,10 +39,6 @@ const EditProfile = () => {
         }
         setLoad(false);
       } catch (error) {
-        if (error.response && error.response.status === 401) {
-          toast.error("Unauthorized: Please log in");
-          setUnauthorized(true);
-        }
         console.error(error.message);
       }
       // finally {
@@ -127,15 +124,22 @@ const EditProfile = () => {
         ) : unauthorized ? (
           <div className="flex items-center justify-center h-screen w-full">
             {load && (
-              <h3 className="flex flex-col justify-start items-center gap-x-2 italic">
-                You are not logged in. Please
-                <Link to="/auth?login=true">
-                  <span className="text-[#FFB7CF] cursor-pointer font-semibold">
-                    login
-                  </span>
-                </Link>{" "}
-                to view your profile
-              </h3>
+              <div>
+                <div className="flex items-center justify-center">
+                    <img src="/unauthorized.png" alt="unauthorized user" className="w-20"/>
+                  </div>
+                <h3 className="flex flex-col justify-start items-center gap-x-2 italic">
+                  You are not logged in. Please
+                  <Link to="/auth?login=true"
+                  className="mt-2 px-4 py-2 bg-[#FFB7CF] text-white rounded-lg hover:bg-[#ff9cbb] transition-colors"
+                  >
+                    <span className="cursor-pointer font-semibold">
+                      login
+                    </span>
+                  </Link>{" "}
+                  to view your profile
+                </h3>
+              </div>
             )}
           </div>
         ) : (

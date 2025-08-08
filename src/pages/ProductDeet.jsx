@@ -25,6 +25,10 @@ const ProductDeet = () => {
     const [reviews, setReviews] = useState([]);
 
      useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+     useEffect(() => {
         const fetchReviews = async () => {
             try {
                 const response = await sendApi(
@@ -62,6 +66,7 @@ const ProductDeet = () => {
                     }
                 } 
                 else {
+                    
                     setMainImage(result.data.data.images[0]);
                     console.log(result.data.message);
                 }
@@ -248,48 +253,66 @@ const ProductDeet = () => {
 
                                     <div className="flex flex-col items-center">
                                         <div className="flex gap-4 overflow-x-auto w-full py-2 px-1">
-                                            {getColors().map((color, index) => {
-                                                const imageKey = `Image ${index + 1}`;
-                                                const colorImage = data.color_image_pairs[imageKey] || data.images[0];
-                                                return (
-                                                    <div 
-                                                        key={index}
-                                                        className="flex flex-col items-center flex-shrink-0"
-                                                    >
-                                                        <button
-                                                            type="button"
-                                                            className={`cursor-pointer rounded-full p-0.5 ${selectedColor === color ? 'bg-[#FFB8CD]' : 'bg-transparent'}`}
-                                                            onClick={() => handleColorSelect(color, index)}
-                                                        >
-                                                            <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white">
-                                                                <img
-                                                                    src={colorImage}
-                                                                    className="w-full h-full object-cover"
-                                                                    alt={`${color} color option`}
-                                                                />
-                                                            </div>
-                                                        </button>
-                                                        <span className="text-xs mt-2 text-center font-medium capitalize">
-                                                            {color}
-                                                        </span>
-                                                    </div>
-                                                );
-                                            })}
+                                            {data?.category?.toLowerCase() !== 'accessory' ? (
+            getColors().length > 0 ? (
+                <div className="flex flex-col items-center">
+                    <div className="flex gap-4 overflow-x-auto w-full py-2 px-1">
+                        {getColors().map((color, index) => {
+                            const imageKey = `Image ${index + 1}`;
+                            const colorImage = data.color_image_pairs[imageKey] || data.images[0];
+                            return (
+                                <div 
+                                    key={index}
+                                    className="flex flex-col items-center flex-shrink-0"
+                                >
+                                    <button
+                                        type="button"
+                                        className={`cursor-pointer rounded-full p-0.5 ${selectedColor === color ? 'bg-[#FFB8CD]' : 'bg-transparent'}`}
+                                        onClick={() => handleColorSelect(color, index)}
+                                    >
+                                        <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white">
+                                            <img
+                                                src={colorImage}
+                                                className="w-full h-full object-cover"
+                                                alt={`${color} color option`}
+                                            />
+                                        </div>
+                                    </button>
+                                    <span className="text-xs mt-2 text-center font-medium capitalize">
+                                        {color}
+                                    </span>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            ) : (
+                <p className='text-gray-500 text-sm'>No color available for this product</p>
+            )
+        ) : null}
                                         </div>
                                     </div>
 
                                     {/* Size Selection (keep your existing size buttons) */}
                                     <div className='flex items-center max-w-full overflow-x-auto gap-x-3'>
-                                        {getSizes().map((size, index) => (
-                                            <button
-                                                type="button"
-                                                key={index}
-                                                className={`px-3 min-w-fit h-8 md:px-5 flex justify-center items-center rounded-xl border ${selectedSize === size ? 'bg-[#FFB8CD] text-white' : 'bg-transparent border-[#FFB8CD]'}`}
-                                                onClick={() => setSelectedSize(size)}
-                                            >
-                                                {size}
-                                            </button>
-                                        ))}
+                                        {data?.category?.toLowerCase() !== 'accessory' ? (
+            getSizes().length > 0 ? (
+                <div className='flex items-center max-w-full overflow-x-auto gap-x-3'>
+                    {getSizes().map((size, index) => (
+                        <button
+                            type="button"
+                            key={index}
+                            className={`px-3 min-w-fit h-8 md:px-5 flex justify-center items-center rounded-xl border ${selectedSize === size ? 'bg-[#FFB8CD] text-white' : 'bg-transparent border-[#FFB8CD]'}`}
+                            onClick={() => setSelectedSize(size)}
+                        >
+                            {size}
+                        </button>
+                    ))}
+                </div>
+            ) : (
+                <p className='text-gray-500 text-sm'>No size available</p>
+            )
+        ) : null}
                                     </div>
 
                                    

@@ -46,6 +46,16 @@ export const fetchApi = async (endpoint) => {
   
         const res = await response.text();
         const result = JSON.parse(res);
+
+        // if (result.success === false && result.status === "unauthorized") {
+        //     if (window.location.pathname !== "/auth") {
+        //         window.location.href = "/auth?login=true";
+        //         return {
+        //             success: false,
+        //             redirecting: true
+        //         };
+        //     }
+        // }
         
         return {
             success: true,
@@ -53,10 +63,6 @@ export const fetchApi = async (endpoint) => {
         };
   
     } catch (error) {
-        if (error.message && error.message.includes('401')) {
-            console.error("Please login to access your profile");
-            window.location.href = '/auth?login=true';
-        }
         return {
             success: false,
             error: error
