@@ -5,7 +5,7 @@ import { FaTools, FaHands, FaRing, FaRegStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { CartContextProvider } from "../context/CartContext";
 import ProductDeetLoader from "../components/PDdetails/ProductDeetLoader";
-import { fetchApi, sendApi } from "../apis/Index";
+import { sendApi } from "../apis/Index";
 import { RiLoader4Fill } from "react-icons/ri";
 import FooterSection from "../components/Footer";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -84,12 +84,17 @@ const ProductDeet = () => {
 
 	const addToItem = () => {
 		const productDetails = {
-			// ...data,
 			product_id: data?.product_id,
 			color:
-				data?.category?.toLowerCase() === "accessory" ? "none" : selectedColor,
+				data?.category?.toLowerCase() === "accessory" || !selectedColor
+					? "none"
+					: selectedColor,
 			size:
-				data?.category?.toLowerCase() === "accessory" ? "none" : selectedSize,
+				data?.category?.toLowerCase() === "accessory" || !selectedSize ||
+				(getSizes().length > 0 &&
+					Object.values(data.sizes).every((size) => size <= 0))
+					? "none"
+					: selectedSize,
 			quantity: item,
 		};
 		addtoCart(productDetails);
@@ -322,16 +327,20 @@ const ProductDeet = () => {
 										</div>
 									</div>
 
-									{/* Size Selection (keep your existing size buttons) */}
+									{/* Size Selection */}
 									<div className="flex items-center max-w-full overflow-x-auto gap-x-3">
 										{data?.category?.toLowerCase() !== "accessory" ? (
-											getSizes().length > 0 ? (
+											getSizes().length > 0 &&
+											Object.values(data.sizes).some((size) => size > 0) ? (
 												<div className="flex items-center max-w-full overflow-x-auto gap-x-3">
 													{getSizes().map((size, index) => (
 														<button
 															type="button"
 															key={index}
-															className={`px-3 min-w-fit h-8 md:px-5 flex justify-center items-center rounded-xl border ${selectedSize === size ? "bg-[#FFB8CD] text-white" : "bg-transparent border-[#FFB8CD]"}`}
+															disabled={data.sizes[size] <= 0}
+															className={`px-3 min-w-fit h-8 md:px-5 flex justify-center items-center rounded-xl border 
+											${selectedSize === size ? "bg-[#FFB8CD] text-white" : "bg-transparent border-[#FFB8CD]"}
+											${data.sizes[size] <= 0 ? "opacity-50 cursor-not-allowed" : ""}`}
 															onClick={() => setSelectedSize(size)}
 														>
 															{size}
@@ -382,21 +391,14 @@ const ProductDeet = () => {
 										item < 1 ||
 										item > data?.total_quantity ||
 										(data?.category?.toLowerCase() !== "accessory" &&
-											(!selectedColor || !selectedSize))
+											getSizes().length > 0 &&
+											Object.values(data.sizes).some((size) => size > 0) &&
+											!selectedSize)
 									}
 									className={`max-lg:w-full h-10 w-40 rounded-3xl text-black tracking-wide 
-                                        disabled:bg-gray-200 disabled:cursor-not-allowed font-medium
-                                        text-center flex items-center justify-center
-                                         ${
-																						item < 1 ||
-																						(
-																							data?.category?.toLowerCase() !==
-																								"accessory" && !selectedSize
-																						)
-																							? ""
-																							: "bg-[#ffb7ce]"
-																					}`}
-									onClick={addToItem}
+                                        disabled:bg-gray-200 bg-[#ffb7ce] disabled:cursor-not-allowed font-medium
+                                        text-center flex items-center justify-center`}
+										onClick={addToItem}
 								>
 									{addingToCart ? (
 										<>

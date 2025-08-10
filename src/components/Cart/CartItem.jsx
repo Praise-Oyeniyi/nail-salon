@@ -24,7 +24,7 @@ const CartItem = ({
                      */}
 			<div className="md:py-3 py-2">
 				<div className="flex items-center gap-x-3 md:gap-x-5 relative">
-					<div className="shadow-lg w-[10em] md:w-[7em] md:h-[7em] bg-[#fff1f5] shadow-gray-300 rounded-xl overflow-hidden">
+					<div className="shadow-lg w-[5em] h-[5em] md:w-[7em] md:h-[7em] bg-[#fff1f5] shadow-gray-300 rounded-xl overflow-hidden">
 						<img src={image} alt="" className="w-full h-full object-cover" />
 					</div>
 
